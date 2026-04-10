@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMersFireship - Digital Product Platform</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Configure Tailwind to use CSS variables & Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: 'var(--brand-color, #4f46e5)',
+                        brandHover: 'var(--brand-hover, #4338ca)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --brand-color: #4f46e5;
+            --brand-hover: #4338ca;
+            --app-name: "iMersFireship";
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            /* Colorful Mesh Gradient Background (Light) */
+            background-color: #f0fdf4;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,74%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,76%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,77%,0.4) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,70%,0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,76%,0.4) 0px, transparent 50%);
+            background-attachment: fixed;
+            transition: background 0.5s ease;
+        }
+
+        .dark body {
+            /* Colorful Mesh Gradient Background (Dark) */
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,40%,0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,30%,0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,40%,0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,40%,0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,30%,0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,40%,0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,30%,0.2) 0px, transparent 50%);
+        }
+        
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .hidden { display: none !important; }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-slate-800 dark:text-slate-100 antialiased h-screen overflow-hidden flex flex-col transition-colors duration-300">
+
+    <!-- ==========================================
+         CHECKOUT VIEW (PUBLIC)
+         ========================================== -->
+    <div id="view-checkout" class="hidden flex-1 overflow-y-auto relative w-full z-50 py-8 px-4">
+        <div class="max-w-xl mx-auto space-y-5 pb-24">
+            <!-- Order Details -->
+            <div class="glass rounded-2xl overflow-hidden">
+                <div class="bg-white/40 dark:bg-slate-800/40 py-3 text-center font-bold text-slate-700 dark:text-slate-200 text-sm border-b border-white/50 dark:border-slate-700/50">Order Details</div>
+                <div class="p-5">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand to-purple-500 rounded-xl flex items-center justify-center text-white text-3xl shadow-lg shadow-brand/30"><i class="ph ph-package"></i></div>
+                        <div class="flex-1">
+                            <h3 id="coProdTitle" class="font-bold text-slate-800 dark:text-white text-lg">Nama Produk</h3>
+                            <p id="coProdPrice" class="text-sm font-bold text-brand dark:text-brandHover">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400 mb-2">
+                        <span>Transaction Fees</span>
+                        <span id="coFee">- Rp. 0</span>
+                    </div>
+                    <div id="coDiscountRow" class="flex justify-between text-sm text-green-500 font-bold mb-2 hidden">
+                        <span>Discount (<span id="coDiscountCodeDisplay"></span>)</span>
+                        <span id="coDiscountAmount">- Rp. 0</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-slate-800 dark:text-white border-t border-slate-200 dark:border-slate-700 pt-3 mb-4">
+                        <span>Total</span>
+                        <span id="coTotal" class="text-red-500 dark:text-red-400 text-lg">Rp. 0</span>
+                    </div>
+                    <div class="text-xs text-emerald-500 font-bold flex items-center gap-1 bg-emerald-500/10 px-3 py-1.5 rounded-lg w-max"><i class="ph ph-shield-check text-lg"></i> Secure 100%</div>
+                </div>
+            </div>
+
+            <!-- Voucher -->
+            <div class="glass rounded-2xl p-5">
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">Voucher Diskon</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Masukkan kode diskon jika memilikinya</p>
+                <div class="flex gap-2">
+                    <input type="text" id="coVoucherInput" placeholder="KODE DISKON" class="flex-1 px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm uppercase focus:ring-2 focus:ring-brand dark:text-white">
+                    <button type="button" onclick="applyVoucher()" id="btnApplyVoucher" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-green-500/30 text-white font-bold px-5 py-2 rounded-xl text-sm transition-all">PAKAI</button>
+                </div>
+                <p id="coVoucherMsg" class="text-xs mt-2 hidden"></p>
+            </div>
+
+            <!-- Account Form -->
+            <div class="glass rounded-2xl p-6">
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-5 leading-relaxed bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">Isi data-data di bawah untuk bisa mengakses member area serta informasi terkait pembelian.</p>
+                <h3 class="font-bold text-slate-800 dark:text-white mb-4 text-lg">Create an Account</h3>
+                <form id="checkoutForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="coName" placeholder="Masukkan nama lengkap" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm focus:border-brand dark:text-white" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="coEmail" placeholder="Masukkan email aktif" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm focus:border-brand dark:text-white" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Create Password <span class="text-red-500">*</span></label>
+                        <input type="password" id="coPassword" placeholder="Buat password" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm focus:border-brand dark:text-white" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                        <input type="text" id="coWA" placeholder="Nomor WA aktif" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm focus:border-brand dark:text-white" required>
+                    </div>
+
+                    <div class="border-t border-slate-200 dark:border-slate-700 pt-5 mt-5">
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-4 text-sm">Select Payment Method <span class="text-red-500">*</span></h3>
+                        <div id="coPaymentMethods" class="space-y-3">
+                            <!-- Dynamic Payment Methods injected here -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Sticky Footer -->
+            <div class="fixed bottom-0 left-0 w-full glass rounded-t-2xl shadow-[0_-4px_25px_-5px_rgba(0,0,0,0.1)] p-4 z-50">
+                <div class="max-w-xl mx-auto flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                    <div>
+                        <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Total Pay</p>
+                        <p id="coTotalPay" class="text-xl font-black text-red-500 dark:text-red-400">Rp. 0</p>
+                    </div>
+                    <button type="button" onclick="submitCheckout()" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-green-500/30 transition-all w-full sm:w-auto text-sm">
+                        CREATE ORDER
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         AUTH VIEWS (LOGIN, REGISTER, FORGOT PWD)
+         ========================================== -->
+    <div id="view-auth" class="flex-1 flex items-center justify-center relative h-screen w-full z-50 p-4 overflow-y-auto">
+        
+        <div class="w-full max-w-md p-8 glass rounded-3xl shadow-2xl relative z-10 mx-auto border border-white/50 dark:border-slate-700/50 my-auto">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-purple-600 shadow-lg shadow-brand/30 text-white mb-5 overflow-hidden" id="authLogoContainer">
+                    <img id="appLogoAuth" src="" alt="Logo" class="w-full h-full object-cover hidden">
+                    <i id="appIconAuth" class="ph ph-rocket-launch text-4xl"></i>
+                </div>
+                <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand to-purple-500 app-name-display">iMersFireship</h1>
+                <p id="authSubtitle" class="text-slate-500 dark:text-slate-400 text-sm mt-2 font-medium">Admin & User Login</p>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email</label>
+                    <input type="email" id="loginEmail" value="admin@imersfireship.com" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                    <input type="password" id="loginPassword" value="admin123" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand/30 transition-all flex justify-center items-center gap-2 text-lg">
+                        <span>Sign In</span>
+                        <i class="ph ph-sign-in"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between text-sm font-bold mt-4 px-1">
+                    <a href="#" onclick="switchAuthView('forgot')" class="text-slate-500 dark:text-slate-400 hover:text-brand dark:hover:text-brand transition-colors">Lupa Password?</a>
+                    <a href="#" onclick="switchAuthView('register')" class="text-brand dark:text-brandHover hover:underline transition-colors">Daftar Baru</a>
+                </div>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="registerForm" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap</label>
+                    <input type="text" id="regName" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                    <input type="email" id="regEmail" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">No WhatsApp</label>
+                    <input type="text" id="regWa" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                    <input type="password" id="regPassword" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" id="regBtn" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-green-500/30 transition-all flex justify-center items-center gap-2 text-lg">
+                        <span>Daftar Sekarang</span>
+                        <i class="ph ph-user-plus"></i>
+                    </button>
+                </div>
+                <div class="text-center text-sm font-bold mt-4">
+                    <span class="text-slate-500 dark:text-slate-400">Sudah punya akun?</span>
+                    <a href="#" onclick="switchAuthView('login')" class="text-brand dark:text-brandHover hover:underline transition-colors ml-1">Masuk di sini</a>
+                </div>
+            </form>
+
+            <!-- FORGOT PASSWORD FORM -->
+            <form id="forgotForm" class="space-y-5 hidden">
+                <p class="text-sm text-slate-600 dark:text-slate-400 text-center mb-4 leading-relaxed">Masukkan email Anda di bawah ini. Kami akan mengirimkan instruksi untuk mereset password Anda.</p>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email Terdaftar</label>
+                    <input type="email" id="forgotEmail" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" id="forgotBtn" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-amber-500/30 transition-all flex justify-center items-center gap-2 text-lg">
+                        <span>Kirim Reset Link</span>
+                        <i class="ph ph-paper-plane-tilt"></i>
+                    </button>
+                </div>
+                <div class="text-center text-sm font-bold mt-4 border-t border-slate-200 dark:border-slate-700 pt-5">
+                    <a href="#" onclick="switchAuthView('login')" class="text-slate-500 dark:text-slate-400 hover:text-brand dark:hover:text-brand transition-colors flex items-center justify-center gap-1">
+                        <i class="ph ph-arrow-left"></i> Kembali ke Login
+                    </a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MAIN APPLICATION LAYOUT (Logged In)
+         ========================================== -->
+    <div id="view-app" class="hidden flex-1 flex h-screen w-full overflow-hidden">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="w-64 glass border-r border-white/40 dark:border-slate-700/50 flex flex-col transition-all duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0 shadow-xl">
+            <div class="h-20 flex items-center px-6 border-b border-white/20 dark:border-slate-700/50">
+                <img id="appLogoSidebar" src="" alt="Logo" class="h-8 w-8 object-contain mr-3 hidden">
+                <div class="w-8 h-8 rounded bg-gradient-to-br from-brand to-purple-500 flex items-center justify-center mr-3 text-white shadow-md shadow-brand/20" id="appIconSidebarBg">
+                    <i id="appIconSidebar" class="ph ph-rocket-launch text-xl"></i>
+                </div>
+                <span class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-brand to-purple-600 dark:from-indigo-400 dark:to-purple-400 tracking-wide app-name-display">iMersFireship</span>
+            </div>
+
+            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+                <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-2">Main Menu</p>
+                
+                <a href="#" onclick="navigate('dashboard')" class="nav-link active group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="dashboard">
+                    <i class="ph ph-squares-four text-xl text-blue-500 group-[.active]:text-white transition-colors"></i> Dashboard
+                </a>
+                <a href="#" onclick="navigate('products')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="products">
+                    <i class="ph ph-package text-xl text-purple-500 group-[.active]:text-white transition-colors"></i> Products
+                </a>
+                <a href="#" onclick="navigate('marketplace')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="marketplace">
+                    <i class="ph ph-storefront text-xl text-pink-500 group-[.active]:text-white transition-colors"></i> Marketplace
+                </a>
+                
+                <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-6">Sales & Users</p>
+                
+                <a href="#" onclick="navigate('orders')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="orders">
+                    <i class="ph ph-shopping-cart text-xl text-orange-500 group-[.active]:text-white transition-colors"></i> Orders 
+                    <span class="ml-auto bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-sm">New</span>
+                </a>
+                
+                <a href="#" onclick="navigate('license')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="license">
+                    <i class="ph ph-key text-xl text-amber-500 group-[.active]:text-white transition-colors"></i> License Code
+                </a>
+
+                <a href="#" onclick="navigate('coupons')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="coupons">
+                    <i class="ph ph-ticket text-xl text-emerald-500 group-[.active]:text-white transition-colors"></i> Kupon Diskon
+                </a>
+                <a href="#" onclick="navigate('users')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="users">
+                    <i class="ph ph-users text-xl text-teal-500 group-[.active]:text-white transition-colors"></i> Users
+                </a>
+                <a href="#" onclick="navigate('affiliate')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="affiliate">
+                    <i class="ph ph-handshake text-xl text-yellow-500 group-[.active]:text-white transition-colors"></i> Affiliate
+                </a>
+
+                <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-6">Marketing & Config</p>
+                <a href="#" onclick="navigate('broadcast')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="broadcast">
+                    <i class="ph ph-paper-plane-tilt text-xl text-cyan-500 group-[.active]:text-white transition-colors"></i> Broadcast WA
+                </a>
+
+                <a href="#" onclick="navigate('templates')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="templates">
+                    <i class="ph ph-envelope-simple text-xl text-rose-500 group-[.active]:text-white transition-colors"></i> Notif Templates
+                </a>
+                
+                <a href="#" onclick="navigate('settings')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="settings">
+                    <i class="ph ph-gear text-xl text-slate-400 group-[.active]:text-white transition-colors"></i> Admin Settings
+                </a>
+
+                <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-6">Account</p>
+                <!-- NEW MENU: MY PROFILE (Change Password) -->
+                <a href="#" onclick="navigate('profile')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="profile">
+                    <i class="ph ph-user-circle text-xl text-blue-500 group-[.active]:text-white transition-colors"></i> My Profile
+                </a>
+            </div>
+
+            <div class="p-5 border-t border-white/20 dark:border-slate-700/50">
+                <button onclick="logout()" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500 hover:text-white transition-all font-bold text-sm border border-red-500/20 shadow-sm">
+                    <i class="ph ph-sign-out text-xl"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative w-full">
+            
+            <!-- TOPBAR -->
+            <header class="h-20 glass border-b border-white/40 dark:border-slate-700/50 flex items-center justify-between px-6 shrink-0 z-30">
+                <div class="flex items-center gap-4">
+                    <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-xl bg-white/50 dark:bg-slate-800/50 flex items-center justify-center text-slate-600 dark:text-slate-300 shadow-sm border border-white/40 dark:border-slate-700/50">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                    <h2 id="pageTitle" class="text-xl font-black text-slate-800 dark:text-white hidden sm:block tracking-tight">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <!-- DARK MODE TOGGLE -->
+                    <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/50 dark:bg-slate-800/50 flex items-center justify-center text-yellow-500 dark:text-blue-400 shadow-sm border border-white/40 dark:border-slate-700/50 hover:scale-105 transition-transform">
+                        <i id="themeIcon" class="ph ph-moon text-xl"></i>
+                    </button>
+
+                    <button class="w-10 h-10 rounded-xl bg-white/50 dark:bg-slate-800/50 flex items-center justify-center text-slate-600 dark:text-slate-300 shadow-sm border border-white/40 dark:border-slate-700/50 relative">
+                        <i class="ph ph-bell text-xl"></i>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full shadow-sm shadow-red-500/50"></span>
+                    </button>
+                    
+                    <div class="flex items-center gap-3 pl-4 border-l border-slate-300/50 dark:border-slate-700/50">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-sm font-bold text-slate-800 dark:text-white" id="userDisplayName">Admin User</p>
+                            <p class="text-[10px] font-bold text-brand tracking-widest uppercase">Administrator</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-purple-500 flex items-center justify-center text-white font-black shadow-md shadow-brand/20">
+                            A
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE CONTENT -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-8 pb-24">
+                
+                <!-- DASHBOARD VIEW -->
+                <div id="content-dashboard" class="content-section space-y-8">
+                    <!-- Stats Grid - Colorful & Glass -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="glass rounded-2xl p-6 relative overflow-hidden group">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-green-500/20 rounded-full blur-2xl group-hover:bg-green-500/30 transition-all"></div>
+                            <div class="flex items-center justify-between relative z-10">
+                                <div>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Total Revenue</p>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">Rp 12.45M</h3>
+                                </div>
+                                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-green-500/30">
+                                    <i class="ph ph-money"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-6 relative overflow-hidden group">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl group-hover:bg-blue-500/30 transition-all"></div>
+                            <div class="flex items-center justify-between relative z-10">
+                                <div>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Total Products</p>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white" id="statProducts">0</h3>
+                                </div>
+                                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-500/30">
+                                    <i class="ph ph-package"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 relative overflow-hidden group">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-purple-500/20 rounded-full blur-2xl group-hover:bg-purple-500/30 transition-all"></div>
+                            <div class="flex items-center justify-between relative z-10">
+                                <div>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Total Users</p>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">1,204</h3>
+                                </div>
+                                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-fuchsia-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-purple-500/30">
+                                    <i class="ph ph-users"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 relative overflow-hidden group">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl group-hover:bg-orange-500/30 transition-all"></div>
+                            <div class="flex items-center justify-between relative z-10">
+                                <div>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Active Affiliates</p>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">86</h3>
+                                </div>
+                                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-orange-500/30">
+                                    <i class="ph ph-share-network"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Area -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 glass rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Revenue Overview</h3>
+                            <canvas id="salesChart" height="100"></canvas>
+                        </div>
+                        <div class="glass rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Recent Orders</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white shadow-sm"><i class="ph ph-file-pdf text-2xl"></i></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-bold text-slate-800 dark:text-white truncate">50 Ide Konten Viral</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Budi Santoso</p>
+                                    </div>
+                                    <span class="px-2.5 py-1 bg-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-black uppercase rounded-lg">Paid</span>
+                                </div>
+                                <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white shadow-sm"><i class="ph ph-video text-2xl"></i></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-bold text-slate-800 dark:text-white truncate">Digital Product Starter</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Siti Aminah</p>
+                                    </div>
+                                    <span class="px-2.5 py-1 bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase rounded-lg">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRODUCTS VIEW -->
+                <div id="content-products" class="content-section hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage your digital downloads and courses here.</p>
+                        <button onclick="openProductModal()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-plus-circle text-xl"></i> Add Product
+                        </button>
+                    </div>
+
+                    <div class="glass border border-blue-200 dark:border-blue-900/50 p-4 rounded-2xl text-sm text-blue-800 dark:text-blue-200 flex items-start sm:items-center gap-3 shadow-sm relative overflow-hidden">
+                        <div class="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20"></div>
+                        <i class="ph ph-info text-2xl shrink-0 relative z-10 text-blue-500"></i>
+                        <p class="relative z-10"><strong>Affiliate Ready:</strong> Edit produk untuk menyalin <em>Link Checkout</em> yang bisa disebar ke affiliator Anda.</p>
+                    </div>
+
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Product Name</th>
+                                        <th class="px-6 py-4 font-bold">Type</th>
+                                        <th class="px-6 py-4 font-bold">Price</th>
+                                        <th class="px-6 py-4 font-bold text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                    <!-- Dynamic rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MARKETPLACE VIEW -->
+                <div id="content-marketplace" class="content-section hidden space-y-6">
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Marketplace</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Katalog semua produk digital dan Course yang Anda jual.</p>
+                    </div>
+                    <div id="marketplaceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Products injected here -->
+                    </div>
+                    
+                    <!-- Single Product Access Viewer -->
+                    <div id="productViewer" class="hidden glass rounded-3xl overflow-hidden flex flex-col relative h-[80vh] shadow-2xl">
+                        <!-- Header -->
+                        <div class="p-6 border-b border-white/40 dark:border-slate-700/50 flex justify-between items-center bg-white/30 dark:bg-slate-800/30 shrink-0">
+                            <div>
+                                <h3 id="pvTitle" class="text-2xl font-black text-slate-800 dark:text-white">Product Title</h3>
+                                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/20 px-3 py-1 rounded-lg mt-2 inline-block">Access Granted</span>
+                            </div>
+                            <button onclick="closeProductViewer()" class="text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-brand bg-white/50 dark:bg-slate-700/50 px-4 py-2 rounded-xl transition-all font-bold text-sm flex items-center gap-2 shadow-sm border border-white/40 dark:border-slate-600"><i class="ph ph-arrow-left text-lg"></i> Back</button>
+                        </div>
+                        
+                        <div class="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8">
+                            <div id="pvStructuredArea" class="w-full"></div>
+                            <div id="pvHtmlArea" class="prose max-w-none text-slate-700 dark:text-slate-300 bg-amber-50/50 dark:bg-amber-900/20 p-6 rounded-2xl border border-amber-200/50 dark:border-amber-700/30 shadow-inner hidden backdrop-blur-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LICENSE VIEW -->
+                <div id="content-license" class="content-section hidden space-y-6">
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My License</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Gunakan kode lisensi ini untuk aktivasi layanan atau produk khusus Anda.</p>
+                    </div>
+
+                    <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-2xl">
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                            <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                <i class="ph ph-shield-check text-4xl text-emerald-500"></i>
+                            </div>
+                            <div class="flex-1 w-full">
+                                <h4 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-1">Lisensi Aktif Anda</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Kode di bawah otomatis ter-generate sesuai akun Anda.</p>
+                                
+                                <div class="bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <code id="userLicenseCode" class="text-xl font-black text-brand dark:text-brandHover tracking-widest uppercase">DUMMY-KEY-123</code>
+                                    <button onclick="copyLicenseCode()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-brand/30 flex items-center gap-2 shrink-0 text-sm">
+                                        <i class="ph ph-copy text-lg"></i> Salin Kode
+                                    </button>
+                                </div>
+                                
+                                <div class="mt-5 text-xs text-slate-500 dark:text-slate-400 flex items-start gap-2 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
+                                    <i class="ph ph-warning-circle text-amber-500 text-lg shrink-0"></i>
+                                    <p>Mohon jangan bagikan kode rahasia ini kepada siapapun demi keamanan akses produk Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOTIFICATION TEMPLATES VIEW -->
+                <div id="content-templates" class="content-section hidden space-y-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Notification Templates</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola template pesan dinamis untuk Email dan WhatsApp.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Event Type</th>
+                                        <th class="px-6 py-4 font-bold">Email Subject</th>
+                                        <th class="px-6 py-4 font-bold text-center">Email Status</th>
+                                        <th class="px-6 py-4 font-bold text-center">WA Status</th>
+                                        <th class="px-6 py-4 font-bold text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="templatesTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                    <!-- Dynamic rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE (CHANGE PASSWORD) VIEW -->
+                <div id="content-profile" class="content-section hidden space-y-6">
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Profile</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola informasi akun dan keamanan Anda di sini.</p>
+                    </div>
+
+                    <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-xl">
+                        <h4 class="font-black text-slate-800 dark:text-white mb-6 text-lg border-b border-white/30 dark:border-slate-700/50 pb-3 flex items-center gap-2">
+                            <i class="ph ph-lock-key text-brand"></i> Ganti Password
+                        </h4>
+                        
+                        <form id="changePasswordForm" class="space-y-5" onsubmit="event.preventDefault(); handleChangePassword();">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Password Saat Ini</label>
+                                <input type="password" id="cpOldPass" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Password Baru</label>
+                                <input type="password" id="cpNewPass" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Konfirmasi Password Baru</label>
+                                <input type="password" id="cpConfirmPass" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                            </div>
+                            <div class="pt-4">
+                                <button type="submit" id="cpBtn" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30 flex items-center gap-2">
+                                    <i class="ph ph-floppy-disk text-xl"></i> Simpan Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- COUPONS VIEW -->
+                <div id="content-coupons" class="content-section hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Master Kupon</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Buat kode diskon untuk promosi atau base affiliate Anda.</p>
+                        </div>
+                        <button onclick="openCouponModal()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-plus-circle text-xl"></i> Tambah Kupon
+                        </button>
+                    </div>
+
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Kode Kupon</th>
+                                        <th class="px-6 py-4 font-bold">Tipe Diskon</th>
+                                        <th class="px-6 py-4 font-bold">Nilai</th>
+                                        <th class="px-6 py-4 font-bold">Berlaku Untuk</th>
+                                        <th class="px-6 py-4 font-bold text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="couponsTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                    <!-- Dynamic rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BROADCAST VIEW -->
+                <div id="content-broadcast" class="content-section hidden space-y-6 max-w-4xl">
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">Broadcast System</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kirim pesan massal ke Users via WhatsApp API Gateway.</p>
+                    </div>
+
+                    <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50">
+                        <form id="broadcastForm" class="space-y-6" onsubmit="event.preventDefault(); simulateBroadcast();">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Target Audience</label>
+                                <select id="bcTarget" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                    <option value="all">Semua Users</option>
+                                    <option value="affiliates">Hanya Affiliates</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center justify-between">
+                                    <span>Pesan WhatsApp</span>
+                                    <span class="text-xs font-medium text-slate-500 bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded">Variabel: {nama}, {produk}, {link}</span>
+                                </label>
+                                <textarea id="bcMessage" rows="6" placeholder="Halo {nama}, promo spesial untuk Anda hari ini..." class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white text-sm" required></textarea>
+                            </div>
+                            <div class="pt-2">
+                                <button type="submit" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/30 flex items-center gap-2">
+                                    <i class="ph ph-paper-plane-tilt text-xl"></i> Kirim Broadcast Sekarang
+                                </button>
+                                <p class="text-xs text-slate-500 mt-3"><i class="ph ph-info"></i> Pastikan WhatsApp Gateway Anda sudah diatur di Admin Settings.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- SETTINGS VIEW -->
+                <div id="content-settings" class="content-section hidden space-y-8 max-w-4xl">
+                    <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50">
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white mb-6 border-b border-white/40 dark:border-slate-700/50 pb-4">Admin Settings</h3>
+                        
+                        <div class="space-y-8">
+                            <!-- Basic White Label -->
+                            <div>
+                                <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Branding</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Logo URL / Upload</label>
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <input type="url" id="settingLogoUrl" placeholder="https://example.com/logo.png" class="flex-1 px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white">
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <input type="file" id="settingLogoFile" accept="image/*" class="w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-brand/10 file:text-brand hover:file:bg-brand/20 transition-all cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Platform Name</label>
+                                            <input type="text" id="settingAppName" value="iMersFireship" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Primary Color (Hex)</label>
+                                            <div class="flex items-center gap-3">
+                                                <input type="color" id="settingColor" value="#4f46e5" class="w-12 h-12 rounded-xl cursor-pointer border-0 p-1 bg-white/50 dark:bg-slate-900/50 shadow-sm">
+                                                <input type="text" id="settingColorText" value="#4f46e5" class="flex-1 px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-mono font-medium" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- WA Gateway / Notification Settings -->
+                            <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
+                                <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">WhatsApp API Gateway</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Atur API WA untuk otomatis mengirim tagihan dan akses produk ke kustomer.</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Provider</label>
+                                        <select id="notifWaProvider" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                            <option value="fonnte">Fonnte</option>
+                                            <option value="starsender">StarSender</option>
+                                            <option value="xsender">Xsender</option>
+                                            <option value="custom">Custom API</option>
+                                        </select>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">API Token / Key</label>
+                                        <input type="password" id="notifWaToken" placeholder="Masukkan Token Fonnte / StarSender / Xsender Anda" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nomor WA Admin <span class="text-slate-400 font-normal">(Untuk Notif Order Baru)</span></label>
+                                    <input type="text" id="notifAdminWa" placeholder="Contoh: 08123456789" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                </div>
+                            </div>
+                            
+                            <!-- Email API Gateway Settings -->
+                            <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
+                                <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Email API Gateway</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Atur pengiriman email menggunakan layanan pihak ke-3. Kosongkan untuk pakai bawaan Google.</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Provider Email</label>
+                                        <select id="notifEmailProvider" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                            <option value="google">Default (Google MailApp)</option>
+                                            <option value="mailketing">Mailketing</option>
+                                            <option value="jowmail">Jowmail</option>
+                                        </select>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">API Bearer Token</label>
+                                        <input type="password" id="notifEmailToken" placeholder="Masukkan API Token Pihak Ke-3 Anda" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Methods -->
+                            <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
+                                <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Payment Methods</h4>
+                                
+                                <div class="mb-5 bg-white/30 dark:bg-slate-800/30 p-5 rounded-2xl border border-white/40 dark:border-slate-700/50">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Manual Bank Transfer</label>
+                                    <div id="bankList" class="space-y-3 mb-4">
+                                        <!-- Bank inputs injected here -->
+                                    </div>
+                                    <button onclick="addBankField()" class="text-xs bg-brand/10 hover:bg-brand/20 text-brand font-black px-4 py-2 rounded-lg shadow-sm transition-colors flex items-center gap-1"><i class="ph ph-plus-circle text-lg"></i> Add Bank</button>
+                                </div>
+
+                                <div class="bg-white/30 dark:bg-slate-800/30 p-5 rounded-2xl border border-white/40 dark:border-slate-700/50">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-4">3rd Party Gateways (Auto-Approval)</label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                        <label class="flex items-center gap-3 p-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-900/50 cursor-pointer hover:border-brand transition-all">
+                                            <input type="checkbox" id="gwTripay" class="accent-brand w-5 h-5"> <span class="text-sm font-bold dark:text-white">Tripay</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 p-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-900/50 cursor-pointer hover:border-brand transition-all">
+                                            <input type="checkbox" id="gwDuitku" class="accent-brand w-5 h-5"> <span class="text-sm font-bold dark:text-white">Duitku</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 p-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white/50 dark:bg-slate-900/50 cursor-pointer hover:border-brand transition-all">
+                                            <input type="checkbox" id="gwSendit" class="accent-brand w-5 h-5"> <span class="text-sm font-bold dark:text-white">SendiT</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
+                                <button onclick="saveSettings()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30 w-full sm:w-auto">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PLACEHOLDER FOR OTHER VIEWS -->
+                <div id="content-orders" class="content-section hidden space-y-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Order Management</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Approve bukti transfer manual untuk mengaktifkan akses.</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Order ID</th>
+                                        <th class="px-6 py-4 font-bold">Customer</th>
+                                        <th class="px-6 py-4 font-bold">Product</th>
+                                        <th class="px-6 py-4 font-bold">Total</th>
+                                        <th class="px-6 py-4 font-bold">Status</th>
+                                        <th class="px-6 py-4 font-bold text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                    <!-- Dynamic rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="content-users" class="content-section hidden">
+                    <div class="p-10 text-center text-slate-500 dark:text-slate-400 glass rounded-3xl shadow-xl">
+                        <i class="ph ph-users-three text-6xl mb-4 text-brand opacity-50 block"></i>
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white">Users Directory</h3>
+                        <p class="text-sm mt-2 font-medium">User management list will be rendered here.</p>
+                    </div>
+                </div>
+
+                <div id="content-affiliate" class="content-section hidden">
+                    <div class="p-10 text-center text-slate-500 dark:text-slate-400 glass rounded-3xl shadow-xl">
+                        <i class="ph ph-handshake text-6xl mb-4 text-yellow-500 opacity-50 block"></i>
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white">Affiliate System</h3>
+                        <p class="text-sm mt-2 font-medium">Link generation and leaderboards will go here.</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================
+         MODALS & OVERLAYS
+         ========================================== -->
+         
+    <!-- Product Form Modal -->
+    <div id="productModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="glass rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-white/20">
+            <div class="p-6 border-b border-white/20 dark:border-slate-700/50 flex justify-between items-center bg-white/40 dark:bg-slate-800/40">
+                <h3 class="text-xl font-black text-slate-800 dark:text-white" id="productModalTitle">Add New Product</h3>
+                <button onclick="closeProductModal()" class="text-slate-500 hover:text-red-500 bg-white/50 dark:bg-slate-700/50 p-2 rounded-full transition-colors"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1">
+                <form id="productForm" class="space-y-5">
+                    <input type="hidden" id="prodId">
+                    
+                    <div id="checkoutLinkContainer" class="hidden mb-4 p-5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex-1 w-full overflow-hidden">
+                            <p class="text-xs font-black text-emerald-600 dark:text-emerald-400 mb-2 uppercase tracking-wider">Affiliate Checkout Link</p>
+                            <input type="text" id="prodCheckoutUrl" readonly class="w-full bg-white/50 dark:bg-slate-900/50 border border-emerald-500/30 rounded-lg text-sm text-emerald-700 dark:text-emerald-300 font-mono p-3 outline-none" value="">
+                        </div>
+                        <button type="button" onclick="copyCheckoutLink()" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-green-500/30 flex items-center gap-2 text-sm font-bold transition-all w-full sm:w-auto justify-center mt-6 sm:mt-0">
+                            <i class="ph ph-copy text-xl"></i> Copy Link
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Title</label>
+                            <input type="text" id="prodTitle" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Price (Rp)</label>
+                            <input type="number" id="prodPrice" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Type</label>
+                        <select id="prodType" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white" onchange="toggleProductFields()">
+                            <option value="download">Digital Download / General</option>
+                            <option value="lms">LMS / Course</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Short Description</label>
+                        <textarea id="prodDesc" rows="2" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white"></textarea>
+                    </div>
+                    
+                    <!-- Dynamic Field: Download -->
+                    <div id="fieldDownload" class="border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <label class="block text-sm font-black text-slate-800 dark:text-white">File Downloads</label>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masukkan link file GDrive / Mediafire / dll.</p>
+                            </div>
+                            <button type="button" onclick="addDownloadField()" class="text-xs bg-brand/10 hover:bg-brand/20 text-brand font-black px-4 py-2 rounded-lg shadow-sm flex items-center gap-1 transition-colors"><i class="ph ph-plus text-lg"></i> Add Link</button>
+                        </div>
+                        <div id="downloadsContainer" class="space-y-3">
+                            <!-- Download inputs appended here -->
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Field: LMS -->
+                    <div id="fieldLMS" class="hidden border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <label class="block text-sm font-black text-slate-800 dark:text-white">Video Lessons</label>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masukkan link YouTube materi Anda.</p>
+                            </div>
+                            <button type="button" onclick="addLessonField()" class="text-xs bg-brand/10 hover:bg-brand/20 text-brand font-black px-4 py-2 rounded-lg shadow-sm flex items-center gap-1 transition-colors"><i class="ph ph-plus text-lg"></i> Add Video</button>
+                        </div>
+                        <div id="lessonsContainer" class="space-y-3">
+                            <!-- Lesson inputs appended here -->
+                        </div>
+                    </div>
+
+                    <!-- Unified Access HTML Field (Optional) -->
+                    <div id="fieldAccess">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">Additional Info / Notes <span class="text-slate-400 dark:text-slate-500 font-medium">(Optional)</span></label>
+                        </div>
+                        <textarea id="prodAccess" rows="3" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm leading-relaxed" placeholder="Catatan tambahan (mendukung tag HTML dasar jika dibutuhkan)..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 border-t border-white/20 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 flex justify-end gap-3">
+                <button onclick="closeProductModal()" class="px-6 py-3 text-slate-600 dark:text-slate-300 font-bold hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl transition-colors">Cancel</button>
+                <button onclick="saveProduct()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Form Modal -->
+    <div id="templateModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="glass rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col border border-white/20">
+            <div class="p-6 border-b border-white/20 dark:border-slate-700/50 flex justify-between items-center bg-white/40 dark:bg-slate-800/40">
+                <h3 class="text-xl font-black text-slate-800 dark:text-white">Edit Notification Template</h3>
+                <button onclick="closeTemplateModal()" class="text-slate-500 hover:text-red-500 bg-white/50 dark:bg-slate-700/50 p-2 rounded-full transition-colors"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+                
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex flex-col gap-2">
+                    <p class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider"><i class="ph ph-info"></i> Variabel Dinamis yang Bisa Digunakan:</p>
+                    <p class="text-sm font-mono text-slate-600 dark:text-slate-300">{nama}, {email}, {wa}, {produk}, {total}, {metode}, {status}, {password}</p>
+                </div>
+
+                <form id="templateForm" class="space-y-5">
+                    <input type="hidden" id="tmplId">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Event Type</label>
+                            <input type="text" id="tmplType" readonly class="w-full px-4 py-3 bg-slate-100/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-slate-500 font-mono font-bold cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Template Title</label>
+                            <input type="text" id="tmplTitle" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white" required>
+                        </div>
+                    </div>
+
+                    <!-- Email Section -->
+                    <div class="border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-black text-slate-800 dark:text-white flex items-center gap-2"><i class="ph ph-envelope-simple text-xl text-rose-500"></i> Email Template</h4>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Aktifkan Email</span>
+                                <input type="checkbox" id="tmplActiveEmail" class="accent-brand w-4 h-4">
+                            </label>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Subject</label>
+                                <input type="text" id="tmplSubject" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Body (Mendukung HTML)</label>
+                                <textarea id="tmplEmailBody" rows="4" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm leading-relaxed"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WA Section -->
+                    <div class="border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-black text-slate-800 dark:text-white flex items-center gap-2"><i class="ph ph-whatsapp-logo text-xl text-green-500"></i> WhatsApp Template</h4>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Aktifkan WA</span>
+                                <input type="checkbox" id="tmplActiveWA" class="accent-brand w-4 h-4">
+                            </label>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Pesan WA (Gunakan * untuk tebal, _ untuk miring)</label>
+                            <textarea id="tmplWABody" rows="4" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm leading-relaxed"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 border-t border-white/20 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 flex justify-end gap-3">
+                <button onclick="closeTemplateModal()" class="px-6 py-3 text-slate-600 dark:text-slate-300 font-bold hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl transition-colors">Batal</button>
+                <button onclick="saveTemplate()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30">Simpan Template</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coupon Form Modal -->
+    <div id="couponModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="glass rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col border border-white/20">
+            <div class="p-6 border-b border-white/20 dark:border-slate-700/50 flex justify-between items-center bg-white/40 dark:bg-slate-800/40">
+                <h3 class="text-xl font-black text-slate-800 dark:text-white" id="couponModalTitle">Tambah Kupon</h3>
+                <button onclick="closeCouponModal()" class="text-slate-500 hover:text-red-500 bg-white/50 dark:bg-slate-700/50 p-2 rounded-full transition-colors"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="couponForm" class="space-y-5">
+                    <input type="hidden" id="couponId">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Kode Kupon</label>
+                        <input type="text" id="couponCode" placeholder="Misal: DISKON50" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white uppercase font-mono font-bold" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Tipe</label>
+                            <select id="couponType" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white font-medium">
+                                <option value="percent">Persentase (%)</option>
+                                <option value="fixed">Nominal (Rp)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nilai Potongan</label>
+                            <input type="number" id="couponValue" placeholder="Misal: 50" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white font-medium" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Berlaku Untuk Produk</label>
+                        <select id="couponProductId" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white font-medium">
+                            <option value="all">Semua Produk</option>
+                            <!-- Dynamic options -->
+                        </select>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Kupon ini dapat dibagikan dan diklaim pada halaman checkout.</p>
+                </form>
+            </div>
+            <div class="p-6 border-t border-white/20 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 flex justify-end gap-3">
+                <button onclick="closeCouponModal()" class="px-6 py-3 text-slate-600 dark:text-slate-300 font-bold hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl transition-colors">Batal</button>
+                <button onclick="saveCoupon()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30">Simpan Kupon</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-green-500">
+        <i id="toastIcon" class="ph ph-check-circle text-green-500 text-2xl drop-shadow-sm"></i>
+        <span id="toastMsg" class="text-sm font-bold">Notification message</span>
+    </div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT & FIREBASE LOGIC
+         ========================================== -->
+    
+    <!-- Firebase SDK v11 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- HASHING UTILITY (SHA-256) ---
+        window.hashPassword = async (password) => {
+            const msgBuffer = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        };
+
+        // --- DARK MODE LOGIC ---
+        window.toggleTheme = () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+        };
+
+        function updateThemeIcon(isDark) {
+            const icon = document.getElementById('themeIcon');
+            if(icon) {
+                icon.className = isDark ? 'ph ph-sun text-xl' : 'ph ph-moon text-xl';
+            }
+        }
+
+        // Initialize Theme
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            updateThemeIcon(true);
+        } else {
+            updateThemeIcon(false);
+        }
+
+        // Global App State
+        window.appState = {
+            user: null,
+            products: [],
+            orders: [],
+            coupons: [],
+            templates: [], // MOCK STATE UNTUK TEMPLATES
+            isSidebarOpen: false,
+            settings: {
+                banks: [
+                    {name: 'BCA', no: '1234567890', owner: 'PT iMers Global'},
+                    {name: 'BANK JAGO', no: '0987654321', owner: 'PT iMers Global'}
+                ],
+                gateways: { tripay: false, duitku: false, sendit: false },
+                notifications: {
+                    waProvider: 'fonnte',
+                    waToken: '',
+                    adminWa: '',
+                    emailProvider: 'google',
+                    emailToken: ''
+                }
+            },
+            currentCheckoutProduct: null,
+            currentCheckoutUniqueCode: 0,
+            currentCheckoutCoupon: null
+        };
+
+        // Firebase Initialization (Using Sandbox Safe Env Variables)
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "dummy", authDomain: "dummy", projectId: "dummy", storageBucket: "dummy", messagingSenderId: "dummy", appId: "dummy"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // STRICT RULE 1: Sandbox Paths
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const getPublicRef = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
+
+        // Required Dummy Data for Seeding
+        const dummySeedData = [
+            {
+                type: 'download', title: 'Template Landing Page Premium', price: 99000,
+                description: 'Premium Landing Page Template for Digital Product Seller', 
+                files: [
+                    { title: 'Download Template Utama (ZIP)', url: '#' },
+                    { title: 'Download Font Pack (ZIP)', url: '#' }
+                ],
+                accessHtml: `<p><strong>Penting:</strong> Harap extract file ZIP di komputer Anda sebelum di-import ke Elementor.</p>`, 
+                createdAt: Date.now()
+            }
+        ];
+
+        const dummyCouponData = {
+            code: 'LAUNCH50',
+            type: 'percent',
+            value: 50,
+            applicableProductId: 'all',
+            createdAt: Date.now()
+        };
+
+        const dummyTemplatesData = [
+            {
+                type: "NEW_ORDER", title: "Order Baru (Pending)", subject: "Menunggu Pembayaran - {produk}",
+                messageEmail: "Halo {nama},\n\nTerima kasih telah memesan {produk}.\nTotal Tagihan: {total}\nMetode: {metode}\n\nSilakan selesaikan pembayaran Anda.",
+                messageWA: "Halo *{nama}* 👋\n\nTerima kasih telah memesan *{produk}*.\nTotal Tagihan: *{total}*\nMetode: {metode}\n\nSilakan selesaikan pembayaran Anda.",
+                isActiveEmail: true, isActiveWA: true, createdAt: Date.now()
+            },
+            {
+                type: "ORDER_ACTIVE", title: "Order Sukses (Akses Terbuka)", subject: "Akses Produk Dibuka - {produk}",
+                messageEmail: "Halo {nama},\n\nPembayaran Anda untuk {produk} telah berhasil diverifikasi.\nAkses produk Anda sudah aktif!\n\nSilakan login ke member area.",
+                messageWA: "Hore! 🎉\n\nPembayaran untuk pesanan *{produk}* berhasil.\nAkses sudah terbuka untuk *{nama}*.\n\nSilakan login ke member area.",
+                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 1
+            },
+            {
+                type: "NEW_USER", title: "Registrasi Member Baru", subject: "Selamat Datang di iMersFireship",
+                messageEmail: "Halo {nama},\n\nAkun Anda berhasil dibuat!\nEmail: {email}\nPassword: {password}\n\nJaga kerahasiaan akun Anda.",
+                messageWA: "Selamat Datang *{nama}*! 🚀\n\nAkun Anda telah aktif.\nGunakan email {email} untuk login ke member area.",
+                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 2
+            },
+            {
+                type: "FORGOT_PASSWORD", title: "Lupa Password", subject: "Reset Password iMersFireship",
+                messageEmail: "Halo {nama},\n\nKami menerima permintaan reset password untuk akun Anda.\n\nSilakan hubungi admin atau gunakan link reset berikut (jika tersedia).\nJika ini bukan Anda, abaikan email ini.",
+                messageWA: "Halo *{nama}*,\n\nKami menerima permintaan Lupa Password untuk akun dengan email {email}.\n\nSilakan hubungi Admin untuk bantuan lebih lanjut.",
+                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 3
+            }
+        ];
+
+        // --- INIT & ROUTING ---
+        window.onload = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkoutId = urlParams.get('checkout');
+            
+            if (checkoutId) {
+                // Tampilkan halaman checkout untuk publik
+                document.getElementById('view-auth').classList.add('hidden');
+                document.getElementById('view-app').classList.add('hidden');
+                document.getElementById('view-checkout').classList.remove('hidden');
+                await loadCheckoutProduct(checkoutId);
+            }
+        };
+
+        // --- NOTIFICATION GATEWAY LOGIC (MOCK FRONTEND) ---
+        window.sendWhatsAppNotification = async (targetWa, messageText, isSilent = true) => {
+            if(!isSilent) showToast("Notifikasi dipicu! (Cek logic di Backend Apps Script nanti)", "success");
+        };
+
+        window.simulateBroadcast = () => {
+            const target = document.getElementById('bcTarget').value;
+            const msg = document.getElementById('bcMessage').value;
+            if(!msg) return;
+
+            showToast("Memproses Broadcast...", "info");
+            setTimeout(() => {
+                sendWhatsAppNotification("SEMUA MEMBER", msg, false);
+                document.getElementById('bcMessage').value = '';
+            }, 1000);
+        };
+
+
+        // --- AUTH LOGIC (LOGIN, REGISTER, FORGOT, CHANGE PWD) ---
+        
+        window.switchAuthView = (view) => {
+            const lf = document.getElementById('loginForm');
+            const rf = document.getElementById('registerForm');
+            const ff = document.getElementById('forgotForm');
+            const subtitle = document.getElementById('authSubtitle');
+
+            lf.classList.add('hidden');
+            rf.classList.add('hidden');
+            ff.classList.add('hidden');
+
+            if (view === 'login') {
+                lf.classList.remove('hidden');
+                subtitle.innerText = "Admin & User Login";
+            } else if (view === 'register') {
+                rf.classList.remove('hidden');
+                subtitle.innerText = "Daftar Akun Baru";
+            } else if (view === 'forgot') {
+                ff.classList.remove('hidden');
+                subtitle.innerText = "Pemulihan Akun";
+            }
+        };
+
+        async function validateLicense(key) {
+            console.log("Validating license via Apps Script...");
+            return new Promise(resolve => setTimeout(() => resolve(true), 800)); 
+        }
+
+        // Handle Login Submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('loginEmail').value;
+            const rawPass = document.getElementById('loginPassword').value;
+
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Validating...';
+            
+            // Hash the password input using SHA-256 before validating
+            const hashedPass = await window.hashPassword(rawPass);
+            
+            // Expected Hash for "admin123" -> 240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
+            const expectedAdminHash = await window.hashPassword('admin123');
+
+            if(email === 'admin@imersfireship.com' && hashedPass === expectedAdminHash) {
+                const isValid = await validateLicense("DUMMY-KEY-123");
+                if(!isValid) {
+                    showToast("License Invalid or Expired!", "error");
+                    btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
+                    return;
+                }
+
+                btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Connecting...';
+                
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch(error) {
+                    showToast("System Error: " + error.message, "error");
+                    btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
+                }
+            } else {
+                showToast("Invalid credentials. Try default admin.", "error");
+                btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
+            }
+        });
+
+        // Handle Register Submission
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('regBtn');
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const wa = document.getElementById('regWa').value;
+            const rawPass = document.getElementById('regPassword').value;
+
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memproses...';
+            
+            try {
+                const hashedPass = await window.hashPassword(rawPass);
+                
+                // MOCK API CALL (Kirim payload ke Endpoint 'register' di Apps Script nantinya)
+                console.log("Registering User:", { name, email, wa, password: hashedPass, role: 'user' });
+                
+                setTimeout(() => {
+                    showToast("Registrasi berhasil! Silakan periksa WA/Email Anda.", "success");
+                    document.getElementById('registerForm').reset();
+                    switchAuthView('login');
+                    btn.innerHTML = '<span>Daftar Sekarang</span> <i class="ph ph-user-plus"></i>';
+                }, 1000);
+            } catch(err) {
+                showToast("Error saat memproses registrasi.", "error");
+                btn.innerHTML = '<span>Daftar Sekarang</span> <i class="ph ph-user-plus"></i>';
+            }
+        });
+
+        // Handle Forgot Password Submission
+        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('forgotBtn');
+            const email = document.getElementById('forgotEmail').value;
+
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memproses...';
+
+            try {
+                // MOCK API CALL (Kirim payload ke Endpoint 'forgotPassword' di Apps Script nantinya)
+                console.log("Request Reset Password for:", email);
+
+                setTimeout(() => {
+                    showToast("Instruksi reset password telah dikirim ke Email/WA Anda.", "success");
+                    document.getElementById('forgotForm').reset();
+                    switchAuthView('login');
+                    btn.innerHTML = '<span>Kirim Reset Link</span> <i class="ph ph-paper-plane-tilt"></i>';
+                }, 1000);
+            } catch(err) {
+                showToast("Error saat mengirim instruksi reset.", "error");
+                btn.innerHTML = '<span>Kirim Reset Link</span> <i class="ph ph-paper-plane-tilt"></i>';
+            }
+        });
+
+        // Handle Change Password inside Dashboard
+        window.handleChangePassword = async () => {
+            const oldPass = document.getElementById('cpOldPass').value;
+            const newPass = document.getElementById('cpNewPass').value;
+            const confirmPass = document.getElementById('cpConfirmPass').value;
+            const btn = document.getElementById('cpBtn');
+
+            if (newPass !== confirmPass) {
+                showToast("Konfirmasi password baru tidak cocok!", "error");
+                return;
+            }
+
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Memproses...';
+
+            try {
+                const oldHash = await window.hashPassword(oldPass);
+                const newHash = await window.hashPassword(newPass);
+
+                // MOCK API CALL (Kirim payload ke Endpoint 'changePassword' di Apps Script)
+                console.log("Request Change Password:", { oldPasswordHash: oldHash, newPasswordHash: newHash });
+
+                setTimeout(() => {
+                    showToast("Password berhasil diperbarui!", "success");
+                    document.getElementById('changePasswordForm').reset();
+                    btn.innerHTML = '<i class="ph ph-floppy-disk text-xl"></i> Simpan Password';
+                }, 1000);
+
+            } catch (err) {
+                showToast("Gagal memproses password.", "error");
+                btn.innerHTML = '<i class="ph ph-floppy-disk text-xl"></i> Simpan Password';
+            }
+        };
+
+        // Listen for Auth State
+        onAuthStateChanged(auth, async (user) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('checkout')) return;
+
+            if (user) {
+                window.appState.user = user;
+                document.getElementById('view-auth').classList.add('hidden');
+                document.getElementById('view-checkout').classList.add('hidden');
+                document.getElementById('view-app').classList.remove('hidden');
+                
+                showToast("Login Successful! Welcome Admin.");
+                
+                await checkAndSeedData();
+                setupDataListeners();
+                
+                window.navigate('dashboard');
+                initChart();
+            } else {
+                window.appState.user = null;
+                document.getElementById('view-auth').classList.remove('hidden');
+                document.getElementById('view-app').classList.add('hidden');
+            }
+        });
+
+        window.logout = () => {
+            signOut(auth);
+        };
+
+        // --- DATA MANAGEMENT & SEEDING ---
+
+        async function checkAndSeedData() {
+            const productsRef = getPublicRef('products');
+            const snapshot = await getDocs(productsRef);
+            
+            if (snapshot.empty) {
+                console.log("Database empty. Seeding dummy products...");
+                showToast("Installing initial modules & dummy data...", "info");
+                
+                for (const prod of dummySeedData) {
+                    await addDoc(productsRef, prod);
+                }
+                await addDoc(getPublicRef('coupons'), dummyCouponData);
+
+                // Seed Templates
+                const templatesRef = getPublicRef('templates');
+                for (const t of dummyTemplatesData) {
+                    await addDoc(templatesRef, t);
+                }
+
+                showToast("Setup complete. Platform ready!");
+            }
+        }
+
+        let unsubscribeProducts = null;
+        let unsubscribeOrders = null;
+        let unsubscribeCoupons = null;
+        let unsubscribeTemplates = null;
+        
+        function setupDataListeners() {
+            if(unsubscribeProducts) unsubscribeProducts();
+            if(unsubscribeOrders) unsubscribeOrders();
+            if(unsubscribeCoupons) unsubscribeCoupons();
+            if(unsubscribeTemplates) unsubscribeTemplates();
+            
+            // Listen to Products
+            const productsRef = getPublicRef('products');
+            unsubscribeProducts = onSnapshot(productsRef, (snapshot) => {
+                window.appState.products = [];
+                snapshot.forEach(doc => {
+                    window.appState.products.push({ id: doc.id, ...doc.data() });
+                });
+                window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
+                document.getElementById('statProducts').innerText = window.appState.products.length;
+                renderProductsTable();
+                renderMarketplaceList();
+            });
+
+            // Listen to Orders
+            const ordersRef = getPublicRef('orders');
+            unsubscribeOrders = onSnapshot(ordersRef, (snapshot) => {
+                window.appState.orders = [];
+                snapshot.forEach(doc => {
+                    window.appState.orders.push({ id: doc.id, ...doc.data() });
+                });
+                window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
+                renderOrdersTable();
+            });
+            
+            // Listen to Coupons
+            const couponsRef = getPublicRef('coupons');
+            unsubscribeCoupons = onSnapshot(couponsRef, (snapshot) => {
+                window.appState.coupons = [];
+                snapshot.forEach(doc => {
+                    window.appState.coupons.push({ id: doc.id, ...doc.data() });
+                });
+                window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
+                renderCouponsTable();
+            });
+
+            // Listen to Templates
+            const templatesRef = getPublicRef('templates');
+            unsubscribeTemplates = onSnapshot(templatesRef, (snapshot) => {
+                window.appState.templates = [];
+                snapshot.forEach(doc => {
+                    window.appState.templates.push({ id: doc.id, ...doc.data() });
+                });
+                window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
+                renderTemplatesTable();
+            });
+
+            // Render settings state
+            renderSettingsBankList();
+            
+            // Render Notification settings
+            if (window.appState.settings.notifications) {
+                document.getElementById('notifWaProvider').value = window.appState.settings.notifications.waProvider || 'fonnte';
+                document.getElementById('notifWaToken').value = window.appState.settings.notifications.waToken || '';
+                document.getElementById('notifAdminWa').value = window.appState.settings.notifications.adminWa || '';
+                document.getElementById('notifEmailProvider').value = window.appState.settings.notifications.emailProvider || 'google';
+                document.getElementById('notifEmailToken').value = window.appState.settings.notifications.emailToken || '';
+            }
+        }
+
+        // --- NAVIGATION & UI LOGIC ---
+
+        window.navigate = (targetId) => {
+            // Update Active Nav Link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if(link.dataset.target === targetId) {
+                    link.classList.add('bg-white/40', 'dark:bg-slate-800/40', 'active');
+                    link.classList.remove('bg-transparent');
+                } else {
+                    link.classList.remove('bg-white/40', 'dark:bg-slate-800/40', 'active');
+                    link.classList.add('bg-transparent');
+                }
+            });
+
+            // Update Header Title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'products': 'Product Management',
+                'marketplace': 'Digital Marketplace',
+                'license': 'License Management',
+                'orders': 'Order Management',
+                'coupons': 'Kupon & Diskon',
+                'users': 'Users Directory',
+                'affiliate': 'Affiliate Center',
+                'templates': 'Notification Templates',
+                'broadcast': 'Marketing Broadcast',
+                'settings': 'Admin Settings',
+                'profile': 'My Profile' // <-- Added Title for Profile
+            };
+            document.getElementById('pageTitle').innerText = titles[targetId] || 'Panel';
+
+            // Switch Views
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + targetId).classList.remove('hidden');
+
+            // Close Mobile Menu if open
+            if(window.innerWidth < 768 && window.appState.isSidebarOpen) {
+                toggleMobileMenu();
+            }
+        };
+
+        // Mobile Menu Toggle
+        const sidebar = document.getElementById('sidebar');
+        window.toggleMobileMenu = () => {
+            window.appState.isSidebarOpen = !window.appState.isSidebarOpen;
+            if(window.appState.isSidebarOpen) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+        };
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        // --- COPY LICENSE LOGIC ---
+        window.copyLicenseCode = () => {
+            const code = document.getElementById('userLicenseCode').innerText;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(code).then(() => {
+                    showToast("Kode Lisensi berhasil disalin!");
+                }).catch(err => {
+                    console.error("Gagal menyalin: ", err);
+                });
+            } else {
+                // Fallback kalau clipboard API diblokir
+                const textArea = document.createElement("textarea");
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                textArea.remove();
+                showToast("Kode Lisensi berhasil disalin!");
+            }
+        };
+
+        // --- NOTIFICATION TEMPLATES LOGIC ---
+
+        window.renderTemplatesTable = () => {
+            const tbody = document.getElementById('templatesTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if(window.appState.templates.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-slate-500 font-bold">Data template kosong.</td></tr>`;
+                return;
+            }
+
+            window.appState.templates.forEach(t => {
+                const isActiveEmail = t.isActiveEmail === true || t.isActiveEmail === 'true';
+                const isActiveWA = t.isActiveWA === true || t.isActiveWA === 'true';
+
+                const badgeEmail = isActiveEmail 
+                    ? `<span class="bg-green-500/20 text-green-700 dark:text-green-400 px-3 py-1 rounded-lg text-xs font-black uppercase inline-flex items-center gap-1"><i class="ph ph-check-circle"></i> On</span>`
+                    : `<span class="bg-slate-500/20 text-slate-700 dark:text-slate-400 px-3 py-1 rounded-lg text-xs font-black uppercase inline-flex items-center gap-1"><i class="ph ph-minus-circle"></i> Off</span>`;
+                
+                const badgeWA = isActiveWA 
+                    ? `<span class="bg-green-500/20 text-green-700 dark:text-green-400 px-3 py-1 rounded-lg text-xs font-black uppercase inline-flex items-center gap-1"><i class="ph ph-check-circle"></i> On</span>`
+                    : `<span class="bg-slate-500/20 text-slate-700 dark:text-slate-400 px-3 py-1 rounded-lg text-xs font-black uppercase inline-flex items-center gap-1"><i class="ph ph-minus-circle"></i> Off</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="px-6 py-4">
+                            <p class="font-black text-slate-800 dark:text-white text-sm mb-1">${t.title}</p>
+                            <p class="font-mono text-xs text-brand font-bold uppercase tracking-wider">${t.type}</p>
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium text-slate-600 dark:text-slate-400 truncate max-w-[200px]">${t.subject}</td>
+                        <td class="px-6 py-4 text-center">${badgeEmail}</td>
+                        <td class="px-6 py-4 text-center">${badgeWA}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="editTemplate('${t.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        };
+
+        const tModal = document.getElementById('templateModal');
+        
+        window.editTemplate = (id) => {
+            const template = window.appState.templates.find(t => t.id === id);
+            if(!template) return;
+            
+            document.getElementById('tmplId').value = template.id;
+            document.getElementById('tmplType').value = template.type;
+            document.getElementById('tmplTitle').value = template.title;
+            document.getElementById('tmplSubject').value = template.subject || '';
+            document.getElementById('tmplEmailBody').value = template.messageEmail || '';
+            document.getElementById('tmplWABody').value = template.messageWA || '';
+            
+            document.getElementById('tmplActiveEmail').checked = (template.isActiveEmail === true || template.isActiveEmail === 'true');
+            document.getElementById('tmplActiveWA').checked = (template.isActiveWA === true || template.isActiveWA === 'true');
+            
+            tModal.classList.remove('hidden');
+        };
+
+        window.closeTemplateModal = () => {
+            tModal.classList.add('hidden');
+        };
+
+        window.saveTemplate = async () => {
+            const id = document.getElementById('tmplId').value;
+            const title = document.getElementById('tmplTitle').value;
+            const subject = document.getElementById('tmplSubject').value;
+            const emailBody = document.getElementById('tmplEmailBody').value;
+            const waBody = document.getElementById('tmplWABody').value;
+            const activeEmail = document.getElementById('tmplActiveEmail').checked;
+            const activeWA = document.getElementById('tmplActiveWA').checked;
+
+            if(!title) {
+                showToast("Judul Template wajib diisi", "error");
+                return;
+            }
+
+            try {
+                // Because we are mocking backend logic for templates
+                await updateDoc(doc(getPublicRef('templates'), id), {
+                    title: title,
+                    subject: subject,
+                    messageEmail: emailBody,
+                    messageWA: waBody,
+                    isActiveEmail: activeEmail,
+                    isActiveWA: activeWA
+                });
+                showToast("Template Notifikasi diperbarui!");
+                closeTemplateModal();
+            } catch (e) {
+                showToast("Error: " + e.message, "error");
+            }
+        };
+
+        // --- PRODUCT CRUD LOGIC ---
+        
+        window.formatRp = (num) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
+        };
+
+        window.renderProductsTable = () => {
+            const tbody = document.getElementById('productsTableBody');
+            if(!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            if(window.appState.products.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-10 text-center text-slate-500 font-bold">No products found. Add one above.</td></tr>`;
+                return;
+            }
+
+            window.appState.products.forEach(p => {
+                const typeLabel = p.type === 'lms' 
+                    ? `<span class="bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-lg text-xs font-black uppercase"><i class="ph ph-video"></i> LMS Course</span>`
+                    : `<span class="bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-lg text-xs font-black uppercase"><i class="ph ph-download-simple"></i> Download</span>`;
+                
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-6 py-4">
+                        <p class="font-bold text-slate-800 dark:text-white text-base">${p.title}</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 w-48 truncate font-medium mt-1" title="${p.description}">${p.description || ''}</p>
+                    </td>
+                    <td class="px-6 py-4">${typeLabel}</td>
+                    <td class="px-6 py-4 font-black text-brand dark:text-brandHover">${formatRp(p.price)}</td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                            <button onclick="editProduct('${p.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
+                            <button onclick="duplicateProduct('${p.id}')" class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20 rounded-xl transition-colors" title="Duplicate"><i class="ph ph-copy text-xl"></i></button>
+                            <button onclick="deleteProduct('${p.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        };
+
+        const modal = document.getElementById('productModal');
+        window.openProductModal = () => {
+            document.getElementById('productForm').reset();
+            document.getElementById('prodId').value = '';
+            document.getElementById('productModalTitle').innerText = 'Add New Product';
+            document.getElementById('checkoutLinkContainer').classList.add('hidden');
+            
+            document.getElementById('downloadsContainer').innerHTML = '';
+            document.getElementById('lessonsContainer').innerHTML = '';
+            window.addDownloadField(); 
+            window.addLessonField();
+            
+            toggleProductFields();
+            modal.classList.remove('hidden');
+        };
+        
+        window.closeProductModal = () => {
+            modal.classList.add('hidden');
+        };
+
+        window.toggleProductFields = () => {
+            const type = document.getElementById('prodType').value;
+            if(type === 'lms') {
+                document.getElementById('fieldLMS').classList.remove('hidden');
+                document.getElementById('fieldDownload').classList.add('hidden');
+            } else {
+                document.getElementById('fieldLMS').classList.add('hidden');
+                document.getElementById('fieldDownload').classList.remove('hidden');
+            }
+        };
+
+        window.addDownloadField = (title = '', url = '') => {
+            const container = document.getElementById('downloadsContainer');
+            const div = document.createElement('div');
+            div.className = "flex gap-3 items-center dl-item bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-white/40 dark:border-slate-700/50";
+            div.innerHTML = `
+                <div class="flex-1 space-y-3">
+                    <input type="text" placeholder="Nama Tombol (mis: Download Ebook)" value="${title}" class="dl-title w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-800 rounded-lg outline-none focus:border-brand font-bold dark:text-white">
+                    <input type="url" placeholder="URL Link (mis: https://drive.google.com/...)" value="${url}" class="dl-url w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-800 rounded-lg outline-none focus:border-brand dark:text-white">
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:bg-red-500/20 p-3 rounded-xl transition-colors"><i class="ph ph-trash text-2xl"></i></button>
+            `;
+            container.appendChild(div);
+        };
+
+        window.addLessonField = (title = '', url = '') => {
+            const container = document.getElementById('lessonsContainer');
+            const div = document.createElement('div');
+            div.className = "flex gap-3 items-center lesson-item bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-white/40 dark:border-slate-700/50";
+            div.innerHTML = `
+                <div class="flex-1 space-y-3">
+                    <input type="text" placeholder="Judul Materi (mis: Bab 1 Pendahuluan)" value="${title}" class="lesson-title w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-800 rounded-lg outline-none focus:border-brand font-bold dark:text-white">
+                    <input type="url" placeholder="YouTube URL (mis: https://www.youtube.com/watch?v=...)" value="${url}" class="lesson-url w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-800 rounded-lg outline-none focus:border-brand dark:text-white">
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:bg-red-500/20 p-3 rounded-xl transition-colors"><i class="ph ph-trash text-2xl"></i></button>
+            `;
+            container.appendChild(div);
+        };
+
+        window.copyCheckoutLink = () => {
+            const input = document.getElementById('prodCheckoutUrl');
+            input.select();
+            document.execCommand('copy');
+            showToast("Checkout Link Berhasil Disalin!");
+        };
+
+        window.saveProduct = async () => {
+            if(!window.appState.user) return;
+            
+            const id = document.getElementById('prodId').value;
+            const type = document.getElementById('prodType').value;
+            const title = document.getElementById('prodTitle').value;
+            const price = Number(document.getElementById('prodPrice').value);
+            const desc = document.getElementById('prodDesc').value;
+            const accessHtml = document.getElementById('prodAccess').value;
+            
+            if(!title || !price) {
+                showToast("Title and Price are required", "error");
+                return;
+            }
+
+            let data = { type, title, price, description: desc, accessHtml };
+
+            if (type === 'download') {
+                let files = [];
+                document.querySelectorAll('.dl-item').forEach(el => {
+                    const lTitle = el.querySelector('.dl-title').value;
+                    const lUrl = el.querySelector('.dl-url').value;
+                    if(lTitle || lUrl) files.push({ title: lTitle, url: lUrl });
+                });
+                data.files = files;
+            } else {
+                let lessons = [];
+                document.querySelectorAll('.lesson-item').forEach(el => {
+                    const lTitle = el.querySelector('.lesson-title').value;
+                    const lUrl = el.querySelector('.lesson-url').value;
+                    if(lTitle || lUrl) lessons.push({ title: lTitle, url: lUrl });
+                });
+                data.lessons = lessons;
+            }
+
+            try {
+                const productsRef = getPublicRef('products');
+                if (id) {
+                    await updateDoc(doc(productsRef, id), data);
+                    showToast("Product updated!");
+                } else {
+                    data.createdAt = Date.now();
+                    await addDoc(productsRef, data);
+                    showToast("Product created!");
+                }
+                closeProductModal();
+            } catch (error) {
+                showToast("Error saving product: " + error.message, "error");
+            }
+        };
+
+        window.editProduct = (id) => {
+            const product = window.appState.products.find(p => p.id === id);
+            if(!product) return;
+
+            document.getElementById('productModalTitle').innerText = 'Edit Product';
+            document.getElementById('prodId').value = product.id;
+            document.getElementById('prodTitle').value = product.title;
+            document.getElementById('prodPrice').value = product.price;
+            document.getElementById('prodType').value = product.type;
+            document.getElementById('prodDesc').value = product.description || '';
+            document.getElementById('prodAccess').value = product.accessHtml || '';
+            
+            document.getElementById('downloadsContainer').innerHTML = '';
+            document.getElementById('lessonsContainer').innerHTML = '';
+
+            if (product.type === 'download') {
+                if(product.files && product.files.length > 0) {
+                    product.files.forEach(f => window.addDownloadField(f.title, f.url));
+                } else {
+                    window.addDownloadField();
+                }
+            } else {
+                if(product.lessons && product.lessons.length > 0) {
+                    product.lessons.forEach(l => window.addLessonField(l.title, l.url));
+                } else {
+                    window.addLessonField();
+                }
+            }
+            
+            toggleProductFields();
+
+            const checkoutUrl = window.location.origin + window.location.pathname + "?checkout=" + product.id;
+            document.getElementById('prodCheckoutUrl').value = checkoutUrl;
+            document.getElementById('checkoutLinkContainer').classList.remove('hidden');
+
+            modal.classList.remove('hidden');
+        };
+
+        window.deleteProduct = async (id) => {
+            if(confirm("Are you sure you want to delete this product?")) {
+                try {
+                    await deleteDoc(doc(getPublicRef('products'), id));
+                    showToast("Product deleted");
+                } catch(err) {
+                    showToast("Error deleting: " + err.message, "error");
+                }
+            }
+        };
+
+        window.duplicateProduct = async (id) => {
+            const product = window.appState.products.find(p => p.id === id);
+            if(!product) return;
+
+            const newData = { ...product };
+            delete newData.id;
+            newData.title = newData.title + " (Copy)";
+            newData.createdAt = Date.now();
+
+            try {
+                await addDoc(getPublicRef('products'), newData);
+                showToast("Product duplicated successfully!");
+            } catch(err) {
+                showToast("Error duplicating: " + err.message, "error");
+            }
+        };
+
+        // --- COUPONS CRUD LOGIC ---
+
+        window.renderCouponsTable = () => {
+            const tbody = document.getElementById('couponsTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if(window.appState.coupons.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-slate-500 font-bold">Belum ada kupon. Buat kupon pertama Anda.</td></tr>`;
+                return;
+            }
+
+            window.appState.coupons.forEach(c => {
+                const typeLabel = c.type === 'percent' ? 'Persentase (%)' : 'Nominal (Rp)';
+                const valueLabel = c.type === 'percent' ? `${c.value}%` : formatRp(c.value);
+                
+                let applicableLabel = '<span class="bg-blue-500/20 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-lg text-xs font-black uppercase">Semua Produk</span>';
+                if (c.applicableProductId && c.applicableProductId !== 'all') {
+                    const prod = window.appState.products.find(p => p.id === c.applicableProductId);
+                    applicableLabel = prod 
+                        ? `<span class="bg-slate-500/20 text-slate-700 dark:text-slate-300 px-3 py-1 rounded-lg text-xs font-bold border border-white/20 dark:border-slate-700" title="${prod.title}">${prod.title.substring(0, 20)}${prod.title.length > 20 ? '...' : ''}</span>` 
+                        : '<span class="text-red-500 text-xs font-black uppercase">Produk Dihapus</span>';
+                }
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="px-6 py-4 font-mono font-black text-brand dark:text-brandHover text-base">${c.code}</td>
+                        <td class="px-6 py-4 font-medium">${typeLabel}</td>
+                        <td class="px-6 py-4 font-black">${valueLabel}</td>
+                        <td class="px-6 py-4">${applicableLabel}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="editCoupon('${c.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
+                            <button onclick="deleteCoupon('${c.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        };
+
+        window.populateCouponProductSelect = (selectedId = 'all') => {
+            const select = document.getElementById('couponProductId');
+            select.innerHTML = '<option value="all">Semua Produk</option>';
+            window.appState.products.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.id;
+                option.innerText = p.title;
+                if (p.id === selectedId) option.selected = true;
+                select.appendChild(option);
+            });
+        };
+
+        const cModal = document.getElementById('couponModal');
+        window.openCouponModal = () => {
+            document.getElementById('couponForm').reset();
+            document.getElementById('couponId').value = '';
+            document.getElementById('couponModalTitle').innerText = 'Tambah Kupon';
+            window.populateCouponProductSelect('all');
+            cModal.classList.remove('hidden');
+        };
+
+        window.closeCouponModal = () => {
+            cModal.classList.add('hidden');
+        };
+
+        window.saveCoupon = async () => {
+            const id = document.getElementById('couponId').value;
+            const code = document.getElementById('couponCode').value.toUpperCase().trim();
+            const type = document.getElementById('couponType').value;
+            const value = Number(document.getElementById('couponValue').value);
+            const applicableProductId = document.getElementById('couponProductId').value;
+
+            if(!code || !value) {
+                showToast("Kode dan Nilai harus diisi", "error");
+                return;
+            }
+
+            let data = { code, type, value, applicableProductId };
+
+            try {
+                if(id) {
+                    await updateDoc(doc(getPublicRef('coupons'), id), data);
+                    showToast("Kupon diperbarui!");
+                } else {
+                    data.createdAt = Date.now();
+                    await addDoc(getPublicRef('coupons'), data);
+                    showToast("Kupon berhasil dibuat!");
+                }
+                closeCouponModal();
+            } catch (e) {
+                showToast("Error: " + e.message, "error");
+            }
+        };
+
+        window.editCoupon = (id) => {
+            const coupon = window.appState.coupons.find(c => c.id === id);
+            if(!coupon) return;
+            document.getElementById('couponModalTitle').innerText = 'Edit Kupon';
+            document.getElementById('couponId').value = coupon.id;
+            document.getElementById('couponCode').value = coupon.code;
+            document.getElementById('couponType').value = coupon.type;
+            document.getElementById('couponValue').value = coupon.value;
+            window.populateCouponProductSelect(coupon.applicableProductId || 'all');
+            cModal.classList.remove('hidden');
+        };
+
+        window.deleteCoupon = async (id) => {
+            if(confirm("Hapus kupon ini?")) {
+                await deleteDoc(doc(getPublicRef('coupons'), id));
+                showToast("Kupon dihapus.");
+            }
+        };
+
+        // --- MARKETPLACE LOGIC ---
+        
+        function getYTVideoId(url) {
+            if(!url) return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        window.renderMarketplaceList = () => {
+            const container = document.getElementById('marketplaceList');
+            if(!container) return;
+            
+            container.innerHTML = '';
+            const products = window.appState.products;
+
+            if(products.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-slate-500 font-bold text-center py-10">Belum ada produk. Tambahkan di menu Products.</p>`;
+                return;
+            }
+
+            products.forEach(course => {
+                const isLms = course.type === 'lms';
+                const icon = isLms ? 'ph-video' : 'ph-download-simple';
+                const typeLabel = isLms ? 'COURSE' : 'DOWNLOAD';
+                const colorFrom = isLms ? 'from-indigo-500' : 'from-emerald-500';
+                const colorTo = isLms ? 'to-purple-600' : 'to-teal-600';
+                
+                container.innerHTML += `
+                    <div class="glass rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer group flex flex-col border border-white/40 dark:border-slate-700/50 hover:-translate-y-1" onclick="openProductAccess('${course.id}')">
+                        <div class="h-40 bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center relative overflow-hidden shrink-0">
+                            <div class="absolute inset-0 bg-black/10"></div>
+                            <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:bg-white/30 transition-all"></div>
+                            <i class="ph ${icon} text-6xl text-white/50 group-hover:text-white transition-colors transform group-hover:scale-110 duration-500 z-10 drop-shadow-md"></i>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm">
+                            <span class="text-[10px] font-black ${isLms ? 'text-indigo-600 dark:text-indigo-400' : 'text-emerald-600 dark:text-emerald-400'} uppercase tracking-widest mb-2 block bg-white/50 dark:bg-slate-800/50 w-max px-2 py-1 rounded-md shadow-sm">${typeLabel}</span>
+                            <h3 class="font-black text-slate-800 dark:text-white mb-2 text-lg leading-tight group-hover:text-brand transition-colors">${course.title}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 line-clamp-2 flex-1 font-medium">${course.description || 'No description'}</p>
+                            <button class="w-full py-3 bg-white/60 hover:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-700 text-slate-800 dark:text-white text-sm font-bold rounded-xl transition-all mt-auto border border-white/50 dark:border-slate-600 shadow-sm flex justify-center items-center gap-2">
+                                Akses Produk <i class="ph ph-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        window.openProductAccess = (id) => {
+            const product = window.appState.products.find(p => p.id === id);
+            if(!product) return;
+
+            document.getElementById('marketplaceList').classList.add('hidden');
+            const viewer = document.getElementById('productViewer');
+            viewer.classList.remove('hidden');
+            
+            document.getElementById('pvTitle').innerText = product.title;
+
+            const structuredArea = document.getElementById('pvStructuredArea');
+            structuredArea.innerHTML = '';
+
+            if (product.type === 'download' && product.files && product.files.length > 0) {
+                let html = '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">';
+                product.files.forEach(f => {
+                    html += `
+                        <a href="${f.url}" target="_blank" class="flex items-center gap-4 bg-gradient-to-r from-emerald-500/10 to-teal-600/10 hover:from-emerald-500/20 hover:to-teal-600/20 text-emerald-700 dark:text-emerald-400 p-5 rounded-2xl border border-emerald-500/30 transition-all font-bold shadow-md hover:shadow-lg group">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                                <i class="ph ph-download-simple text-2xl"></i>
+                            </div>
+                            <span class="flex-1 text-sm">${f.title || 'Download File'}</span>
+                        </a>`;
+                });
+                html += '</div>';
+                structuredArea.innerHTML = html;
+            } 
+            else if (product.type === 'lms' && product.lessons && product.lessons.length > 0) {
+                structuredArea.innerHTML = `
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <div class="flex-1 bg-black rounded-3xl overflow-hidden aspect-video relative shadow-2xl border border-white/10">
+                            <iframe id="pvYtPlayer" class="w-full h-full absolute inset-0" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="w-full lg:w-80 shrink-0 bg-white/40 dark:bg-slate-900/40 border border-white/50 dark:border-slate-700/50 rounded-3xl flex flex-col max-h-[500px] shadow-xl backdrop-blur-md overflow-hidden">
+                            <div class="p-5 border-b border-white/30 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 font-black text-slate-800 dark:text-white uppercase tracking-wider text-sm flex items-center gap-2">
+                                <i class="ph ph-list-dashes text-brand"></i> Daftar Modul
+                            </div>
+                            <div class="overflow-y-auto flex-1 p-3 space-y-2" id="pvLessonList"></div>
+                        </div>
+                    </div>
+                `;
+                
+                const lessonList = document.getElementById('pvLessonList');
+                product.lessons.forEach((lesson, idx) => {
+                    const div = document.createElement('div');
+                    const isActive = idx === 0;
+                    div.className = `p-4 rounded-2xl cursor-pointer transition-all border ${isActive ? 'bg-gradient-to-r from-brand to-purple-600 border-transparent text-white shadow-lg shadow-brand/30' : 'hover:bg-white/50 dark:hover:bg-slate-800/50 border-white/40 dark:border-slate-700/50 text-slate-700 dark:text-slate-300'}`;
+                    div.innerHTML = `<div class="font-bold text-sm flex items-center gap-3"><i class="ph ${isActive ? 'ph-play-circle text-2xl' : 'ph-video text-xl'} shrink-0"></i> <span class="leading-tight">${idx + 1}. ${lesson.title}</span></div>`;
+                    
+                    div.onclick = () => {
+                        Array.from(lessonList.children).forEach(c => {
+                            c.className = 'p-4 rounded-2xl cursor-pointer transition-all border hover:bg-white/50 dark:hover:bg-slate-800/50 border-white/40 dark:border-slate-700/50 text-slate-700 dark:text-slate-300';
+                            c.querySelector('i').className = 'ph ph-video text-xl shrink-0';
+                        });
+                        
+                        div.className = 'p-4 rounded-2xl cursor-pointer transition-all border bg-gradient-to-r from-brand to-purple-600 border-transparent text-white shadow-lg shadow-brand/30';
+                        div.querySelector('i').className = 'ph ph-play-circle text-2xl shrink-0';
+                        
+                        const videoId = getYTVideoId(lesson.url);
+                        document.getElementById('pvYtPlayer').src = videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0` : '';
+                    };
+                    lessonList.appendChild(div);
+                });
+
+                const firstId = getYTVideoId(product.lessons[0].url);
+                if(firstId) document.getElementById('pvYtPlayer').src = `https://www.youtube.com/embed/${firstId}?autoplay=1&rel=0`;
+            } else {
+                structuredArea.innerHTML = `<div class="text-slate-500 font-bold p-8 bg-white/40 dark:bg-slate-800/40 rounded-3xl text-center border border-white/50 dark:border-slate-700/50"><i class="ph ph-empty text-4xl mb-2 opacity-50 block"></i>Belum ada file atau materi yang diupload.</div>`;
+            }
+
+            const htmlArea = document.getElementById('pvHtmlArea');
+            if (product.accessHtml && product.accessHtml.trim() !== '') {
+                htmlArea.innerHTML = `<h4 class="font-black text-slate-800 dark:text-white mb-3 flex items-center gap-2"><i class="ph ph-info text-amber-500"></i> Info Tambahan</h4>` + product.accessHtml;
+                htmlArea.classList.remove('hidden');
+            } else {
+                htmlArea.classList.add('hidden');
+            }
+        };
+
+        window.closeProductViewer = () => {
+            const player = document.getElementById('pvYtPlayer');
+            if(player) player.src = ''; 
+            document.getElementById('productViewer').classList.add('hidden');
+            document.getElementById('marketplaceList').classList.remove('hidden');
+        };
+
+        // --- CHECKOUT LOGIC ---
+        
+        window.loadCheckoutProduct = async (productId) => {
+            try {
+                if(!auth.currentUser) await signInAnonymously(auth);
+                const snapshot = await getDocs(getPublicRef('products'));
+                let found = null;
+                snapshot.forEach(doc => { if(doc.id === productId) found = {id: doc.id, ...doc.data()}; });
+                
+                if(found) {
+                    window.appState.currentCheckoutProduct = found;
+                    document.getElementById('coProdTitle').innerText = found.title;
+                    document.getElementById('coProdPrice').innerText = formatRp(found.price);
+                    
+                    window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
+                    
+                    recalculateCheckout();
+                    renderCheckoutPaymentMethods();
+                } else {
+                    document.getElementById('view-checkout').innerHTML = "<h2 class='text-center mt-20 text-3xl font-black text-slate-800 dark:text-white'>Product Not Found</h2>";
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        };
+
+        window.recalculateCheckout = () => {
+            const product = window.appState.currentCheckoutProduct;
+            const coupon = window.appState.currentCheckoutCoupon;
+            const uniqueCode = window.appState.currentCheckoutUniqueCode;
+            
+            const fee = 113;
+            document.getElementById('coFee').innerText = `- Rp. ${fee}`;
+
+            let discount = 0;
+            if (coupon) {
+                if (coupon.type === 'percent') {
+                    discount = product.price * (coupon.value / 100);
+                } else {
+                    discount = coupon.value;
+                }
+                if(discount > product.price) discount = product.price;
+
+                document.getElementById('coDiscountRow').classList.remove('hidden');
+                document.getElementById('coDiscountCodeDisplay').innerText = coupon.code;
+                document.getElementById('coDiscountAmount').innerText = `- ${formatRp(discount)}`;
+            } else {
+                document.getElementById('coDiscountRow').classList.add('hidden');
+            }
+
+            const total = product.price - fee - discount + uniqueCode;
+            
+            const totalStr = total.toString();
+            const paddedTotal = totalStr.padStart(4, '0');
+            const last3 = paddedTotal.slice(-3);
+            const rest = paddedTotal.slice(0, -3);
+            const formattedRest = new Intl.NumberFormat('id-ID').format(Number(rest));
+            
+            const finalHtml = `Rp. ${formattedRest}.<span class="text-red-500 dark:text-red-400">${last3}</span>`;
+            document.getElementById('coTotal').innerHTML = finalHtml;
+            document.getElementById('coTotalPay').innerHTML = finalHtml;
+        };
+
+        window.applyVoucher = async () => {
+            const codeInput = document.getElementById('coVoucherInput').value.toUpperCase().trim();
+            const msgEl = document.getElementById('coVoucherMsg');
+            
+            if(!codeInput) return;
+            
+            const btn = document.getElementById('btnApplyVoucher');
+            btn.innerText = "...";
+
+            try {
+                const snapshot = await getDocs(getPublicRef('coupons'));
+                let found = null;
+                snapshot.forEach(doc => { 
+                    if(doc.data().code === codeInput) found = {id: doc.id, ...doc.data()}; 
+                });
+
+                if(found) {
+                    if (found.applicableProductId && found.applicableProductId !== 'all' && found.applicableProductId !== window.appState.currentCheckoutProduct.id) {
+                        window.appState.currentCheckoutCoupon = null;
+                        recalculateCheckout();
+                        msgEl.innerHTML = `<i class="ph ph-warning-circle"></i> Kupon tidak berlaku untuk produk ini.`;
+                        msgEl.className = "text-xs mt-3 bg-red-500/10 text-red-500 p-2 rounded-lg font-bold flex items-center gap-1";
+                    } else {
+                        window.appState.currentCheckoutCoupon = found;
+                        recalculateCheckout();
+                        msgEl.innerHTML = `<i class="ph ph-check-circle text-lg"></i> Kupon ${found.code} berhasil diterapkan!`;
+                        msgEl.className = "text-xs mt-3 bg-green-500/10 text-green-600 dark:text-green-400 p-2 rounded-lg font-bold flex items-center gap-1";
+                    }
+                } else {
+                    window.appState.currentCheckoutCoupon = null;
+                    recalculateCheckout();
+                    msgEl.innerHTML = `<i class="ph ph-warning-circle"></i> Kupon tidak ditemukan / tidak valid.`;
+                    msgEl.className = "text-xs mt-3 bg-red-500/10 text-red-500 p-2 rounded-lg font-bold flex items-center gap-1";
+                }
+            } catch(e) {
+                console.error(e);
+            }
+            btn.innerText = "PAKAI";
+        };
+
+        window.renderCheckoutPaymentMethods = () => {
+            const container = document.getElementById('coPaymentMethods');
+            container.innerHTML = '';
+            
+            window.appState.settings.banks.forEach((bank, index) => {
+                container.innerHTML += `
+                    <label class="flex items-center justify-between p-4 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-brand transition-all">
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="paymentMethod" value="Manual-${bank.name}" class="w-5 h-5 text-brand accent-brand" ${index===0?'checked':''}>
+                            <div class="font-bold text-slate-800 dark:text-white text-sm">Bank ${bank.name}</div>
+                        </div>
+                        <i class="ph ph-bank text-2xl text-slate-400"></i>
+                    </label>
+                `;
+            });
+            
+            if(window.appState.settings.gateways.duitku) {
+                container.innerHTML += `
+                <label class="flex items-center justify-between p-4 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-brand transition-all">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="paymentMethod" value="Duitku" class="w-5 h-5 text-brand accent-brand">
+                        <div class="font-bold text-slate-800 dark:text-white text-sm">Otomatis - Duitku</div>
+                    </div>
+                </label>`;
+            }
+        };
+
+        window.submitCheckout = async () => {
+            const name = document.getElementById('coName').value;
+            const email = document.getElementById('coEmail').value;
+            const rawPassword = document.getElementById('coPassword').value;
+            const wa = document.getElementById('coWA').value;
+            const methodEl = document.querySelector('input[name="paymentMethod"]:checked');
+            
+            if(!name || !email || !rawPassword || !wa) {
+                alert("Harap isi lengkap form Akun.");
+                return;
+            }
+            if(!methodEl) {
+                alert("Pilih metode pembayaran.");
+                return;
+            }
+
+            const btn = document.querySelector('button[onclick="submitCheckout()"]');
+            btn.innerText = "PROCESSING...";
+
+            const method = methodEl.value;
+            const product = window.appState.currentCheckoutProduct;
+            const coupon = window.appState.currentCheckoutCoupon;
+            const uniqueCode = window.appState.currentCheckoutUniqueCode;
+
+            // HASH THE PASSWORD SEBELUM DISIMPAN KE DB
+            const hashedPassword = await window.hashPassword(rawPassword);
+
+            let discount = 0;
+            if (coupon) {
+                discount = coupon.type === 'percent' ? product.price * (coupon.value / 100) : coupon.value;
+                if(discount > product.price) discount = product.price;
+            }
+            const finalTotal = product.price - 113 - discount + uniqueCode;
+            
+            const orderData = {
+                customerName: name,
+                customerEmail: email,
+                customerWA: wa,
+                productId: product.id,
+                productTitle: product.title,
+                basePrice: product.price,
+                discountApplied: discount,
+                couponCode: coupon ? coupon.code : null,
+                totalPay: finalTotal,
+                paymentMethod: method,
+                status: 'Pending',
+                createdAt: Date.now(),
+                userPasswordHash: hashedPassword // Disimpan ke order, nanti pas di-approve bisa otomatis bikin User di backend
+            };
+
+            try {
+                await addDoc(getPublicRef('orders'), orderData);
+
+                // MOCK NOTIFICATION TRIGGER FOR CHECKOUT
+                sendWhatsAppNotification(wa, `Halo *${name}* 👋\nTotal Tagihan: *${formatRp(finalTotal)}*`, true);
+                
+                // Layar Sukses
+                document.getElementById('view-checkout').innerHTML = `
+                    <div class="max-w-md mx-auto mt-20 glass p-10 rounded-3xl shadow-2xl text-center border border-white/40 dark:border-slate-700/50">
+                        <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30">
+                            <i class="ph ph-check text-5xl text-white font-black"></i>
+                        </div>
+                        <h2 class="text-3xl font-black text-slate-800 dark:text-white mb-2">Order Diterima!</h2>
+                        <p class="text-slate-600 dark:text-slate-400 mb-8 font-medium">Silakan lakukan transfer via <b>${method}</b> sejumlah <br><span class="text-red-500 text-3xl font-black mt-2 inline-block">${formatRp(finalTotal)}</span></p>
+                        <div class="bg-blue-500/10 border border-blue-500/20 p-5 rounded-2xl text-sm text-blue-800 dark:text-blue-300 text-left mb-8 font-medium leading-relaxed">
+                            Pastikan Anda menyimpan bukti transfer. Admin akan segera memverifikasi pesanan Anda. Akses produk akan terbuka otomatis di akun Anda setelah status menjadi <b>Paid</b>.
+                        </div>
+                        <a href="?" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl block transition-all shadow-lg shadow-brand/30">Selesai & Login</a>
+                    </div>
+                `;
+            } catch(e) {
+                alert("Terjadi kesalahan: " + e.message);
+                btn.innerText = "CREATE ORDER";
+            }
+        };
+
+        // --- ORDERS LOGIC (ADMIN) ---
+
+        window.renderOrdersTable = () => {
+            const tbody = document.getElementById('ordersTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if(window.appState.orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-10 text-center text-slate-500 font-bold">Belum ada orderan masuk.</td></tr>`;
+                return;
+            }
+
+            window.appState.orders.forEach(o => {
+                const isPaid = o.status === 'Paid';
+                const statusBadge = isPaid 
+                    ? `<span class="bg-green-500/20 text-green-700 dark:text-green-400 px-3 py-1 rounded-lg text-xs font-black uppercase">Paid</span>`
+                    : `<span class="bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 px-3 py-1 rounded-lg text-xs font-black uppercase">Pending</span>`;
+                
+                const actionBtn = isPaid 
+                    ? `<button class="text-xs text-slate-400 dark:text-slate-500 font-bold bg-white/30 dark:bg-slate-800/30 px-4 py-2 rounded-lg cursor-not-allowed border border-white/20 dark:border-slate-700/50" disabled>Activated</button>`
+                    : `<button onclick="approveOrder('${o.id}')" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md shadow-brand/30 transition-all flex items-center gap-1 justify-center"><i class="ph ph-check-circle text-base"></i> Approve</button>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="px-6 py-4 text-xs font-mono font-bold text-slate-500 dark:text-slate-400">#${o.id.substring(0,6)}</td>
+                        <td class="px-6 py-4">
+                            <p class="font-bold text-slate-800 dark:text-white text-base">${o.customerName}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${o.paymentMethod}</p>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">${o.productTitle}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <p class="font-black text-slate-800 dark:text-white text-base">${formatRp(o.totalPay || o.price)}</p>
+                            ${o.couponCode ? `<p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1 mt-1 border border-emerald-500/20"><i class="ph ph-ticket"></i> ${o.couponCode}</p>` : ''}
+                        </td>
+                        <td class="px-6 py-4">${statusBadge}</td>
+                        <td class="px-6 py-4 text-right flex justify-end">${actionBtn}</td>
+                    </tr>
+                `;
+            });
+        };
+
+        window.approveOrder = async (orderId) => {
+            const order = window.appState.orders.find(o => o.id === orderId);
+            if(!order) return;
+            
+            if(confirm(`Approve pesanan dari ${order.customerName}? Akses produk otomatis terbuka.`)) {
+                try {
+                    await updateDoc(doc(getPublicRef('orders'), orderId), { status: 'Paid' });
+                    showToast("Order Approved! Akses diberikan ke kustomer.");
+
+                    // MOCK NOTIFICATION TRIGGER FOR APPROVAL
+                    sendWhatsAppNotification(order.customerWA, `Hore! Pembayaran untuk pesanan *${order.productTitle}* telah berhasil dikonfirmasi 🎉`, false);
+
+                } catch(e) {
+                    showToast("Error approving: " + e.message, "error");
+                }
+            }
+        };
+
+        // --- SETTINGS / WHITE LABEL LOGIC ---
+        
+        window.renderSettingsBankList = () => {
+            const list = document.getElementById('bankList');
+            if(!list) return;
+            list.innerHTML = '';
+            
+            window.appState.settings.banks.forEach((b) => {
+                list.innerHTML += `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
+                        <input type="text" placeholder="Nama Bank (BCA)" value="${b.name}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
+                        <input type="text" placeholder="No Rekening" value="${b.no}" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
+                        <input type="text" placeholder="Atas Nama" value="${b.owner}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
+                        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('gwTripay').checked = window.appState.settings.gateways.tripay;
+            document.getElementById('gwDuitku').checked = window.appState.settings.gateways.duitku;
+            document.getElementById('gwSendit').checked = window.appState.settings.gateways.sendit;
+        };
+
+        window.addBankField = () => {
+            const list = document.getElementById('bankList');
+            list.innerHTML += `
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
+                    <input type="text" placeholder="Nama Bank" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
+                    <input type="text" placeholder="No Rekening" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
+                    <input type="text" placeholder="Atas Nama" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
+                    <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
+                </div>
+            `;
+        };
+
+        window.saveSettings = () => {
+            const name = document.getElementById('settingAppName').value;
+            const color = document.getElementById('settingColor').value;
+            const logoUrlInput = document.getElementById('settingLogoUrl').value;
+            const logoFileInput = document.getElementById('settingLogoFile').files[0];
+            
+            // Notification Gateway Value
+            const waProv = document.getElementById('notifWaProvider').value;
+            const waToken = document.getElementById('notifWaToken').value;
+            const adminWa = document.getElementById('notifAdminWa').value;
+            const emailProv = document.getElementById('notifEmailProvider').value;
+            const emailToken = document.getElementById('notifEmailToken').value;
+
+            document.documentElement.style.setProperty('--brand-color', color);
+            document.documentElement.style.setProperty('--brand-hover', color); 
+            
+            document.querySelectorAll('.app-name-display').forEach(el => {
+                el.innerText = name || 'iMersFireship';
+            });
+            
+            document.getElementById('settingColorText').value = color;
+
+            const bankItems = document.querySelectorAll('.bank-item');
+            const banks = [];
+            bankItems.forEach(el => {
+                const bname = el.querySelector('.b-name').value;
+                const bno = el.querySelector('.b-no').value;
+                const bowner = el.querySelector('.b-owner').value;
+                if(bname) banks.push({name: bname, no: bno, owner: bowner});
+            });
+
+            window.appState.settings.banks = banks;
+            window.appState.settings.gateways = {
+                tripay: document.getElementById('gwTripay').checked,
+                duitku: document.getElementById('gwDuitku').checked,
+                sendit: document.getElementById('gwSendit').checked
+            };
+            
+            // Save Notification setting
+            window.appState.settings.notifications = {
+                waProvider: waProv,
+                waToken: waToken,
+                adminWa: adminWa,
+                emailProvider: emailProv,
+                emailToken: emailToken
+            };
+
+            if (logoUrlInput) {
+                applyLogo(logoUrlInput);
+                showToast("Admin settings applied locally!");
+            } else if (logoFileInput) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    applyLogo(e.target.result);
+                    showToast("Admin settings applied locally!");
+                }
+                reader.readAsDataURL(logoFileInput);
+            } else {
+                applyLogo(null);
+                showToast("Admin settings applied locally!");
+            }
+        };
+
+        window.applyLogo = (src) => {
+            const appLogoSidebar = document.getElementById('appLogoSidebar');
+            const appIconSidebarBg = document.getElementById('appIconSidebarBg');
+            const appLogoLogin = document.getElementById('appLogoLogin');
+            const appIconLogin = document.getElementById('appIconLogin');
+
+            if (src) {
+                if(appLogoSidebar) { appLogoSidebar.src = src; appLogoSidebar.classList.remove('hidden'); }
+                if(appIconSidebarBg) appIconSidebarBg.classList.add('hidden');
+                
+                if(appLogoLogin) { appLogoLogin.src = src; appLogoLogin.classList.remove('hidden'); }
+                if(appIconLogin) appIconLogin.classList.add('hidden');
+            } else {
+                if(appLogoSidebar) appLogoSidebar.classList.add('hidden');
+                if(appIconSidebarBg) appIconSidebarBg.classList.remove('hidden');
+                
+                if(appLogoLogin) appLogoLogin.classList.add('hidden');
+                if(appIconLogin) appIconLogin.classList.remove('hidden');
+            }
+        };
+
+        document.getElementById('settingColor').addEventListener('input', (e) => {
+            document.getElementById('settingColorText').value = e.target.value;
+        });
+
+        // --- UTILS ---
+
+        window.showToast = (msg, type = 'success') => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            
+            const icon = document.getElementById('toastIcon');
+            if(type === 'error') {
+                icon.className = "ph ph-x-circle text-red-500 text-3xl drop-shadow-sm";
+                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-red-500 translate-y-0";
+            } else if (type === 'info') {
+                icon.className = "ph ph-info text-blue-500 text-3xl drop-shadow-sm";
+                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-blue-500 translate-y-0";
+            } else {
+                icon.className = "ph ph-check-circle text-green-500 text-3xl drop-shadow-sm";
+                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-green-500 translate-y-0";
+            }
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        };
+
+        function initChart() {
+            setTimeout(() => {
+                const ctx = document.getElementById('salesChart');
+                if(!ctx) return;
+                
+                const isDark = document.documentElement.classList.contains('dark');
+                const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)';
+                const textColor = isDark ? '#cbd5e1' : '#64748b';
+
+                new Chart(ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+                        datasets: [{
+                            label: 'Revenue',
+                            data: [1200000, 1900000, 3000000, 5000000, 4200000, 6800000, 12450000],
+                            borderColor: getComputedStyle(document.documentElement).getPropertyValue('--brand-color').trim() || '#4f46e5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#ffffff',
+                            pointBorderColor: '#4f46e5',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { 
+                                beginAtZero: true, 
+                                grid: { color: gridColor }, 
+                                ticks: { color: textColor }
+                            },
+                            x: { 
+                                grid: { display: false },
+                                ticks: { color: textColor }
+                            }
+                        }
+                    }
+                });
+            }, 100);
+        }
+
+    </script>
+</body>
+</html>
