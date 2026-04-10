@@ -114,7 +114,7 @@
                     <div class="flex items-center gap-4 mb-5">
                         <div class="w-14 h-14 bg-gradient-to-br from-brand to-purple-500 rounded-xl flex items-center justify-center text-white text-3xl shadow-lg shadow-brand/30"><i class="ph ph-package"></i></div>
                         <div class="flex-1">
-                            <h3 id="coProdTitle" class="font-bold text-slate-800 dark:text-white text-lg">Nama Produk</h3>
+                            <h3 id="coProdTitle" class="font-bold text-slate-800 dark:text-white text-lg">Memuat Produk...</h3>
                             <p id="coProdPrice" class="text-sm font-bold text-brand dark:text-brandHover">Rp 0</p>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                         <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Total Pay</p>
                         <p id="coTotalPay" class="text-xl font-black text-red-500 dark:text-red-400">Rp. 0</p>
                     </div>
-                    <button type="button" onclick="submitCheckout()" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-green-500/30 transition-all w-full sm:w-auto text-sm">
+                    <button type="button" onclick="submitCheckout()" id="btnSubmitCheckout" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-green-500/30 transition-all w-full sm:w-auto text-sm">
                         CREATE ORDER
                     </button>
                 </div>
@@ -210,11 +210,11 @@
             <form id="loginForm" class="space-y-5">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email</label>
-                    <input type="email" id="loginEmail" value="admin@imersfireship.com" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                    <input type="email" id="loginEmail" placeholder="admin@imersfireship.com" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Password</label>
-                    <input type="password" id="loginPassword" value="admin123" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                    <input type="password" id="loginPassword" placeholder="admin123" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
                 </div>
                 <div class="pt-2">
                     <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand/30 transition-all flex justify-center items-center gap-2 text-lg">
@@ -316,6 +316,7 @@
                     <span class="ml-auto bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-sm">New</span>
                 </a>
                 
+                <!-- NEW MENU: LICENSE (Now below Orders) -->
                 <a href="#" onclick="navigate('license')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="license">
                     <i class="ph ph-key text-xl text-amber-500 group-[.active]:text-white transition-colors"></i> License Code
                 </a>
@@ -383,10 +384,10 @@
                     <div class="flex items-center gap-3 pl-4 border-l border-slate-300/50 dark:border-slate-700/50">
                         <div class="text-right hidden sm:block">
                             <p class="text-sm font-bold text-slate-800 dark:text-white" id="userDisplayName">Admin User</p>
-                            <p class="text-[10px] font-bold text-brand tracking-widest uppercase">Administrator</p>
+                            <p class="text-[10px] font-bold text-brand tracking-widest uppercase" id="userRoleDisplay">Administrator</p>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-purple-500 flex items-center justify-center text-white font-black shadow-md shadow-brand/20">
-                            A
+                            <i class="ph ph-user"></i>
                         </div>
                     </div>
                 </div>
@@ -430,7 +431,7 @@
                             <div class="flex items-center justify-between relative z-10">
                                 <div>
                                     <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Total Users</p>
-                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">1,204</h3>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white" id="statUsers">0</h3>
                                 </div>
                                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-fuchsia-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-purple-500/30">
                                     <i class="ph ph-users"></i>
@@ -442,11 +443,11 @@
                             <div class="absolute -right-6 -top-6 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl group-hover:bg-orange-500/30 transition-all"></div>
                             <div class="flex items-center justify-between relative z-10">
                                 <div>
-                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Active Affiliates</p>
-                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">86</h3>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Active Orders</p>
+                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white" id="statOrders">0</h3>
                                 </div>
                                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-orange-500/30">
-                                    <i class="ph ph-share-network"></i>
+                                    <i class="ph ph-shopping-cart"></i>
                                 </div>
                             </div>
                         </div>
@@ -460,23 +461,9 @@
                         </div>
                         <div class="glass rounded-2xl p-6">
                             <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Recent Orders</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
-                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white shadow-sm"><i class="ph ph-file-pdf text-2xl"></i></div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-bold text-slate-800 dark:text-white truncate">50 Ide Konten Viral</p>
-                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Budi Santoso</p>
-                                    </div>
-                                    <span class="px-2.5 py-1 bg-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-black uppercase rounded-lg">Paid</span>
-                                </div>
-                                <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
-                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white shadow-sm"><i class="ph ph-video text-2xl"></i></div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-bold text-slate-800 dark:text-white truncate">Digital Product Starter</p>
-                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Siti Aminah</p>
-                                    </div>
-                                    <span class="px-2.5 py-1 bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase rounded-lg">Pending</span>
-                                </div>
+                            <div class="space-y-4" id="recentOrdersList">
+                                <!-- Injected from JS -->
+                                <p class="text-sm text-slate-500 text-center py-4">Memuat data...</p>
                             </div>
                         </div>
                     </div>
@@ -561,7 +548,7 @@
                                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Kode di bawah otomatis ter-generate sesuai akun Anda.</p>
                                 
                                 <div class="bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                    <code id="userLicenseCode" class="text-xl font-black text-brand dark:text-brandHover tracking-widest uppercase">DUMMY-KEY-123</code>
+                                    <code id="userLicenseCode" class="text-xl font-black text-brand dark:text-brandHover tracking-widest uppercase">Memuat...</code>
                                     <button onclick="copyLicenseCode()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-brand/30 flex items-center gap-2 shrink-0 text-sm">
                                         <i class="ph ph-copy text-lg"></i> Salin Kode
                                     </button>
@@ -1086,14 +1073,44 @@
 
 
     <!-- ==========================================
-         JAVASCRIPT & FIREBASE LOGIC
+         JAVASCRIPT & APPS SCRIPT API LOGIC
          ========================================== -->
-    
-    <!-- Firebase SDK v11 -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // ==========================================
+        // GANTI URL INI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT LO
+        // ==========================================
+        const SCRIPT_URL = "URL_WEB_APP_APPS_SCRIPT_LO_DISINI";
+        
+        // --- API CALL WRAPPER ---
+        async function apiCall(action, payload = null) {
+            if (SCRIPT_URL === "URL_WEB_APP_APPS_SCRIPT_LO_DISINI") {
+                showToast("Script URL belum di-setting di index.html!", "error");
+                throw new Error("URL Belum disetting");
+            }
+            
+            let url = `${SCRIPT_URL}?action=${action}`;
+            let options = {
+                method: 'GET',
+                mode: 'cors',
+            };
+            
+            if (payload) {
+                options.method = 'POST';
+                options.body = JSON.stringify(payload);
+                // Menggunakan text/plain agar tidak memicu preflight request (CORS) di Apps Script
+                options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+            }
+
+            try {
+                const response = await fetch(url, options);
+                const data = await response.json();
+                if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
+                return data;
+            } catch (err) {
+                console.error("API Call Error:", err);
+                throw err;
+            }
+        }
 
         // --- HASHING UTILITY (SHA-256) ---
         window.hashPassword = async (password) => {
@@ -1133,88 +1150,17 @@
             products: [],
             orders: [],
             coupons: [],
-            templates: [], // MOCK STATE UNTUK TEMPLATES
+            templates: [], 
+            usersData: [], // Cache user admin
             isSidebarOpen: false,
             settings: {
-                banks: [
-                    {name: 'BCA', no: '1234567890', owner: 'PT iMers Global'},
-                    {name: 'BANK JAGO', no: '0987654321', owner: 'PT iMers Global'}
-                ],
-                gateways: { tripay: false, duitku: false, sendit: false },
-                notifications: {
-                    waProvider: 'fonnte',
-                    waToken: '',
-                    adminWa: '',
-                    emailProvider: 'google',
-                    emailToken: ''
-                }
+                banks: [], gateways: { tripay: false, duitku: false, sendit: false },
+                notifications: { waProvider: 'fonnte', waToken: '', adminWa: '', emailProvider: 'google', emailToken: '' }
             },
             currentCheckoutProduct: null,
             currentCheckoutUniqueCode: 0,
             currentCheckoutCoupon: null
         };
-
-        // Firebase Initialization (Using Sandbox Safe Env Variables)
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "dummy", authDomain: "dummy", projectId: "dummy", storageBucket: "dummy", messagingSenderId: "dummy", appId: "dummy"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        // STRICT RULE 1: Sandbox Paths
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const getPublicRef = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
-
-        // Required Dummy Data for Seeding
-        const dummySeedData = [
-            {
-                type: 'download', title: 'Template Landing Page Premium', price: 99000,
-                description: 'Premium Landing Page Template for Digital Product Seller', 
-                files: [
-                    { title: 'Download Template Utama (ZIP)', url: '#' },
-                    { title: 'Download Font Pack (ZIP)', url: '#' }
-                ],
-                accessHtml: `<p><strong>Penting:</strong> Harap extract file ZIP di komputer Anda sebelum di-import ke Elementor.</p>`, 
-                createdAt: Date.now()
-            }
-        ];
-
-        const dummyCouponData = {
-            code: 'LAUNCH50',
-            type: 'percent',
-            value: 50,
-            applicableProductId: 'all',
-            createdAt: Date.now()
-        };
-
-        const dummyTemplatesData = [
-            {
-                type: "NEW_ORDER", title: "Order Baru (Pending)", subject: "Menunggu Pembayaran - {produk}",
-                messageEmail: "Halo {nama},\n\nTerima kasih telah memesan {produk}.\nTotal Tagihan: {total}\nMetode: {metode}\n\nSilakan selesaikan pembayaran Anda.",
-                messageWA: "Halo *{nama}* 👋\n\nTerima kasih telah memesan *{produk}*.\nTotal Tagihan: *{total}*\nMetode: {metode}\n\nSilakan selesaikan pembayaran Anda.",
-                isActiveEmail: true, isActiveWA: true, createdAt: Date.now()
-            },
-            {
-                type: "ORDER_ACTIVE", title: "Order Sukses (Akses Terbuka)", subject: "Akses Produk Dibuka - {produk}",
-                messageEmail: "Halo {nama},\n\nPembayaran Anda untuk {produk} telah berhasil diverifikasi.\nAkses produk Anda sudah aktif!\n\nSilakan login ke member area.",
-                messageWA: "Hore! 🎉\n\nPembayaran untuk pesanan *{produk}* berhasil.\nAkses sudah terbuka untuk *{nama}*.\n\nSilakan login ke member area.",
-                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 1
-            },
-            {
-                type: "NEW_USER", title: "Registrasi Member Baru", subject: "Selamat Datang di iMersFireship",
-                messageEmail: "Halo {nama},\n\nAkun Anda berhasil dibuat!\nEmail: {email}\nPassword: {password}\n\nJaga kerahasiaan akun Anda.",
-                messageWA: "Selamat Datang *{nama}*! 🚀\n\nAkun Anda telah aktif.\nGunakan email {email} untuk login ke member area.",
-                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 2
-            },
-            {
-                type: "FORGOT_PASSWORD", title: "Lupa Password", subject: "Reset Password iMersFireship",
-                messageEmail: "Halo {nama},\n\nKami menerima permintaan reset password untuk akun Anda.\n\nSilakan hubungi admin atau gunakan link reset berikut (jika tersedia).\nJika ini bukan Anda, abaikan email ini.",
-                messageWA: "Halo *{nama}*,\n\nKami menerima permintaan Lupa Password untuk akun dengan email {email}.\n\nSilakan hubungi Admin untuk bantuan lebih lanjut.",
-                isActiveEmail: true, isActiveWA: true, createdAt: Date.now() + 3
-            }
-        ];
 
         // --- INIT & ROUTING ---
         window.onload = async () => {
@@ -1222,30 +1168,112 @@
             const checkoutId = urlParams.get('checkout');
             
             if (checkoutId) {
-                // Tampilkan halaman checkout untuk publik
                 document.getElementById('view-auth').classList.add('hidden');
                 document.getElementById('view-app').classList.add('hidden');
                 document.getElementById('view-checkout').classList.remove('hidden');
                 await loadCheckoutProduct(checkoutId);
+            } else {
+                // Pre-load settings untuk tampilan awal (warna/logo dari DB) jika memungkinkan
+                try {
+                    const setRes = await apiCall('getSettings');
+                    if(setRes && setRes.data) {
+                        window.appState.settings = setRes.data;
+                        applySettingsUI();
+                    }
+                } catch(e){}
             }
         };
 
-        // --- NOTIFICATION GATEWAY LOGIC (MOCK FRONTEND) ---
-        window.sendWhatsAppNotification = async (targetWa, messageText, isSilent = true) => {
-            if(!isSilent) showToast("Notifikasi dipicu! (Cek logic di Backend Apps Script nanti)", "success");
-        };
+        // Memuat semua data (menggantikan onSnapshot Firebase)
+        async function loadAllData() {
+            try {
+                showToast("Memuat data dari server...", "info");
+                const [prodRes, orderRes, coupRes, tmplRes, userRes, setRes] = await Promise.all([
+                    apiCall('getProducts'),
+                    apiCall('getOrders'),
+                    apiCall('getCoupons'),
+                    apiCall('getTemplates'),
+                    apiCall('getUsers'),
+                    apiCall('getSettings')
+                ]);
+                
+                window.appState.products = prodRes.data || [];
+                window.appState.orders = orderRes.data || [];
+                window.appState.coupons = coupRes.data || [];
+                window.appState.templates = tmplRes.data || [];
+                window.appState.usersData = userRes.data || [];
+                if (setRes.data) window.appState.settings = setRes.data;
 
-        window.simulateBroadcast = () => {
-            const target = document.getElementById('bcTarget').value;
-            const msg = document.getElementById('bcMessage').value;
-            if(!msg) return;
+                // Sortings
+                window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
+                window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
+                window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
+                window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
+                
+                // Renders Dashboard & UI
+                document.getElementById('statProducts').innerText = window.appState.products.length;
+                document.getElementById('statOrders').innerText = window.appState.orders.length;
+                document.getElementById('statUsers').innerText = window.appState.usersData.length;
+                
+                applySettingsUI();
+                renderProductsTable();
+                renderMarketplaceList();
+                renderOrdersTable();
+                renderCouponsTable();
+                renderTemplatesTable();
+                renderSettingsBankList();
 
-            showToast("Memproses Broadcast...", "info");
-            setTimeout(() => {
-                sendWhatsAppNotification("SEMUA MEMBER", msg, false);
-                document.getElementById('bcMessage').value = '';
-            }, 1000);
-        };
+                // Generate recent orders list
+                const recContainer = document.getElementById('recentOrdersList');
+                recContainer.innerHTML = '';
+                const recents = window.appState.orders.slice(0, 5);
+                if(recents.length === 0) recContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Belum ada order</p>';
+                recents.forEach(o => {
+                    const statusClass = o.status === 'Paid' ? 'bg-green-500/20 text-green-600' : 'bg-yellow-500/20 text-yellow-600';
+                    recContainer.innerHTML += `
+                        <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br ${o.status === 'Paid'?'from-emerald-400 to-teal-500':'from-amber-400 to-orange-500'} flex items-center justify-center text-white shadow-sm"><i class="ph ph-shopping-bag text-xl"></i></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-slate-800 dark:text-white truncate">${o.productTitle}</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${o.customerName}</p>
+                            </div>
+                            <span class="px-2.5 py-1 ${statusClass} text-[10px] font-black uppercase rounded-lg">${o.status}</span>
+                        </div>
+                    `;
+                });
+                
+            } catch (err) {
+                console.error("Gagal memuat data:", err);
+                showToast("Gagal memuat data dari server.", "error");
+            }
+        }
+
+        // Apply Setting ke CSS dan UI
+        function applySettingsUI() {
+            const set = window.appState.settings;
+            if(set.primaryColor) {
+                document.documentElement.style.setProperty('--brand-color', set.primaryColor);
+                document.documentElement.style.setProperty('--brand-hover', set.primaryColor);
+            }
+            if(set.appName) {
+                document.querySelectorAll('.app-name-display').forEach(el => el.innerText = set.appName);
+            }
+            applyLogo(set.logoUrl);
+            
+            // Populate form settings
+            document.getElementById('settingAppName').value = set.appName || 'iMersFireship';
+            document.getElementById('settingColor').value = set.primaryColor || '#4f46e5';
+            document.getElementById('settingColorText').value = set.primaryColor || '#4f46e5';
+            document.getElementById('settingLogoUrl').value = set.logoUrl || '';
+
+            if (set.notifications) {
+                document.getElementById('notifWaProvider').value = set.notifications.waProvider || 'fonnte';
+                document.getElementById('notifWaToken').value = set.notifications.waToken || '';
+                document.getElementById('notifAdminWa').value = set.notifications.adminWa || '';
+                document.getElementById('notifEmailProvider').value = set.notifications.emailProvider || 'google';
+                document.getElementById('notifEmailToken').value = set.notifications.emailToken || '';
+            }
+        }
 
 
         // --- AUTH LOGIC (LOGIN, REGISTER, FORGOT, CHANGE PWD) ---
@@ -1272,11 +1300,6 @@
             }
         };
 
-        async function validateLicense(key) {
-            console.log("Validating license via Apps Script...");
-            return new Promise(resolve => setTimeout(() => resolve(true), 800)); 
-        }
-
         // Handle Login Submission
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1286,34 +1309,40 @@
 
             btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Validating...';
             
-            // Hash the password input using SHA-256 before validating
-            const hashedPass = await window.hashPassword(rawPass);
-            
-            // Expected Hash for "admin123" -> 240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
-            const expectedAdminHash = await window.hashPassword('admin123');
-
-            if(email === 'admin@imersfireship.com' && hashedPass === expectedAdminHash) {
-                const isValid = await validateLicense("DUMMY-KEY-123");
-                if(!isValid) {
-                    showToast("License Invalid or Expired!", "error");
-                    btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
-                    return;
-                }
-
-                btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Connecting...';
+            try {
+                const hashedPass = await window.hashPassword(rawPass);
+                const res = await apiCall('getUsers');
+                const users = res.data || [];
                 
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
+                // Cari user berdasarkan email dan password(hashed)
+                const user = users.find(u => u.email === email && u.password === hashedPass);
+
+                if (user) {
+                    window.appState.user = user;
+                    
+                    document.getElementById('view-auth').classList.add('hidden');
+                    document.getElementById('view-app').classList.remove('hidden');
+                    
+                    document.getElementById('userDisplayName').innerText = user.name;
+                    document.getElementById('userRoleDisplay').innerText = user.role;
+                    document.getElementById('userLicenseCode').innerText = user.license || 'TIDAK-ADA-LISENSI';
+                    
+                    // Sembunyikan menu admin jika role nya cuma user biasa
+                    if (user.role === 'user') {
+                        document.querySelectorAll('[data-target="products"], [data-target="orders"], [data-target="coupons"], [data-target="users"], [data-target="broadcast"], [data-target="templates"], [data-target="settings"]').forEach(el => el.classList.add('hidden'));
                     }
-                } catch(error) {
-                    showToast("System Error: " + error.message, "error");
-                    btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
+                    
+                    showToast("Login Berhasil! Selamat datang " + user.name);
+                    
+                    await loadAllData();
+                    window.navigate('dashboard');
+                    initChart();
+                } else {
+                    showToast("Email atau password salah.", "error");
                 }
-            } else {
-                showToast("Invalid credentials. Try default admin.", "error");
+            } catch (err) {
+                showToast("System Error: " + err.message, "error");
+            } finally {
                 btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
             }
         });
@@ -1332,17 +1361,15 @@
             try {
                 const hashedPass = await window.hashPassword(rawPass);
                 
-                // MOCK API CALL (Kirim payload ke Endpoint 'register' di Apps Script nantinya)
-                console.log("Registering User:", { name, email, wa, password: hashedPass, role: 'user' });
+                const payload = { name, email, wa, password: hashedPass, role: 'user', license: 'USER-BASIC-'+Math.floor(Math.random()*999) };
+                await apiCall('register', payload);
                 
-                setTimeout(() => {
-                    showToast("Registrasi berhasil! Silakan periksa WA/Email Anda.", "success");
-                    document.getElementById('registerForm').reset();
-                    switchAuthView('login');
-                    btn.innerHTML = '<span>Daftar Sekarang</span> <i class="ph ph-user-plus"></i>';
-                }, 1000);
+                showToast("Registrasi berhasil! Silakan periksa WA/Email Anda atau langsung Login.", "success");
+                document.getElementById('registerForm').reset();
+                switchAuthView('login');
             } catch(err) {
-                showToast("Error saat memproses registrasi.", "error");
+                showToast("Error: " + err.message, "error");
+            } finally {
                 btn.innerHTML = '<span>Daftar Sekarang</span> <i class="ph ph-user-plus"></i>';
             }
         });
@@ -1356,17 +1383,13 @@
             btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memproses...';
 
             try {
-                // MOCK API CALL (Kirim payload ke Endpoint 'forgotPassword' di Apps Script nantinya)
-                console.log("Request Reset Password for:", email);
-
-                setTimeout(() => {
-                    showToast("Instruksi reset password telah dikirim ke Email/WA Anda.", "success");
-                    document.getElementById('forgotForm').reset();
-                    switchAuthView('login');
-                    btn.innerHTML = '<span>Kirim Reset Link</span> <i class="ph ph-paper-plane-tilt"></i>';
-                }, 1000);
+                await apiCall('forgotPassword', {email});
+                showToast("Instruksi reset password telah dikirim ke Email/WA Anda.", "success");
+                document.getElementById('forgotForm').reset();
+                switchAuthView('login');
             } catch(err) {
-                showToast("Error saat mengirim instruksi reset.", "error");
+                showToast("Error: " + err.message, "error");
+            } finally {
                 btn.innerHTML = '<span>Kirim Reset Link</span> <i class="ph ph-paper-plane-tilt"></i>';
             }
         });
@@ -1389,144 +1412,31 @@
                 const oldHash = await window.hashPassword(oldPass);
                 const newHash = await window.hashPassword(newPass);
 
-                // MOCK API CALL (Kirim payload ke Endpoint 'changePassword' di Apps Script)
-                console.log("Request Change Password:", { oldPasswordHash: oldHash, newPasswordHash: newHash });
+                const payload = {
+                    id: window.appState.user.id,
+                    oldPasswordHash: oldHash,
+                    newPasswordHash: newHash
+                };
 
-                setTimeout(() => {
-                    showToast("Password berhasil diperbarui!", "success");
-                    document.getElementById('changePasswordForm').reset();
-                    btn.innerHTML = '<i class="ph ph-floppy-disk text-xl"></i> Simpan Password';
-                }, 1000);
-
+                await apiCall('changePassword', payload);
+                
+                showToast("Password berhasil diperbarui!", "success");
+                document.getElementById('changePasswordForm').reset();
             } catch (err) {
-                showToast("Gagal memproses password.", "error");
+                showToast("Error: " + err.message, "error");
+            } finally {
                 btn.innerHTML = '<i class="ph ph-floppy-disk text-xl"></i> Simpan Password';
             }
         };
 
-        // Listen for Auth State
-        onAuthStateChanged(auth, async (user) => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.get('checkout')) return;
-
-            if (user) {
-                window.appState.user = user;
-                document.getElementById('view-auth').classList.add('hidden');
-                document.getElementById('view-checkout').classList.add('hidden');
-                document.getElementById('view-app').classList.remove('hidden');
-                
-                showToast("Login Successful! Welcome Admin.");
-                
-                await checkAndSeedData();
-                setupDataListeners();
-                
-                window.navigate('dashboard');
-                initChart();
-            } else {
-                window.appState.user = null;
-                document.getElementById('view-auth').classList.remove('hidden');
-                document.getElementById('view-app').classList.add('hidden');
-            }
-        });
-
         window.logout = () => {
-            signOut(auth);
+            window.appState.user = null;
+            document.getElementById('view-auth').classList.remove('hidden');
+            document.getElementById('view-app').classList.add('hidden');
+            // Show all menus back in case it was hidden by user role
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('hidden'));
         };
 
-        // --- DATA MANAGEMENT & SEEDING ---
-
-        async function checkAndSeedData() {
-            const productsRef = getPublicRef('products');
-            const snapshot = await getDocs(productsRef);
-            
-            if (snapshot.empty) {
-                console.log("Database empty. Seeding dummy products...");
-                showToast("Installing initial modules & dummy data...", "info");
-                
-                for (const prod of dummySeedData) {
-                    await addDoc(productsRef, prod);
-                }
-                await addDoc(getPublicRef('coupons'), dummyCouponData);
-
-                // Seed Templates
-                const templatesRef = getPublicRef('templates');
-                for (const t of dummyTemplatesData) {
-                    await addDoc(templatesRef, t);
-                }
-
-                showToast("Setup complete. Platform ready!");
-            }
-        }
-
-        let unsubscribeProducts = null;
-        let unsubscribeOrders = null;
-        let unsubscribeCoupons = null;
-        let unsubscribeTemplates = null;
-        
-        function setupDataListeners() {
-            if(unsubscribeProducts) unsubscribeProducts();
-            if(unsubscribeOrders) unsubscribeOrders();
-            if(unsubscribeCoupons) unsubscribeCoupons();
-            if(unsubscribeTemplates) unsubscribeTemplates();
-            
-            // Listen to Products
-            const productsRef = getPublicRef('products');
-            unsubscribeProducts = onSnapshot(productsRef, (snapshot) => {
-                window.appState.products = [];
-                snapshot.forEach(doc => {
-                    window.appState.products.push({ id: doc.id, ...doc.data() });
-                });
-                window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
-                document.getElementById('statProducts').innerText = window.appState.products.length;
-                renderProductsTable();
-                renderMarketplaceList();
-            });
-
-            // Listen to Orders
-            const ordersRef = getPublicRef('orders');
-            unsubscribeOrders = onSnapshot(ordersRef, (snapshot) => {
-                window.appState.orders = [];
-                snapshot.forEach(doc => {
-                    window.appState.orders.push({ id: doc.id, ...doc.data() });
-                });
-                window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
-                renderOrdersTable();
-            });
-            
-            // Listen to Coupons
-            const couponsRef = getPublicRef('coupons');
-            unsubscribeCoupons = onSnapshot(couponsRef, (snapshot) => {
-                window.appState.coupons = [];
-                snapshot.forEach(doc => {
-                    window.appState.coupons.push({ id: doc.id, ...doc.data() });
-                });
-                window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
-                renderCouponsTable();
-            });
-
-            // Listen to Templates
-            const templatesRef = getPublicRef('templates');
-            unsubscribeTemplates = onSnapshot(templatesRef, (snapshot) => {
-                window.appState.templates = [];
-                snapshot.forEach(doc => {
-                    window.appState.templates.push({ id: doc.id, ...doc.data() });
-                });
-                window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
-                renderTemplatesTable();
-            });
-
-            // Render settings state
-            renderSettingsBankList();
-            
-            // Render Notification settings
-            if (window.appState.settings.notifications) {
-                document.getElementById('notifWaProvider').value = window.appState.settings.notifications.waProvider || 'fonnte';
-                document.getElementById('notifWaToken').value = window.appState.settings.notifications.waToken || '';
-                document.getElementById('notifAdminWa').value = window.appState.settings.notifications.adminWa || '';
-                document.getElementById('notifEmailProvider').value = window.appState.settings.notifications.emailProvider || 'google';
-                document.getElementById('notifEmailToken').value = window.appState.settings.notifications.emailToken || '';
-            }
-        }
 
         // --- NAVIGATION & UI LOGIC ---
 
@@ -1555,7 +1465,7 @@
                 'templates': 'Notification Templates',
                 'broadcast': 'Marketing Broadcast',
                 'settings': 'Admin Settings',
-                'profile': 'My Profile' // <-- Added Title for Profile
+                'profile': 'My Profile'
             };
             document.getElementById('pageTitle').innerText = titles[targetId] || 'Panel';
 
@@ -1563,7 +1473,6 @@
             document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('content-' + targetId).classList.remove('hidden');
 
-            // Close Mobile Menu if open
             if(window.innerWidth < 768 && window.appState.isSidebarOpen) {
                 toggleMobileMenu();
             }
@@ -1591,7 +1500,6 @@
                     console.error("Gagal menyalin: ", err);
                 });
             } else {
-                // Fallback kalau clipboard API diblokir
                 const textArea = document.createElement("textarea");
                 textArea.value = code;
                 document.body.appendChild(textArea);
@@ -1668,6 +1576,7 @@
 
         window.saveTemplate = async () => {
             const id = document.getElementById('tmplId').value;
+            const type = document.getElementById('tmplType').value;
             const title = document.getElementById('tmplTitle').value;
             const subject = document.getElementById('tmplSubject').value;
             const emailBody = document.getElementById('tmplEmailBody').value;
@@ -1681,16 +1590,14 @@
             }
 
             try {
-                // Because we are mocking backend logic for templates
-                await updateDoc(doc(getPublicRef('templates'), id), {
-                    title: title,
-                    subject: subject,
-                    messageEmail: emailBody,
-                    messageWA: waBody,
-                    isActiveEmail: activeEmail,
-                    isActiveWA: activeWA
-                });
+                const payload = {
+                    id: id, type: type, title: title, subject: subject, messageEmail: emailBody, messageWA: waBody,
+                    isActiveEmail: activeEmail, isActiveWA: activeWA
+                };
+                
+                await apiCall('saveTemplate', payload);
                 showToast("Template Notifikasi diperbarui!");
+                await loadAllData();
                 closeTemplateModal();
             } catch (e) {
                 showToast("Error: " + e.message, "error");
@@ -1731,7 +1638,6 @@
                     <td class="px-6 py-4 text-right">
                         <div class="flex items-center justify-end gap-3">
                             <button onclick="editProduct('${p.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
-                            <button onclick="duplicateProduct('${p.id}')" class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20 rounded-xl transition-colors" title="Duplicate"><i class="ph ph-copy text-xl"></i></button>
                             <button onclick="deleteProduct('${p.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
                         </div>
                     </td>
@@ -1807,8 +1713,6 @@
         };
 
         window.saveProduct = async () => {
-            if(!window.appState.user) return;
-            
             const id = document.getElementById('prodId').value;
             const type = document.getElementById('prodType').value;
             const title = document.getElementById('prodTitle').value;
@@ -1821,7 +1725,7 @@
                 return;
             }
 
-            let data = { type, title, price, description: desc, accessHtml };
+            let data = { id, type, title, price, description: desc, accessHtml };
 
             if (type === 'download') {
                 let files = [];
@@ -1842,15 +1746,9 @@
             }
 
             try {
-                const productsRef = getPublicRef('products');
-                if (id) {
-                    await updateDoc(doc(productsRef, id), data);
-                    showToast("Product updated!");
-                } else {
-                    data.createdAt = Date.now();
-                    await addDoc(productsRef, data);
-                    showToast("Product created!");
-                }
+                await apiCall('saveProduct', data);
+                showToast("Product saved!");
+                await loadAllData();
                 closeProductModal();
             } catch (error) {
                 showToast("Error saving product: " + error.message, "error");
@@ -1898,28 +1796,12 @@
         window.deleteProduct = async (id) => {
             if(confirm("Are you sure you want to delete this product?")) {
                 try {
-                    await deleteDoc(doc(getPublicRef('products'), id));
+                    await apiCall('deleteProduct', {id: id});
                     showToast("Product deleted");
+                    await loadAllData();
                 } catch(err) {
                     showToast("Error deleting: " + err.message, "error");
                 }
-            }
-        };
-
-        window.duplicateProduct = async (id) => {
-            const product = window.appState.products.find(p => p.id === id);
-            if(!product) return;
-
-            const newData = { ...product };
-            delete newData.id;
-            newData.title = newData.title + " (Copy)";
-            newData.createdAt = Date.now();
-
-            try {
-                await addDoc(getPublicRef('products'), newData);
-                showToast("Product duplicated successfully!");
-            } catch(err) {
-                showToast("Error duplicating: " + err.message, "error");
             }
         };
 
@@ -1999,17 +1881,12 @@
                 return;
             }
 
-            let data = { code, type, value, applicableProductId };
+            let data = { id, code, type, value, applicableProductId };
 
             try {
-                if(id) {
-                    await updateDoc(doc(getPublicRef('coupons'), id), data);
-                    showToast("Kupon diperbarui!");
-                } else {
-                    data.createdAt = Date.now();
-                    await addDoc(getPublicRef('coupons'), data);
-                    showToast("Kupon berhasil dibuat!");
-                }
+                await apiCall('saveCoupon', data);
+                showToast("Kupon tersimpan!");
+                await loadAllData();
                 closeCouponModal();
             } catch (e) {
                 showToast("Error: " + e.message, "error");
@@ -2030,8 +1907,9 @@
 
         window.deleteCoupon = async (id) => {
             if(confirm("Hapus kupon ini?")) {
-                await deleteDoc(doc(getPublicRef('coupons'), id));
+                await apiCall('deleteCoupon', {id});
                 showToast("Kupon dihapus.");
+                await loadAllData();
             }
         };
 
@@ -2052,7 +1930,7 @@
             const products = window.appState.products;
 
             if(products.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-slate-500 font-bold text-center py-10">Belum ada produk. Tambahkan di menu Products.</p>`;
+                container.innerHTML = `<p class="col-span-full text-slate-500 font-bold text-center py-10">Belum ada produk.</p>`;
                 return;
             }
 
@@ -2173,10 +2051,10 @@
         
         window.loadCheckoutProduct = async (productId) => {
             try {
-                if(!auth.currentUser) await signInAnonymously(auth);
-                const snapshot = await getDocs(getPublicRef('products'));
-                let found = null;
-                snapshot.forEach(doc => { if(doc.id === productId) found = {id: doc.id, ...doc.data()}; });
+                // Fetch product for checkout without login needed via API
+                const res = await apiCall('getProducts');
+                const products = res.data || [];
+                let found = products.find(p => p.id === productId);
                 
                 if(found) {
                     window.appState.currentCheckoutProduct = found;
@@ -2185,6 +2063,10 @@
                     
                     window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
                     
+                    // Fetch settings for payment methods
+                    const setRes = await apiCall('getSettings');
+                    if(setRes && setRes.data) window.appState.settings = setRes.data;
+
                     recalculateCheckout();
                     renderCheckoutPaymentMethods();
                 } else {
@@ -2242,11 +2124,9 @@
             btn.innerText = "...";
 
             try {
-                const snapshot = await getDocs(getPublicRef('coupons'));
-                let found = null;
-                snapshot.forEach(doc => { 
-                    if(doc.data().code === codeInput) found = {id: doc.id, ...doc.data()}; 
-                });
+                const res = await apiCall('getCoupons');
+                const coupons = res.data || [];
+                let found = coupons.find(c => c.code === codeInput);
 
                 if(found) {
                     if (found.applicableProductId && found.applicableProductId !== 'all' && found.applicableProductId !== window.appState.currentCheckoutProduct.id) {
@@ -2276,19 +2156,22 @@
             const container = document.getElementById('coPaymentMethods');
             container.innerHTML = '';
             
-            window.appState.settings.banks.forEach((bank, index) => {
-                container.innerHTML += `
-                    <label class="flex items-center justify-between p-4 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-brand transition-all">
-                        <div class="flex items-center gap-3">
-                            <input type="radio" name="paymentMethod" value="Manual-${bank.name}" class="w-5 h-5 text-brand accent-brand" ${index===0?'checked':''}>
-                            <div class="font-bold text-slate-800 dark:text-white text-sm">Bank ${bank.name}</div>
-                        </div>
-                        <i class="ph ph-bank text-2xl text-slate-400"></i>
-                    </label>
-                `;
-            });
+            const settings = window.appState.settings;
+            if(settings && settings.banks) {
+                settings.banks.forEach((bank, index) => {
+                    container.innerHTML += `
+                        <label class="flex items-center justify-between p-4 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-brand transition-all">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="paymentMethod" value="Manual-${bank.name}" class="w-5 h-5 text-brand accent-brand" ${index===0?'checked':''}>
+                                <div class="font-bold text-slate-800 dark:text-white text-sm">Bank ${bank.name}</div>
+                            </div>
+                            <i class="ph ph-bank text-2xl text-slate-400"></i>
+                        </label>
+                    `;
+                });
+            }
             
-            if(window.appState.settings.gateways.duitku) {
+            if(settings && settings.gateways && settings.gateways.duitku) {
                 container.innerHTML += `
                 <label class="flex items-center justify-between p-4 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-brand transition-all">
                     <div class="flex items-center gap-3">
@@ -2315,7 +2198,7 @@
                 return;
             }
 
-            const btn = document.querySelector('button[onclick="submitCheckout()"]');
+            const btn = document.getElementById('btnSubmitCheckout');
             btn.innerText = "PROCESSING...";
 
             const method = methodEl.value;
@@ -2345,15 +2228,11 @@
                 totalPay: finalTotal,
                 paymentMethod: method,
                 status: 'Pending',
-                createdAt: Date.now(),
-                userPasswordHash: hashedPassword // Disimpan ke order, nanti pas di-approve bisa otomatis bikin User di backend
+                userPasswordHash: hashedPassword 
             };
 
             try {
-                await addDoc(getPublicRef('orders'), orderData);
-
-                // MOCK NOTIFICATION TRIGGER FOR CHECKOUT
-                sendWhatsAppNotification(wa, `Halo *${name}* 👋\nTotal Tagihan: *${formatRp(finalTotal)}*`, true);
+                await apiCall('saveOrder', orderData);
                 
                 // Layar Sukses
                 document.getElementById('view-checkout').innerHTML = `
@@ -2406,7 +2285,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">${o.productTitle}</td>
                         <td class="px-6 py-4 text-sm">
-                            <p class="font-black text-slate-800 dark:text-white text-base">${formatRp(o.totalPay || o.price)}</p>
+                            <p class="font-black text-slate-800 dark:text-white text-base">${formatRp(o.totalPay || o.basePrice)}</p>
                             ${o.couponCode ? `<p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1 mt-1 border border-emerald-500/20"><i class="ph ph-ticket"></i> ${o.couponCode}</p>` : ''}
                         </td>
                         <td class="px-6 py-4">${statusBadge}</td>
@@ -2422,12 +2301,9 @@
             
             if(confirm(`Approve pesanan dari ${order.customerName}? Akses produk otomatis terbuka.`)) {
                 try {
-                    await updateDoc(doc(getPublicRef('orders'), orderId), { status: 'Paid' });
+                    await apiCall('approveOrder', {id: orderId});
                     showToast("Order Approved! Akses diberikan ke kustomer.");
-
-                    // MOCK NOTIFICATION TRIGGER FOR APPROVAL
-                    sendWhatsAppNotification(order.customerWA, `Hore! Pembayaran untuk pesanan *${order.productTitle}* telah berhasil dikonfirmasi 🎉`, false);
-
+                    await loadAllData();
                 } catch(e) {
                     showToast("Error approving: " + e.message, "error");
                 }
@@ -2441,20 +2317,23 @@
             if(!list) return;
             list.innerHTML = '';
             
-            window.appState.settings.banks.forEach((b) => {
-                list.innerHTML += `
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
-                        <input type="text" placeholder="Nama Bank (BCA)" value="${b.name}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
-                        <input type="text" placeholder="No Rekening" value="${b.no}" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
-                        <input type="text" placeholder="Atas Nama" value="${b.owner}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
-                        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
-                    </div>
-                `;
-            });
+            const settings = window.appState.settings;
+            if(settings && settings.banks) {
+                settings.banks.forEach((b) => {
+                    list.innerHTML += `
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <input type="text" placeholder="Nama Bank (BCA)" value="${b.name}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
+                            <input type="text" placeholder="No Rekening" value="${b.no}" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
+                            <input type="text" placeholder="Atas Nama" value="${b.owner}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
+                            <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
+                        </div>
+                    `;
+                });
+            }
 
-            document.getElementById('gwTripay').checked = window.appState.settings.gateways.tripay;
-            document.getElementById('gwDuitku').checked = window.appState.settings.gateways.duitku;
-            document.getElementById('gwSendit').checked = window.appState.settings.gateways.sendit;
+            document.getElementById('gwTripay').checked = settings.gateways ? settings.gateways.tripay : false;
+            document.getElementById('gwDuitku').checked = settings.gateways ? settings.gateways.duitku : false;
+            document.getElementById('gwSendit').checked = settings.gateways ? settings.gateways.sendit : false;
         };
 
         window.addBankField = () => {
@@ -2469,7 +2348,7 @@
             `;
         };
 
-        window.saveSettings = () => {
+        window.saveSettings = async () => {
             const name = document.getElementById('settingAppName').value;
             const color = document.getElementById('settingColor').value;
             const logoUrlInput = document.getElementById('settingLogoUrl').value;
@@ -2500,35 +2379,37 @@
                 if(bname) banks.push({name: bname, no: bno, owner: bowner});
             });
 
-            window.appState.settings.banks = banks;
-            window.appState.settings.gateways = {
-                tripay: document.getElementById('gwTripay').checked,
-                duitku: document.getElementById('gwDuitku').checked,
-                sendit: document.getElementById('gwSendit').checked
-            };
+            // Convert image to Base64 if uploaded
+            let finalLogoUrl = logoUrlInput;
+            if (logoFileInput) {
+                finalLogoUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(logoFileInput);
+                });
+            }
             
-            // Save Notification setting
-            window.appState.settings.notifications = {
-                waProvider: waProv,
-                waToken: waToken,
-                adminWa: adminWa,
-                emailProvider: emailProv,
-                emailToken: emailToken
+            const payload = {
+                appName: name,
+                primaryColor: color,
+                logoUrl: finalLogoUrl,
+                banks: banks,
+                gateways: {
+                    tripay: document.getElementById('gwTripay').checked,
+                    duitku: document.getElementById('gwDuitku').checked,
+                    sendit: document.getElementById('gwSendit').checked
+                },
+                waProvider: waProv, waToken: waToken, adminWa: adminWa,
+                emailProvider: emailProv, emailToken: emailToken
             };
 
-            if (logoUrlInput) {
-                applyLogo(logoUrlInput);
-                showToast("Admin settings applied locally!");
-            } else if (logoFileInput) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    applyLogo(e.target.result);
-                    showToast("Admin settings applied locally!");
-                }
-                reader.readAsDataURL(logoFileInput);
-            } else {
-                applyLogo(null);
-                showToast("Admin settings applied locally!");
+            try {
+                await apiCall('saveSettings', payload);
+                applyLogo(finalLogoUrl);
+                showToast("Admin settings saved to server!");
+                await loadAllData();
+            } catch(e) {
+                showToast("Error saving settings: " + e.message, "error");
             }
         };
 
