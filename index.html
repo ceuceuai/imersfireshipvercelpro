@@ -1079,12 +1079,12 @@
         // ==========================================
         // GANTI URL INI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT LO
         // ==========================================
-        const SCRIPT_URL = "URL_WEB_APP_APPS_SCRIPT_LO_DISINI";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDMp3bh13yicLhXHlldnu1kO57rTxS_BQ-svN1Z5hSl6MSWyayFWkgnTTO4prxQWHM/exec";
         
         // --- API CALL WRAPPER ---
         async function apiCall(action, payload = null) {
-            if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyDMp3bh13yicLhXHlldnu1kO57rTxS_BQ-svN1Z5hSl6MSWyayFWkgnTTO4prxQWHM/exec") {
-                showToast("Script URL belum di-setting di index.html!", "error");
+            if (SCRIPT_URL === "URL_WEB_APP_APPS_SCRIPT_LO_DISINI" || !SCRIPT_URL) {
+                showToast("Script URL belum diganti di index.html!", "error");
                 throw new Error("URL Belum disetting");
             }
             
@@ -1103,9 +1103,15 @@
 
             try {
                 const response = await fetch(url, options);
-                const data = await response.json();
-                if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
-                return data;
+                const text = await response.text(); // Baca sebagai text dulu untuk mencegah error "Token T"
+                try {
+                    const data = JSON.parse(text); // Coba convert ke JSON
+                    if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
+                    return data;
+                } catch(e) {
+                    console.error("Respon bukan JSON:", text);
+                    throw new Error("Gagal konek ke DB! Pastikan URL Apps Script sudah benar & di-Deploy (Anyone).");
+                }
             } catch (err) {
                 console.error("API Call Error:", err);
                 throw err;
