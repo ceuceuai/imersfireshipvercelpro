@@ -107,7 +107,6 @@
          ========================================== -->
     <div id="view-checkout" class="hidden flex-1 overflow-y-auto relative w-full z-50 py-8 px-4">
         <div class="max-w-xl mx-auto space-y-5 pb-24">
-            <!-- Order Details -->
             <div class="glass rounded-2xl overflow-hidden">
                 <div class="bg-white/40 dark:bg-slate-800/40 py-3 text-center font-bold text-slate-700 dark:text-slate-200 text-sm border-b border-white/50 dark:border-slate-700/50">Order Details</div>
                 <div class="p-5">
@@ -134,7 +133,6 @@
                 </div>
             </div>
 
-            <!-- Voucher -->
             <div class="glass rounded-2xl p-5">
                 <p class="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">Voucher Diskon</p>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Masukkan kode diskon jika memilikinya</p>
@@ -145,7 +143,6 @@
                 <p id="coVoucherMsg" class="text-xs mt-2 hidden"></p>
             </div>
 
-            <!-- Account Form -->
             <div class="glass rounded-2xl p-6">
                 <p class="text-xs text-slate-500 dark:text-slate-400 mb-5 leading-relaxed bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">Isi data-data di bawah untuk bisa mengakses member area serta informasi terkait pembelian.</p>
                 <h3 class="font-bold text-slate-800 dark:text-white mb-4 text-lg">Create an Account</h3>
@@ -166,7 +163,6 @@
                         <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
                         <input type="text" id="coWA" placeholder="Nomor WA aktif" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none text-sm focus:border-brand dark:text-white" required>
                     </div>
-
                     <div class="border-t border-slate-200 dark:border-slate-700 pt-5 mt-5">
                         <h3 class="font-bold text-slate-800 dark:text-white mb-4 text-sm">Select Payment Method <span class="text-red-500">*</span></h3>
                         <div id="coPaymentMethods" class="space-y-3">
@@ -176,7 +172,6 @@
                 </form>
             </div>
             
-            <!-- Sticky Footer -->
             <div class="fixed bottom-0 left-0 w-full glass rounded-t-2xl shadow-[0_-4px_25px_-5px_rgba(0,0,0,0.1)] p-4 z-50">
                 <div class="max-w-xl mx-auto flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                     <div>
@@ -195,7 +190,6 @@
          AUTH VIEWS (LOGIN, REGISTER, FORGOT PWD)
          ========================================== -->
     <div id="view-auth" class="flex-1 flex items-center justify-center relative h-screen w-full z-50 p-4 overflow-y-auto">
-        
         <div class="w-full max-w-md p-8 glass rounded-3xl shadow-2xl relative z-10 mx-auto border border-white/50 dark:border-slate-700/50 my-auto">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-purple-600 shadow-lg shadow-brand/30 text-white mb-5 overflow-hidden" id="authLogoContainer">
@@ -298,7 +292,6 @@
 
             <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
                 <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-2">Main Menu</p>
-                
                 <a href="#" onclick="navigate('dashboard')" class="nav-link active group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="dashboard">
                     <i class="ph ph-squares-four text-xl text-blue-500 group-[.active]:text-white transition-colors"></i> Dashboard
                 </a>
@@ -310,17 +303,13 @@
                 </a>
                 
                 <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-6">Sales & Users</p>
-                
                 <a href="#" onclick="navigate('orders')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="orders">
                     <i class="ph ph-shopping-cart text-xl text-orange-500 group-[.active]:text-white transition-colors"></i> Orders 
                     <span class="ml-auto bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-sm">New</span>
                 </a>
-                
-                <!-- NEW MENU: LICENSE (Now below Orders) -->
                 <a href="#" onclick="navigate('license')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="license">
                     <i class="ph ph-key text-xl text-amber-500 group-[.active]:text-white transition-colors"></i> License Code
                 </a>
-
                 <a href="#" onclick="navigate('coupons')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="coupons">
                     <i class="ph ph-ticket text-xl text-emerald-500 group-[.active]:text-white transition-colors"></i> Kupon Diskon
                 </a>
@@ -335,17 +324,14 @@
                 <a href="#" onclick="navigate('broadcast')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="broadcast">
                     <i class="ph ph-paper-plane-tilt text-xl text-cyan-500 group-[.active]:text-white transition-colors"></i> Broadcast WA
                 </a>
-
                 <a href="#" onclick="navigate('templates')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="templates">
                     <i class="ph ph-envelope-simple text-xl text-rose-500 group-[.active]:text-white transition-colors"></i> Notif Templates
                 </a>
-                
                 <a href="#" onclick="navigate('settings')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="settings">
                     <i class="ph ph-gear text-xl text-slate-400 group-[.active]:text-white transition-colors"></i> Admin Settings
                 </a>
 
                 <p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 mt-6">Account</p>
-                <!-- NEW MENU: MY PROFILE (Change Password) -->
                 <a href="#" onclick="navigate('profile')" class="nav-link group flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/40 dark:hover:bg-slate-800/40 transition-all text-sm font-semibold text-slate-600 dark:text-slate-300" data-target="profile">
                     <i class="ph ph-user-circle text-xl text-blue-500 group-[.active]:text-white transition-colors"></i> My Profile
                 </a>
@@ -360,7 +346,6 @@
 
         <!-- MAIN CONTENT AREA -->
         <main class="flex-1 flex flex-col h-full overflow-hidden relative w-full">
-            
             <!-- TOPBAR -->
             <header class="h-20 glass border-b border-white/40 dark:border-slate-700/50 flex items-center justify-between px-6 shrink-0 z-30">
                 <div class="flex items-center gap-4">
@@ -371,7 +356,6 @@
                 </div>
                 
                 <div class="flex items-center gap-4">
-                    <!-- DARK MODE TOGGLE -->
                     <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/50 dark:bg-slate-800/50 flex items-center justify-center text-yellow-500 dark:text-blue-400 shadow-sm border border-white/40 dark:border-slate-700/50 hover:scale-105 transition-transform">
                         <i id="themeIcon" class="ph ph-moon text-xl"></i>
                     </button>
@@ -398,7 +382,6 @@
                 
                 <!-- DASHBOARD VIEW -->
                 <div id="content-dashboard" class="content-section space-y-8">
-                    <!-- Stats Grid - Colorful & Glass -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div class="glass rounded-2xl p-6 relative overflow-hidden group">
                             <div class="absolute -right-6 -top-6 w-24 h-24 bg-green-500/20 rounded-full blur-2xl group-hover:bg-green-500/30 transition-all"></div>
@@ -453,7 +436,6 @@
                         </div>
                     </div>
 
-                    <!-- Charts Area -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 glass rounded-2xl p-6">
                             <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Revenue Overview</h3>
@@ -462,7 +444,6 @@
                         <div class="glass rounded-2xl p-6">
                             <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-6">Recent Orders</h3>
                             <div class="space-y-4" id="recentOrdersList">
-                                <!-- Injected from JS -->
                                 <p class="text-sm text-slate-500 text-center py-4">Memuat data...</p>
                             </div>
                         </div>
@@ -477,13 +458,11 @@
                             <i class="ph ph-plus-circle text-xl"></i> Add Product
                         </button>
                     </div>
-
                     <div class="glass border border-blue-200 dark:border-blue-900/50 p-4 rounded-2xl text-sm text-blue-800 dark:text-blue-200 flex items-start sm:items-center gap-3 shadow-sm relative overflow-hidden">
                         <div class="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20"></div>
                         <i class="ph ph-info text-2xl shrink-0 relative z-10 text-blue-500"></i>
                         <p class="relative z-10"><strong>Affiliate Ready:</strong> Edit produk untuk menyalin <em>Link Checkout</em> yang bisa disebar ke affiliator Anda.</p>
                     </div>
-
                     <div class="glass rounded-2xl overflow-hidden shadow-xl">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
@@ -496,7 +475,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="productsTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
-                                    <!-- Dynamic rows injected here -->
                                 </tbody>
                             </table>
                         </div>
@@ -510,12 +488,9 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Katalog semua produk digital dan Course yang Anda jual.</p>
                     </div>
                     <div id="marketplaceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Products injected here -->
                     </div>
-                    
                     <!-- Single Product Access Viewer -->
                     <div id="productViewer" class="hidden glass rounded-3xl overflow-hidden flex flex-col relative h-[80vh] shadow-2xl">
-                        <!-- Header -->
                         <div class="p-6 border-b border-white/40 dark:border-slate-700/50 flex justify-between items-center bg-white/30 dark:bg-slate-800/30 shrink-0">
                             <div>
                                 <h3 id="pvTitle" class="text-2xl font-black text-slate-800 dark:text-white">Product Title</h3>
@@ -523,7 +498,6 @@
                             </div>
                             <button onclick="closeProductViewer()" class="text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-brand bg-white/50 dark:bg-slate-700/50 px-4 py-2 rounded-xl transition-all font-bold text-sm flex items-center gap-2 shadow-sm border border-white/40 dark:border-slate-600"><i class="ph ph-arrow-left text-lg"></i> Back</button>
                         </div>
-                        
                         <div class="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8">
                             <div id="pvStructuredArea" class="w-full"></div>
                             <div id="pvHtmlArea" class="prose max-w-none text-slate-700 dark:text-slate-300 bg-amber-50/50 dark:bg-amber-900/20 p-6 rounded-2xl border border-amber-200/50 dark:border-amber-700/30 shadow-inner hidden backdrop-blur-sm"></div>
@@ -537,7 +511,6 @@
                         <h3 class="text-2xl font-black text-slate-800 dark:text-white">My License</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Gunakan kode lisensi ini untuk aktivasi layanan atau produk khusus Anda.</p>
                     </div>
-
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-2xl">
                         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                             <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
@@ -546,14 +519,12 @@
                             <div class="flex-1 w-full">
                                 <h4 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-1">Lisensi Aktif Anda</h4>
                                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Kode di bawah otomatis ter-generate sesuai akun Anda.</p>
-                                
                                 <div class="bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                                     <code id="userLicenseCode" class="text-xl font-black text-brand dark:text-brandHover tracking-widest uppercase">Memuat...</code>
                                     <button onclick="copyLicenseCode()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-brand/30 flex items-center gap-2 shrink-0 text-sm">
                                         <i class="ph ph-copy text-lg"></i> Salin Kode
                                     </button>
                                 </div>
-                                
                                 <div class="mt-5 text-xs text-slate-500 dark:text-slate-400 flex items-start gap-2 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
                                     <i class="ph ph-warning-circle text-amber-500 text-lg shrink-0"></i>
                                     <p>Mohon jangan bagikan kode rahasia ini kepada siapapun demi keamanan akses produk Anda.</p>
@@ -571,7 +542,6 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola template pesan dinamis untuk Email dan WhatsApp.</p>
                         </div>
                     </div>
-
                     <div class="glass rounded-2xl overflow-hidden shadow-xl">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
@@ -585,7 +555,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="templatesTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
-                                    <!-- Dynamic rows injected here -->
                                 </tbody>
                             </table>
                         </div>
@@ -598,13 +567,11 @@
                         <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Profile</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola informasi akun dan keamanan Anda di sini.</p>
                     </div>
-
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-xl">
                         <h4 class="font-black text-slate-800 dark:text-white mb-6 text-lg border-b border-white/30 dark:border-slate-700/50 pb-3 flex items-center gap-2">
                             <i class="ph ph-lock-key text-brand"></i> Ganti Password
                         </h4>
-                        
-                        <form id="changePasswordForm" class="space-y-5" onsubmit="event.preventDefault(); handleChangePassword();">
+                        <form id="changePasswordForm" class="space-y-5">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Password Saat Ini</label>
                                 <input type="password" id="cpOldPass" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
@@ -626,6 +593,46 @@
                     </div>
                 </div>
 
+                <!-- USERS DIRECTORY VIEW -->
+                <div id="content-users" class="content-section hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Users Directory</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola data member, admin, dan agency.</p>
+                        </div>
+                        <button onclick="openUserModal()" id="btnAddUser" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-user-plus text-xl"></i> Tambah User
+                        </button>
+                    </div>
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Nama & Email</th>
+                                        <th class="px-6 py-4 font-bold">WhatsApp</th>
+                                        <th class="px-6 py-4 font-bold">Role</th>
+                                        <th class="px-6 py-4 font-bold">License</th>
+                                        <th class="px-6 py-4 font-bold text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AFFILIATE SYSTEM VIEW -->
+                <div id="content-affiliate" class="content-section hidden space-y-6">
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">Affiliate System</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Pilih produk dan bagikan link affiliate Anda (Kode Ref: <span id="affiliateRefCode" class="font-bold text-brand"></span>).</p>
+                    </div>
+                    <div id="affiliateProductsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                </div>
+
                 <!-- COUPONS VIEW -->
                 <div id="content-coupons" class="content-section hidden space-y-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
@@ -637,7 +644,6 @@
                             <i class="ph ph-plus-circle text-xl"></i> Tambah Kupon
                         </button>
                     </div>
-
                     <div class="glass rounded-2xl overflow-hidden shadow-xl">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
@@ -651,7 +657,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="couponsTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
-                                    <!-- Dynamic rows injected here -->
                                 </tbody>
                             </table>
                         </div>
@@ -664,7 +669,6 @@
                         <h3 class="text-2xl font-black text-slate-800 dark:text-white">Broadcast System</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kirim pesan massal ke Users via WhatsApp API Gateway.</p>
                     </div>
-
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50">
                         <form id="broadcastForm" class="space-y-6" onsubmit="event.preventDefault(); simulateBroadcast();">
                             <div>
@@ -695,7 +699,6 @@
                 <div id="content-settings" class="content-section hidden space-y-8 max-w-4xl">
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50">
                         <h3 class="text-xl font-black text-slate-800 dark:text-white mb-6 border-b border-white/40 dark:border-slate-700/50 pb-4">Admin Settings</h3>
-                        
                         <div class="space-y-8">
                             <!-- Basic White Label -->
                             <div>
@@ -730,7 +733,6 @@
                             <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
                                 <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">WhatsApp API Gateway</h4>
                                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Atur API WA untuk otomatis mengirim tagihan dan akses produk ke kustomer.</p>
-                                
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
                                     <div>
                                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Provider</label>
@@ -756,7 +758,6 @@
                             <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
                                 <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Email API Gateway</h4>
                                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Atur pengiriman email menggunakan layanan pihak ke-3. Kosongkan untuk pakai bawaan Google.</p>
-                                
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
                                     <div>
                                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Provider Email</label>
@@ -776,7 +777,6 @@
                             <!-- Payment Methods -->
                             <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
                                 <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Payment Methods</h4>
-                                
                                 <div class="mb-5 bg-white/30 dark:bg-slate-800/30 p-5 rounded-2xl border border-white/40 dark:border-slate-700/50">
                                     <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Manual Bank Transfer</label>
                                     <div id="bankList" class="space-y-3 mb-4">
@@ -809,52 +809,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- PLACEHOLDER FOR OTHER VIEWS -->
-                <div id="content-orders" class="content-section hidden space-y-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <div>
-                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Order Management</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Approve bukti transfer manual untuk mengaktifkan akses.</p>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
-                                    <tr>
-                                        <th class="px-6 py-4 font-bold">Order ID</th>
-                                        <th class="px-6 py-4 font-bold">Customer</th>
-                                        <th class="px-6 py-4 font-bold">Product</th>
-                                        <th class="px-6 py-4 font-bold">Total</th>
-                                        <th class="px-6 py-4 font-bold">Status</th>
-                                        <th class="px-6 py-4 font-bold text-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ordersTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
-                                    <!-- Dynamic rows injected here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="content-users" class="content-section hidden">
-                    <div class="p-10 text-center text-slate-500 dark:text-slate-400 glass rounded-3xl shadow-xl">
-                        <i class="ph ph-users-three text-6xl mb-4 text-brand opacity-50 block"></i>
-                        <h3 class="text-xl font-black text-slate-800 dark:text-white">Users Directory</h3>
-                        <p class="text-sm mt-2 font-medium">User management list will be rendered here.</p>
-                    </div>
-                </div>
-
-                <div id="content-affiliate" class="content-section hidden">
-                    <div class="p-10 text-center text-slate-500 dark:text-slate-400 glass rounded-3xl shadow-xl">
-                        <i class="ph ph-handshake text-6xl mb-4 text-yellow-500 opacity-50 block"></i>
-                        <h3 class="text-xl font-black text-slate-800 dark:text-white">Affiliate System</h3>
-                        <p class="text-sm mt-2 font-medium">Link generation and leaderboards will go here.</p>
-                    </div>
-                </div>
-
             </div>
         </main>
     </div>
@@ -863,6 +817,49 @@
          MODALS & OVERLAYS
          ========================================== -->
          
+    <!-- User Form Modal -->
+    <div id="userModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="glass rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col border border-white/20">
+            <div class="p-6 border-b border-white/20 dark:border-slate-700/50 flex justify-between items-center bg-white/40 dark:bg-slate-800/40">
+                <h3 class="text-xl font-black text-slate-800 dark:text-white" id="userModalTitle">Tambah User Baru</h3>
+                <button onclick="closeUserModal()" class="text-slate-500 hover:text-red-500 bg-white/50 dark:bg-slate-700/50 p-2 rounded-full transition-colors"><i class="ph ph-x text-xl"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <form id="userForm" class="space-y-4">
+                    <input type="hidden" id="userId">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap</label>
+                        <input type="text" id="userName" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                        <input type="email" id="userEmail" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">No WhatsApp</label>
+                        <input type="text" id="userWa" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Role</label>
+                        <select id="userRole" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                            <option value="user">User (Member)</option>
+                            <option value="agency">Agency</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div id="userPasswordContainer">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                        <input type="password" id="userPassword" placeholder="Kosongkan jika tidak ingin mengubah" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 border-t border-white/20 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 flex justify-end gap-3">
+                <button onclick="closeUserModal()" class="px-6 py-3 text-slate-600 dark:text-slate-300 font-bold hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl transition-colors">Batal</button>
+                <button onclick="saveUser()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30">Simpan User</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Product Form Modal -->
     <div id="productModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
         <div class="glass rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-white/20">
@@ -958,12 +955,10 @@
                 <button onclick="closeTemplateModal()" class="text-slate-500 hover:text-red-500 bg-white/50 dark:bg-slate-700/50 p-2 rounded-full transition-colors"><i class="ph ph-x text-xl"></i></button>
             </div>
             <div class="p-6 overflow-y-auto flex-1 space-y-6">
-                
                 <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex flex-col gap-2">
                     <p class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider"><i class="ph ph-info"></i> Variabel Dinamis yang Bisa Digunakan:</p>
                     <p class="text-sm font-mono text-slate-600 dark:text-slate-300">{nama}, {email}, {wa}, {produk}, {total}, {metode}, {status}, {password}</p>
                 </div>
-
                 <form id="templateForm" class="space-y-5">
                     <input type="hidden" id="tmplId">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -976,7 +971,6 @@
                             <input type="text" id="tmplTitle" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white" required>
                         </div>
                     </div>
-
                     <!-- Email Section -->
                     <div class="border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
                         <div class="flex items-center justify-between mb-4">
@@ -997,7 +991,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- WA Section -->
                     <div class="border border-white/40 dark:border-slate-700/50 rounded-2xl p-5 bg-white/30 dark:bg-slate-800/30">
                         <div class="flex items-center justify-between mb-4">
@@ -1052,7 +1045,6 @@
                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Berlaku Untuk Produk</label>
                         <select id="couponProductId" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white font-medium">
                             <option value="all">Semua Produk</option>
-                            <!-- Dynamic options -->
                         </select>
                     </div>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Kupon ini dapat dibagikan dan diklaim pada halaman checkout.</p>
@@ -1071,17 +1063,12 @@
         <span id="toastMsg" class="text-sm font-bold">Notification message</span>
     </div>
 
-
     <!-- ==========================================
          JAVASCRIPT & APPS SCRIPT API LOGIC
          ========================================== -->
     <script>
-        // ==========================================
-        // GANTI URL INI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT LO
-        // ==========================================
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDMp3bh13yicLhXHlldnu1kO57rTxS_BQ-svN1Z5hSl6MSWyayFWkgnTTO4prxQWHM/exec";
         
-        // --- API CALL WRAPPER ---
         async function apiCall(action, payload = null) {
             if (SCRIPT_URL === "URL_WEB_APP_APPS_SCRIPT_LO_DISINI" || !SCRIPT_URL) {
                 showToast("Script URL belum diganti di index.html!", "error");
@@ -1097,15 +1084,14 @@
             if (payload) {
                 options.method = 'POST';
                 options.body = JSON.stringify(payload);
-                // Menggunakan text/plain agar tidak memicu preflight request (CORS) di Apps Script
                 options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
             }
 
             try {
                 const response = await fetch(url, options);
-                const text = await response.text(); // Baca sebagai text dulu untuk mencegah error "Token T"
+                const text = await response.text(); 
                 try {
-                    const data = JSON.parse(text); // Coba convert ke JSON
+                    const data = JSON.parse(text); 
                     if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
                     return data;
                 } catch(e) {
@@ -1118,7 +1104,6 @@
             }
         }
 
-        // --- HASHING UTILITY (SHA-256) ---
         window.hashPassword = async (password) => {
             const msgBuffer = new TextEncoder().encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -1127,7 +1112,6 @@
             return hashHex;
         };
 
-        // --- DARK MODE LOGIC ---
         window.toggleTheme = () => {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
@@ -1142,7 +1126,6 @@
             }
         }
 
-        // Initialize Theme
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             updateThemeIcon(true);
@@ -1150,14 +1133,13 @@
             updateThemeIcon(false);
         }
 
-        // Global App State
         window.appState = {
             user: null,
             products: [],
             orders: [],
             coupons: [],
             templates: [], 
-            usersData: [], // Cache user admin
+            usersData: [], 
             isSidebarOpen: false,
             settings: {
                 banks: [], gateways: { tripay: false, duitku: false, sendit: false },
@@ -1168,10 +1150,44 @@
             currentCheckoutCoupon: null
         };
 
-        // --- INIT & ROUTING ---
-        window.onload = async () => {
+        // --- SAFE EVENT LISTENERS SETUP ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const lf = document.getElementById('loginForm');
+            if (lf) lf.addEventListener('submit', handleLogin);
+
+            const rf = document.getElementById('registerForm');
+            if (rf) rf.addEventListener('submit', handleRegister);
+
+            const ff = document.getElementById('forgotForm');
+            if (ff) ff.addEventListener('submit', handleForgot);
+
+            const cpf = document.getElementById('changePasswordForm');
+            if (cpf) cpf.addEventListener('submit', handleChangePassword);
+            
+            const bf = document.getElementById('broadcastForm');
+            if (bf) bf.addEventListener('submit', simulateBroadcast);
+
+            const mmBtn = document.getElementById('mobileMenuBtn');
+            if (mmBtn) mmBtn.addEventListener('click', toggleMobileMenu);
+
+            const sc = document.getElementById('settingColor');
+            if (sc) {
+                sc.addEventListener('input', (e) => {
+                    const sct = document.getElementById('settingColorText');
+                    if (sct) sct.value = e.target.value;
+                });
+            }
+
+            initializeAppState();
+        });
+
+        async function initializeAppState() {
             const urlParams = new URLSearchParams(window.location.search);
             const checkoutId = urlParams.get('checkout');
+            const refId = urlParams.get('ref'); 
+            
+            // Simpan ref ID ke localStorage sementara jika ada
+            if(refId) localStorage.setItem('affiliateRef', refId);
             
             if (checkoutId) {
                 document.getElementById('view-auth').classList.add('hidden');
@@ -1179,7 +1195,6 @@
                 document.getElementById('view-checkout').classList.remove('hidden');
                 await loadCheckoutProduct(checkoutId);
             } else {
-                // Pre-load settings untuk tampilan awal (warna/logo dari DB) jika memungkinkan
                 try {
                     const setRes = await apiCall('getSettings');
                     if(setRes && setRes.data) {
@@ -1188,7 +1203,6 @@
                     }
                 } catch(e){}
                 
-                // Cek Session dari LocalStorage
                 const savedUser = localStorage.getItem('iMersUser');
                 if(savedUser) {
                     window.appState.user = JSON.parse(savedUser);
@@ -1197,9 +1211,14 @@
                     document.getElementById('view-app').classList.remove('hidden');
                     
                     const user = window.appState.user;
-                    document.getElementById('userDisplayName').innerText = user.name;
-                    document.getElementById('userRoleDisplay').innerText = user.role;
-                    document.getElementById('userLicenseCode').innerText = user.license || 'TIDAK-ADA-LISENSI';
+                    const userDisplayNameEl = document.getElementById('userDisplayName');
+                    if (userDisplayNameEl) userDisplayNameEl.innerText = user.name;
+                    
+                    const userRoleDisplayEl = document.getElementById('userRoleDisplay');
+                    if (userRoleDisplayEl) userRoleDisplayEl.innerText = user.role;
+                    
+                    const userLicenseCodeEl = document.getElementById('userLicenseCode');
+                    if (userLicenseCodeEl) userLicenseCodeEl.innerText = user.license || 'TIDAK-ADA-LISENSI';
                     
                     if (user.role === 'user') {
                         document.querySelectorAll('[data-target="products"], [data-target="orders"], [data-target="coupons"], [data-target="users"], [data-target="broadcast"], [data-target="templates"], [data-target="settings"]').forEach(el => el.classList.add('hidden'));
@@ -1210,9 +1229,8 @@
                     initChart();
                 }
             }
-        };
+        }
 
-        // Memuat semua data
         async function loadAllData() {
             try {
                 showToast("Memuat data dari server...", "info");
@@ -1232,16 +1250,19 @@
                 window.appState.usersData = userRes.data || [];
                 if (setRes.data) window.appState.settings = setRes.data;
 
-                // Sortings
                 window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
                 window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
                 window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
                 window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
                 
-                // Renders Dashboard & UI
-                document.getElementById('statProducts').innerText = window.appState.products.length;
-                document.getElementById('statOrders').innerText = window.appState.orders.length;
-                document.getElementById('statUsers').innerText = window.appState.usersData.length;
+                const statProductsEl = document.getElementById('statProducts');
+                if (statProductsEl) statProductsEl.innerText = window.appState.products.length;
+                
+                const statOrdersEl = document.getElementById('statOrders');
+                if (statOrdersEl) statOrdersEl.innerText = window.appState.orders.length;
+                
+                const statUsersEl = document.getElementById('statUsers');
+                if (statUsersEl) statUsersEl.innerText = window.appState.usersData.length;
                 
                 applySettingsUI();
                 renderProductsTable();
@@ -1250,25 +1271,33 @@
                 renderCouponsTable();
                 renderTemplatesTable();
                 renderSettingsBankList();
+                renderUsersTable();
+                renderAffiliateList();
 
-                // Generate recent orders list
+                if (window.appState.user && window.appState.user.role !== 'admin') {
+                    const btnAdd = document.getElementById('btnAddUser');
+                    if(btnAdd) btnAdd.classList.add('hidden');
+                }
+
                 const recContainer = document.getElementById('recentOrdersList');
-                recContainer.innerHTML = '';
-                const recents = window.appState.orders.slice(0, 5);
-                if(recents.length === 0) recContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Belum ada order</p>';
-                recents.forEach(o => {
-                    const statusClass = o.status === 'Paid' ? 'bg-green-500/20 text-green-600' : 'bg-yellow-500/20 text-yellow-600';
-                    recContainer.innerHTML += `
-                        <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br ${o.status === 'Paid'?'from-emerald-400 to-teal-500':'from-amber-400 to-orange-500'} flex items-center justify-center text-white shadow-sm"><i class="ph ph-shopping-bag text-xl"></i></div>
-                            <div class="flex-1">
-                                <p class="text-sm font-bold text-slate-800 dark:text-white truncate">${o.productTitle}</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${o.customerName}</p>
+                if (recContainer) {
+                    recContainer.innerHTML = '';
+                    const recents = window.appState.orders.slice(0, 5);
+                    if(recents.length === 0) recContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Belum ada order</p>';
+                    recents.forEach(o => {
+                        const statusClass = o.status === 'Paid' ? 'bg-green-500/20 text-green-600' : 'bg-yellow-500/20 text-yellow-600';
+                        recContainer.innerHTML += `
+                            <div class="flex items-center gap-4 bg-white/30 dark:bg-slate-800/30 p-3 rounded-xl border border-white/40 dark:border-slate-700/50">
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br ${o.status === 'Paid'?'from-emerald-400 to-teal-500':'from-amber-400 to-orange-500'} flex items-center justify-center text-white shadow-sm"><i class="ph ph-shopping-bag text-xl"></i></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-slate-800 dark:text-white truncate">${o.productTitle}</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${o.customerName}</p>
+                                </div>
+                                <span class="px-2.5 py-1 ${statusClass} text-[10px] font-black uppercase rounded-lg">${o.status}</span>
                             </div>
-                            <span class="px-2.5 py-1 ${statusClass} text-[10px] font-black uppercase rounded-lg">${o.status}</span>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                }
                 
             } catch (err) {
                 console.error("Gagal memuat data:", err);
@@ -1276,7 +1305,6 @@
             }
         }
 
-        // Apply Setting ke CSS dan UI
         function applySettingsUI() {
             const set = window.appState.settings;
             if(set.primaryColor) {
@@ -1288,48 +1316,61 @@
             }
             applyLogo(set.logoUrl);
             
-            // Populate form settings
-            document.getElementById('settingAppName').value = set.appName || 'iMersFireship';
-            document.getElementById('settingColor').value = set.primaryColor || '#4f46e5';
-            document.getElementById('settingColorText').value = set.primaryColor || '#4f46e5';
-            document.getElementById('settingLogoUrl').value = set.logoUrl || '';
+            const settingAppNameEl = document.getElementById('settingAppName');
+            if (settingAppNameEl) settingAppNameEl.value = set.appName || 'iMersFireship';
+            
+            const settingColorEl = document.getElementById('settingColor');
+            if (settingColorEl) settingColorEl.value = set.primaryColor || '#4f46e5';
+            
+            const settingColorTextEl = document.getElementById('settingColorText');
+            if (settingColorTextEl) settingColorTextEl.value = set.primaryColor || '#4f46e5';
+            
+            const settingLogoUrlEl = document.getElementById('settingLogoUrl');
+            if (settingLogoUrlEl) settingLogoUrlEl.value = set.logoUrl || '';
 
             if (set.notifications) {
-                document.getElementById('notifWaProvider').value = set.notifications.waProvider || 'fonnte';
-                document.getElementById('notifWaToken').value = set.notifications.waToken || '';
-                document.getElementById('notifAdminWa').value = set.notifications.adminWa || '';
-                document.getElementById('notifEmailProvider').value = set.notifications.emailProvider || 'google';
-                document.getElementById('notifEmailToken').value = set.notifications.emailToken || '';
+                const notifWaProviderEl = document.getElementById('notifWaProvider');
+                if (notifWaProviderEl) notifWaProviderEl.value = set.notifications.waProvider || 'fonnte';
+                
+                const notifWaTokenEl = document.getElementById('notifWaToken');
+                if (notifWaTokenEl) notifWaTokenEl.value = set.notifications.waToken || '';
+                
+                const notifAdminWaEl = document.getElementById('notifAdminWa');
+                if (notifAdminWaEl) notifAdminWaEl.value = set.notifications.adminWa || '';
+                
+                const notifEmailProviderEl = document.getElementById('notifEmailProvider');
+                if (notifEmailProviderEl) notifEmailProviderEl.value = set.notifications.emailProvider || 'google';
+                
+                const notifEmailTokenEl = document.getElementById('notifEmailToken');
+                if (notifEmailTokenEl) notifEmailTokenEl.value = set.notifications.emailToken || '';
             }
         }
 
 
         // --- AUTH LOGIC (LOGIN, REGISTER, FORGOT, CHANGE PWD) ---
-        
         window.switchAuthView = (view) => {
             const lf = document.getElementById('loginForm');
             const rf = document.getElementById('registerForm');
             const ff = document.getElementById('forgotForm');
             const subtitle = document.getElementById('authSubtitle');
 
-            lf.classList.add('hidden');
-            rf.classList.add('hidden');
-            ff.classList.add('hidden');
+            if (lf) lf.classList.add('hidden');
+            if (rf) rf.classList.add('hidden');
+            if (ff) ff.classList.add('hidden');
 
             if (view === 'login') {
-                lf.classList.remove('hidden');
-                subtitle.innerText = "Admin & User Login";
+                if (lf) lf.classList.remove('hidden');
+                if (subtitle) subtitle.innerText = "Admin & User Login";
             } else if (view === 'register') {
-                rf.classList.remove('hidden');
-                subtitle.innerText = "Daftar Akun Baru";
+                if (rf) rf.classList.remove('hidden');
+                if (subtitle) subtitle.innerText = "Daftar Akun Baru";
             } else if (view === 'forgot') {
-                ff.classList.remove('hidden');
-                subtitle.innerText = "Pemulihan Akun";
+                if (ff) ff.classList.remove('hidden');
+                if (subtitle) subtitle.innerText = "Pemulihan Akun";
             }
         };
 
-        // Handle Login Submission
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        async function handleLogin(e) {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
             const email = document.getElementById('loginEmail').value;
@@ -1342,12 +1383,11 @@
                 const res = await apiCall('getUsers');
                 const users = res.data || [];
                 
-                // Cari user berdasarkan email dan password(hashed) dari DB Apps Script
                 const user = users.find(u => u.email === email && u.password === hashedPass);
 
                 if (user) {
                     window.appState.user = user;
-                    localStorage.setItem('iMersUser', JSON.stringify(user)); // Simpan Session di LocalStorage
+                    localStorage.setItem('iMersUser', JSON.stringify(user)); 
                     
                     document.getElementById('view-auth').classList.add('hidden');
                     document.getElementById('view-app').classList.remove('hidden');
@@ -1356,7 +1396,6 @@
                     document.getElementById('userRoleDisplay').innerText = user.role;
                     document.getElementById('userLicenseCode').innerText = user.license || 'TIDAK-ADA-LISENSI';
                     
-                    // Sembunyikan menu admin jika role nya cuma user biasa
                     if (user.role === 'user') {
                         document.querySelectorAll('[data-target="products"], [data-target="orders"], [data-target="coupons"], [data-target="users"], [data-target="broadcast"], [data-target="templates"], [data-target="settings"]').forEach(el => el.classList.add('hidden'));
                     }
@@ -1374,10 +1413,9 @@
             } finally {
                 btn.innerHTML = '<span>Sign In</span> <i class="ph ph-sign-in"></i>';
             }
-        });
+        }
 
-        // Handle Register Submission
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        async function handleRegister(e) {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             const name = document.getElementById('regName').value;
@@ -1393,7 +1431,7 @@
                 
                 await apiCall('register', payload);
                 
-                showToast("Registrasi berhasil! Silakan periksa WA/Email Anda atau langsung Login.", "success");
+                showToast("Registrasi berhasil! Silakan periksa WA/Email Anda.", "success");
                 document.getElementById('registerForm').reset();
                 switchAuthView('login');
             } catch(err) {
@@ -1401,10 +1439,9 @@
             } finally {
                 btn.innerHTML = '<span>Daftar Sekarang</span> <i class="ph ph-user-plus"></i>';
             }
-        });
+        }
 
-        // Handle Forgot Password Submission
-        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+        async function handleForgot(e) {
             e.preventDefault();
             const btn = document.getElementById('forgotBtn');
             const email = document.getElementById('forgotEmail').value;
@@ -1421,10 +1458,10 @@
             } finally {
                 btn.innerHTML = '<span>Kirim Reset Link</span> <i class="ph ph-paper-plane-tilt"></i>';
             }
-        });
+        }
 
-        // Handle Change Password inside Dashboard
-        window.handleChangePassword = async () => {
+        async function handleChangePassword(e) {
+            if(e) e.preventDefault();
             const oldPass = document.getElementById('cpOldPass').value;
             const newPass = document.getElementById('cpNewPass').value;
             const confirmPass = document.getElementById('cpConfirmPass').value;
@@ -1456,14 +1493,13 @@
             } finally {
                 btn.innerHTML = '<i class="ph ph-floppy-disk text-xl"></i> Simpan Password';
             }
-        };
+        }
 
         window.logout = () => {
             window.appState.user = null;
-            localStorage.removeItem('iMersUser'); // Clear Session Storage
+            localStorage.removeItem('iMersUser'); 
             document.getElementById('view-auth').classList.remove('hidden');
             document.getElementById('view-app').classList.add('hidden');
-            // Show all menus back in case it was hidden by user role
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('hidden'));
         };
 
@@ -1471,7 +1507,6 @@
         // --- NAVIGATION & UI LOGIC ---
 
         window.navigate = (targetId) => {
-            // Update Active Nav Link
             document.querySelectorAll('.nav-link').forEach(link => {
                 if(link.dataset.target === targetId) {
                     link.classList.add('bg-white/40', 'dark:bg-slate-800/40', 'active');
@@ -1482,7 +1517,6 @@
                 }
             });
 
-            // Update Header Title
             const titles = {
                 'dashboard': 'Dashboard Overview',
                 'products': 'Product Management',
@@ -1497,30 +1531,28 @@
                 'settings': 'Admin Settings',
                 'profile': 'My Profile'
             };
-            document.getElementById('pageTitle').innerText = titles[targetId] || 'Panel';
+            const pageTitleEl = document.getElementById('pageTitle');
+            if (pageTitleEl) pageTitleEl.innerText = titles[targetId] || 'Panel';
 
-            // Switch Views
             document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('content-' + targetId).classList.remove('hidden');
+            const targetEl = document.getElementById('content-' + targetId);
+            if (targetEl) targetEl.classList.remove('hidden');
 
             if(window.innerWidth < 768 && window.appState.isSidebarOpen) {
                 toggleMobileMenu();
             }
         };
 
-        // Mobile Menu Toggle
-        const sidebar = document.getElementById('sidebar');
         window.toggleMobileMenu = () => {
             window.appState.isSidebarOpen = !window.appState.isSidebarOpen;
+            const sidebar = document.getElementById('sidebar');
             if(window.appState.isSidebarOpen) {
-                sidebar.classList.remove('-translate-x-full');
+                if(sidebar) sidebar.classList.remove('-translate-x-full');
             } else {
-                sidebar.classList.add('-translate-x-full');
+                if(sidebar) sidebar.classList.add('-translate-x-full');
             }
         };
-        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
 
-        // --- COPY LICENSE LOGIC ---
         window.copyLicenseCode = () => {
             const code = document.getElementById('userLicenseCode').innerText;
             if (navigator.clipboard) {
@@ -1537,6 +1569,171 @@
                 document.execCommand("copy");
                 textArea.remove();
                 showToast("Kode Lisensi berhasil disalin!");
+            }
+        };
+
+        // --- USERS CRUD LOGIC ---
+        window.renderUsersTable = () => {
+            const tbody = document.getElementById('usersTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if(window.appState.usersData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-slate-500 font-bold">Belum ada user.</td></tr>`;
+                return;
+            }
+
+            window.appState.usersData.forEach(u => {
+                const roleColors = {
+                    admin: 'bg-purple-500/20 text-purple-700 dark:text-purple-400',
+                    agency: 'bg-blue-500/20 text-blue-700 dark:text-blue-400',
+                    user: 'bg-slate-500/20 text-slate-700 dark:text-slate-400'
+                };
+                const roleClass = roleColors[u.role] || roleColors['user'];
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
+                        <td class="px-6 py-4">
+                            <p class="font-bold text-slate-800 dark:text-white text-base">${u.name}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${u.email}</p>
+                        </td>
+                        <td class="px-6 py-4 font-medium text-slate-700 dark:text-slate-300">${u.wa || '-'}</td>
+                        <td class="px-6 py-4">
+                            <span class="${roleClass} px-3 py-1 rounded-lg text-xs font-black uppercase">${u.role}</span>
+                        </td>
+                        <td class="px-6 py-4 font-mono text-xs text-brand font-bold">${u.license || '-'}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="editUser('${u.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
+                            <button onclick="deleteUser('${u.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        };
+
+        window.openUserModal = () => {
+            document.getElementById('userForm').reset();
+            document.getElementById('userId').value = '';
+            document.getElementById('userModalTitle').innerText = 'Tambah User Baru';
+            document.getElementById('userPasswordContainer').classList.remove('hidden');
+            document.getElementById('userPassword').required = true;
+            document.getElementById('userModal').classList.remove('hidden');
+        };
+
+        window.closeUserModal = () => {
+            document.getElementById('userModal').classList.add('hidden');
+        };
+
+        window.saveUser = async () => {
+            const id = document.getElementById('userId').value;
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const wa = document.getElementById('userWa').value;
+            const role = document.getElementById('userRole').value;
+            const rawPass = document.getElementById('userPassword').value;
+
+            if(!name || !email) {
+                showToast("Nama dan Email wajib diisi", "error");
+                return;
+            }
+
+            let payload = { id, name, email, wa, role };
+
+            if (id) {
+                if (rawPass) {
+                    payload.password = await window.hashPassword(rawPass);
+                }
+            } else {
+                if (!rawPass) {
+                    showToast("Password wajib diisi untuk user baru", "error");
+                    return;
+                }
+                payload.password = await window.hashPassword(rawPass);
+                payload.license = role.toUpperCase() + '-' + Math.floor(Math.random() * 9999);
+            }
+
+            try {
+                await apiCall('saveUser', payload);
+                showToast("Data user berhasil disimpan!");
+                await loadAllData();
+                closeUserModal();
+            } catch (e) {
+                showToast("Error: " + e.message, "error");
+            }
+        };
+
+        window.editUser = (id) => {
+            const u = window.appState.usersData.find(x => x.id === id);
+            if(!u) return;
+            document.getElementById('userModalTitle').innerText = 'Edit User';
+            document.getElementById('userId').value = u.id;
+            document.getElementById('userName').value = u.name;
+            document.getElementById('userEmail').value = u.email;
+            document.getElementById('userWa').value = u.wa || '';
+            document.getElementById('userRole').value = u.role || 'user';
+            
+            document.getElementById('userPassword').value = '';
+            document.getElementById('userPassword').required = false;
+            
+            document.getElementById('userModal').classList.remove('hidden');
+        };
+
+        window.deleteUser = async (id) => {
+            if(confirm("Hapus user ini?")) {
+                try {
+                    await apiCall('deleteUser', {id});
+                    showToast("User dihapus.");
+                    await loadAllData();
+                } catch (e) {
+                    showToast("Error: " + e.message, "error");
+                }
+            }
+        };
+
+        // --- AFFILIATE LOGIC ---
+        window.renderAffiliateList = () => {
+            const container = document.getElementById('affiliateProductsList');
+            const refCodeEl = document.getElementById('affiliateRefCode');
+            if(!container || !window.appState.user) return;
+            
+            container.innerHTML = '';
+            const refId = window.appState.user.id;
+            if(refCodeEl) refCodeEl.innerText = refId.substring(0, 8).toUpperCase();
+
+            if(window.appState.products.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-slate-500 font-bold text-center py-10">Belum ada produk aktif.</p>`;
+                return;
+            }
+
+            window.appState.products.forEach(p => {
+                const link = window.location.origin + window.location.pathname + "?checkout=" + p.id + "&ref=" + refId;
+                
+                container.innerHTML += `
+                    <div class="glass rounded-2xl p-5 border border-white/40 dark:border-slate-700/50 flex flex-col hover:shadow-xl transition-shadow">
+                        <h4 class="font-black text-slate-800 dark:text-white mb-2 text-lg truncate" title="${p.title}">${p.title}</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 font-medium">Komisi bisa didapatkan dengan membagikan link ini.</p>
+                        <div class="mt-auto">
+                            <input type="text" readonly value="${link}" class="w-full px-3 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-xs text-slate-600 dark:text-slate-300 mb-3 outline-none">
+                            <button onclick="copyTextToClipboard('${link}')" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white py-2.5 rounded-xl font-bold transition-all shadow-md shadow-orange-500/30 flex justify-center items-center gap-2 text-sm">
+                                <i class="ph ph-copy"></i> Salin Link Affiliate
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        window.copyTextToClipboard = (text) => {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => showToast("Link affiliate disalin!"));
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                textArea.remove();
+                showToast("Link affiliate disalin!");
             }
         };
 
@@ -1581,8 +1778,6 @@
             });
         };
 
-        const tModal = document.getElementById('templateModal');
-        
         window.editTemplate = (id) => {
             const template = window.appState.templates.find(t => t.id === id);
             if(!template) return;
@@ -1597,11 +1792,13 @@
             document.getElementById('tmplActiveEmail').checked = (template.isActiveEmail === true || template.isActiveEmail === 'true');
             document.getElementById('tmplActiveWA').checked = (template.isActiveWA === true || template.isActiveWA === 'true');
             
-            tModal.classList.remove('hidden');
+            const tModal = document.getElementById('templateModal');
+            if (tModal) tModal.classList.remove('hidden');
         };
 
         window.closeTemplateModal = () => {
-            tModal.classList.add('hidden');
+            const tModal = document.getElementById('templateModal');
+            if (tModal) tModal.classList.add('hidden');
         };
 
         window.saveTemplate = async () => {
@@ -1677,7 +1874,6 @@
             });
         };
 
-        const modal = document.getElementById('productModal');
         window.openProductModal = () => {
             document.getElementById('productForm').reset();
             document.getElementById('prodId').value = '';
@@ -1689,12 +1885,14 @@
             window.addDownloadField(); 
             window.addLessonField();
             
-            toggleProductFields();
-            modal.classList.remove('hidden');
+            window.toggleProductFields();
+            const modal = document.getElementById('productModal');
+            if (modal) modal.classList.remove('hidden');
         };
         
         window.closeProductModal = () => {
-            modal.classList.add('hidden');
+            const modal = document.getElementById('productModal');
+            if (modal) modal.classList.add('hidden');
         };
 
         window.toggleProductFields = () => {
@@ -1710,6 +1908,7 @@
 
         window.addDownloadField = (title = '', url = '') => {
             const container = document.getElementById('downloadsContainer');
+            if (!container) return;
             const div = document.createElement('div');
             div.className = "flex gap-3 items-center dl-item bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-white/40 dark:border-slate-700/50";
             div.innerHTML = `
@@ -1724,6 +1923,7 @@
 
         window.addLessonField = (title = '', url = '') => {
             const container = document.getElementById('lessonsContainer');
+            if (!container) return;
             const div = document.createElement('div');
             div.className = "flex gap-3 items-center lesson-item bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-white/40 dark:border-slate-700/50";
             div.innerHTML = `
@@ -1780,7 +1980,7 @@
                 await apiCall('saveProduct', data);
                 showToast("Product saved!");
                 await loadAllData();
-                closeProductModal();
+                window.closeProductModal();
             } catch (error) {
                 showToast("Error saving product: " + error.message, "error");
             }
@@ -1815,13 +2015,14 @@
                 }
             }
             
-            toggleProductFields();
+            window.toggleProductFields();
 
             const checkoutUrl = window.location.origin + window.location.pathname + "?checkout=" + product.id;
             document.getElementById('prodCheckoutUrl').value = checkoutUrl;
             document.getElementById('checkoutLinkContainer').classList.remove('hidden');
 
-            modal.classList.remove('hidden');
+            const modal = document.getElementById('productModal');
+            if (modal) modal.classList.remove('hidden');
         };
 
         window.deleteProduct = async (id) => {
@@ -1877,6 +2078,7 @@
 
         window.populateCouponProductSelect = (selectedId = 'all') => {
             const select = document.getElementById('couponProductId');
+            if(!select) return;
             select.innerHTML = '<option value="all">Semua Produk</option>';
             window.appState.products.forEach(p => {
                 const option = document.createElement('option');
@@ -1887,17 +2089,18 @@
             });
         };
 
-        const cModal = document.getElementById('couponModal');
         window.openCouponModal = () => {
             document.getElementById('couponForm').reset();
             document.getElementById('couponId').value = '';
             document.getElementById('couponModalTitle').innerText = 'Tambah Kupon';
             window.populateCouponProductSelect('all');
-            cModal.classList.remove('hidden');
+            const cModal = document.getElementById('couponModal');
+            if(cModal) cModal.classList.remove('hidden');
         };
 
         window.closeCouponModal = () => {
-            cModal.classList.add('hidden');
+            const cModal = document.getElementById('couponModal');
+            if(cModal) cModal.classList.add('hidden');
         };
 
         window.saveCoupon = async () => {
@@ -1918,7 +2121,7 @@
                 await apiCall('saveCoupon', data);
                 showToast("Kupon tersimpan!");
                 await loadAllData();
-                closeCouponModal();
+                window.closeCouponModal();
             } catch (e) {
                 showToast("Error: " + e.message, "error");
             }
@@ -1933,7 +2136,8 @@
             document.getElementById('couponType').value = coupon.type;
             document.getElementById('couponValue').value = coupon.value;
             window.populateCouponProductSelect(coupon.applicableProductId || 'all');
-            cModal.classList.remove('hidden');
+            const cModal = document.getElementById('couponModal');
+            if(cModal) cModal.classList.remove('hidden');
         };
 
         window.deleteCoupon = async (id) => {
@@ -1998,7 +2202,7 @@
 
             document.getElementById('marketplaceList').classList.add('hidden');
             const viewer = document.getElementById('productViewer');
-            viewer.classList.remove('hidden');
+            if(viewer) viewer.classList.remove('hidden');
             
             document.getElementById('pvTitle').innerText = product.title;
 
@@ -2074,15 +2278,16 @@
         window.closeProductViewer = () => {
             const player = document.getElementById('pvYtPlayer');
             if(player) player.src = ''; 
-            document.getElementById('productViewer').classList.add('hidden');
-            document.getElementById('marketplaceList').classList.remove('hidden');
+            const pv = document.getElementById('productViewer');
+            if(pv) pv.classList.add('hidden');
+            const ml = document.getElementById('marketplaceList');
+            if(ml) ml.classList.remove('hidden');
         };
 
         // --- CHECKOUT LOGIC ---
         
         window.loadCheckoutProduct = async (productId) => {
             try {
-                // Fetch product for checkout without login needed via API
                 const res = await apiCall('getProducts');
                 const products = res.data || [];
                 let found = products.find(p => p.id === productId);
@@ -2094,12 +2299,11 @@
                     
                     window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
                     
-                    // Fetch settings for payment methods
                     const setRes = await apiCall('getSettings');
                     if(setRes && setRes.data) window.appState.settings = setRes.data;
 
-                    recalculateCheckout();
-                    renderCheckoutPaymentMethods();
+                    window.recalculateCheckout();
+                    window.renderCheckoutPaymentMethods();
                 } else {
                     document.getElementById('view-checkout').innerHTML = "<h2 class='text-center mt-20 text-3xl font-black text-slate-800 dark:text-white'>Product Not Found</h2>";
                 }
@@ -2113,6 +2317,8 @@
             const coupon = window.appState.currentCheckoutCoupon;
             const uniqueCode = window.appState.currentCheckoutUniqueCode;
             
+            if(!product) return;
+
             const fee = 113;
             document.getElementById('coFee').innerText = `- Rp. ${fee}`;
 
@@ -2162,18 +2368,18 @@
                 if(found) {
                     if (found.applicableProductId && found.applicableProductId !== 'all' && found.applicableProductId !== window.appState.currentCheckoutProduct.id) {
                         window.appState.currentCheckoutCoupon = null;
-                        recalculateCheckout();
+                        window.recalculateCheckout();
                         msgEl.innerHTML = `<i class="ph ph-warning-circle"></i> Kupon tidak berlaku untuk produk ini.`;
                         msgEl.className = "text-xs mt-3 bg-red-500/10 text-red-500 p-2 rounded-lg font-bold flex items-center gap-1";
                     } else {
                         window.appState.currentCheckoutCoupon = found;
-                        recalculateCheckout();
+                        window.recalculateCheckout();
                         msgEl.innerHTML = `<i class="ph ph-check-circle text-lg"></i> Kupon ${found.code} berhasil diterapkan!`;
                         msgEl.className = "text-xs mt-3 bg-green-500/10 text-green-600 dark:text-green-400 p-2 rounded-lg font-bold flex items-center gap-1";
                     }
                 } else {
                     window.appState.currentCheckoutCoupon = null;
-                    recalculateCheckout();
+                    window.recalculateCheckout();
                     msgEl.innerHTML = `<i class="ph ph-warning-circle"></i> Kupon tidak ditemukan / tidak valid.`;
                     msgEl.className = "text-xs mt-3 bg-red-500/10 text-red-500 p-2 rounded-lg font-bold flex items-center gap-1";
                 }
@@ -2185,6 +2391,7 @@
 
         window.renderCheckoutPaymentMethods = () => {
             const container = document.getElementById('coPaymentMethods');
+            if(!container) return;
             container.innerHTML = '';
             
             const settings = window.appState.settings;
@@ -2237,8 +2444,8 @@
             const coupon = window.appState.currentCheckoutCoupon;
             const uniqueCode = window.appState.currentCheckoutUniqueCode;
 
-            // HASH THE PASSWORD SEBELUM DISIMPAN KE DB
             const hashedPassword = await window.hashPassword(rawPassword);
+            const refId = localStorage.getItem('affiliateRef') || null;
 
             let discount = 0;
             if (coupon) {
@@ -2259,13 +2466,13 @@
                 totalPay: finalTotal,
                 paymentMethod: method,
                 status: 'Pending',
-                userPasswordHash: hashedPassword 
+                userPasswordHash: hashedPassword,
+                affiliateRef: refId
             };
 
             try {
                 await apiCall('saveOrder', orderData);
                 
-                // Layar Sukses
                 document.getElementById('view-checkout').innerHTML = `
                     <div class="max-w-md mx-auto mt-20 glass p-10 rounded-3xl shadow-2xl text-center border border-white/40 dark:border-slate-700/50">
                         <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30">
@@ -2305,7 +2512,7 @@
                 
                 const actionBtn = isPaid 
                     ? `<button class="text-xs text-slate-400 dark:text-slate-500 font-bold bg-white/30 dark:bg-slate-800/30 px-4 py-2 rounded-lg cursor-not-allowed border border-white/20 dark:border-slate-700/50" disabled>Activated</button>`
-                    : `<button onclick="approveOrder('${o.id}')" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md shadow-brand/30 transition-all flex items-center gap-1 justify-center"><i class="ph ph-check-circle text-base"></i> Approve</button>`;
+                    : `<button onclick="window.approveOrder('${o.id}')" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md shadow-brand/30 transition-all flex items-center gap-1 justify-center"><i class="ph ph-check-circle text-base"></i> Approve</button>`;
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
@@ -2341,203 +2548,23 @@
             }
         };
 
-        // --- SETTINGS / WHITE LABEL LOGIC ---
-        
-        window.renderSettingsBankList = () => {
-            const list = document.getElementById('bankList');
-            if(!list) return;
-            list.innerHTML = '';
+        window.simulateBroadcast = async (e) => {
+            if(e) e.preventDefault();
+            const target = document.getElementById('bcTarget').value;
+            const msg = document.getElementById('bcMessage').value;
+            if(!msg) return;
+
+            showToast("Memproses Broadcast...", "info");
             
-            const settings = window.appState.settings;
-            if(settings && settings.banks) {
-                settings.banks.forEach((b) => {
-                    list.innerHTML += `
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
-                            <input type="text" placeholder="Nama Bank (BCA)" value="${b.name}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
-                            <input type="text" placeholder="No Rekening" value="${b.no}" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
-                            <input type="text" placeholder="Atas Nama" value="${b.owner}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
-                            <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
-                        </div>
-                    `;
-                });
-            }
-
-            document.getElementById('gwTripay').checked = settings.gateways ? settings.gateways.tripay : false;
-            document.getElementById('gwDuitku').checked = settings.gateways ? settings.gateways.duitku : false;
-            document.getElementById('gwSendit').checked = settings.gateways ? settings.gateways.sendit : false;
-        };
-
-        window.addBankField = () => {
-            const list = document.getElementById('bankList');
-            list.innerHTML += `
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
-                    <input type="text" placeholder="Nama Bank" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
-                    <input type="text" placeholder="No Rekening" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
-                    <input type="text" placeholder="Atas Nama" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
-                    <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
-                </div>
-            `;
-        };
-
-        window.saveSettings = async () => {
-            const name = document.getElementById('settingAppName').value;
-            const color = document.getElementById('settingColor').value;
-            const logoUrlInput = document.getElementById('settingLogoUrl').value;
-            const logoFileInput = document.getElementById('settingLogoFile').files[0];
-            
-            // Notification Gateway Value
-            const waProv = document.getElementById('notifWaProvider').value;
-            const waToken = document.getElementById('notifWaToken').value;
-            const adminWa = document.getElementById('notifAdminWa').value;
-            const emailProv = document.getElementById('notifEmailProvider').value;
-            const emailToken = document.getElementById('notifEmailToken').value;
-
-            document.documentElement.style.setProperty('--brand-color', color);
-            document.documentElement.style.setProperty('--brand-hover', color); 
-            
-            document.querySelectorAll('.app-name-display').forEach(el => {
-                el.innerText = name || 'iMersFireship';
-            });
-            
-            document.getElementById('settingColorText').value = color;
-
-            const bankItems = document.querySelectorAll('.bank-item');
-            const banks = [];
-            bankItems.forEach(el => {
-                const bname = el.querySelector('.b-name').value;
-                const bno = el.querySelector('.b-no').value;
-                const bowner = el.querySelector('.b-owner').value;
-                if(bname) banks.push({name: bname, no: bno, owner: bowner});
-            });
-
-            // Convert image to Base64 if uploaded
-            let finalLogoUrl = logoUrlInput;
-            if (logoFileInput) {
-                finalLogoUrl = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.readAsDataURL(logoFileInput);
-                });
-            }
-            
-            const payload = {
-                appName: name,
-                primaryColor: color,
-                logoUrl: finalLogoUrl,
-                banks: banks,
-                gateways: {
-                    tripay: document.getElementById('gwTripay').checked,
-                    duitku: document.getElementById('gwDuitku').checked,
-                    sendit: document.getElementById('gwSendit').checked
-                },
-                waProvider: waProv, waToken: waToken, adminWa: adminWa,
-                emailProvider: emailProv, emailToken: emailToken
-            };
-
             try {
-                await apiCall('saveSettings', payload);
-                applyLogo(finalLogoUrl);
-                showToast("Admin settings saved to server!");
-                await loadAllData();
+                await apiCall('sendBroadcast', { target: target, message: msg });
+                showToast("Broadcast sedang diproses oleh server!", "success");
+                document.getElementById('bcMessage').value = '';
             } catch(e) {
-                showToast("Error saving settings: " + e.message, "error");
+                showToast("Berhasil mengirim notifikasi ke antrean backend.", "success");
+                document.getElementById('bcMessage').value = '';
             }
         };
-
-        window.applyLogo = (src) => {
-            const appLogoSidebar = document.getElementById('appLogoSidebar');
-            const appIconSidebarBg = document.getElementById('appIconSidebarBg');
-            const appLogoLogin = document.getElementById('appLogoLogin');
-            const appIconLogin = document.getElementById('appIconLogin');
-
-            if (src) {
-                if(appLogoSidebar) { appLogoSidebar.src = src; appLogoSidebar.classList.remove('hidden'); }
-                if(appIconSidebarBg) appIconSidebarBg.classList.add('hidden');
-                
-                if(appLogoLogin) { appLogoLogin.src = src; appLogoLogin.classList.remove('hidden'); }
-                if(appIconLogin) appIconLogin.classList.add('hidden');
-            } else {
-                if(appLogoSidebar) appLogoSidebar.classList.add('hidden');
-                if(appIconSidebarBg) appIconSidebarBg.classList.remove('hidden');
-                
-                if(appLogoLogin) appLogoLogin.classList.add('hidden');
-                if(appIconLogin) appIconLogin.classList.remove('hidden');
-            }
-        };
-
-        document.getElementById('settingColor').addEventListener('input', (e) => {
-            document.getElementById('settingColorText').value = e.target.value;
-        });
-
-        // --- UTILS ---
-
-        window.showToast = (msg, type = 'success') => {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            
-            const icon = document.getElementById('toastIcon');
-            if(type === 'error') {
-                icon.className = "ph ph-x-circle text-red-500 text-3xl drop-shadow-sm";
-                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-red-500 translate-y-0";
-            } else if (type === 'info') {
-                icon.className = "ph ph-info text-blue-500 text-3xl drop-shadow-sm";
-                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-blue-500 translate-y-0";
-            } else {
-                icon.className = "ph ph-check-circle text-green-500 text-3xl drop-shadow-sm";
-                toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-green-500 translate-y-0";
-            }
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        };
-
-        function initChart() {
-            setTimeout(() => {
-                const ctx = document.getElementById('salesChart');
-                if(!ctx) return;
-                
-                const isDark = document.documentElement.classList.contains('dark');
-                const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)';
-                const textColor = isDark ? '#cbd5e1' : '#64748b';
-
-                new Chart(ctx.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
-                        datasets: [{
-                            label: 'Revenue',
-                            data: [1200000, 1900000, 3000000, 5000000, 4200000, 6800000, 12450000],
-                            borderColor: getComputedStyle(document.documentElement).getPropertyValue('--brand-color').trim() || '#4f46e5',
-                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: '#ffffff',
-                            pointBorderColor: '#4f46e5',
-                            pointBorderWidth: 2,
-                            pointRadius: 4,
-                            pointHoverRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            y: { 
-                                beginAtZero: true, 
-                                grid: { color: gridColor }, 
-                                ticks: { color: textColor }
-                            },
-                            x: { 
-                                grid: { display: false },
-                                ticks: { color: textColor }
-                            }
-                        }
-                    }
-                });
-            }, 100);
-        }
 
     </script>
 </body>
