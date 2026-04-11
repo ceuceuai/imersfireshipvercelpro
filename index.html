@@ -1168,19 +1168,14 @@
             try {
                 const response = await fetch(url, options);
                 const text = await response.text(); 
-                
-                // Mencegah error Parsing JSON jika Apps Script mengembalikan halaman Error HTML (contoh 404 / Sign In)
-                if (text.trim().startsWith('<')) {
-                    console.error("Menerima respon HTML, bukan JSON:", text.substring(0, 100));
-                    if (text.includes("The page cannot be found") || text.includes("404")) {
-                        throw new Error("URL Apps Script Salah atau Kadaluarsa (404). Harap deploy ulang Web App.");
-                    } else if (text.includes("Sign in") || text.includes("accounts.google.com")) {
-                        throw new Error("Akses Ditolak! Pastikan Apps Script di-deploy dengan Who has access: 'Anyone'.");
-                    }
-                    throw new Error("Server mengembalikan halaman HTML Error.");
+                let data;
+                try {
+                    data = JSON.parse(text); 
+                } catch(e) {
+                    console.error("Respon bukan JSON:", text);
+                    throw new Error("Gagal konek ke DB! Pastikan URL Apps Script sudah di-Deploy (Anyone).");
                 }
                 
-                const data = JSON.parse(text); 
                 if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
                 return data;
             } catch (err) {
@@ -1224,6 +1219,7 @@
             currentCheckoutProduct: null, currentCheckoutUniqueCode: 0, currentCheckoutCoupon: null
         };
 
+        // --- SAFE EVENT LISTENERS SETUP ---
         document.addEventListener("DOMContentLoaded", () => {
             const lf = document.getElementById('loginForm');
             if (lf) lf.addEventListener('submit', handleLogin);
@@ -1346,27 +1342,31 @@
             try {
                 showToast("Memuat data dari server...", "info");
                 
-                // Gunakan allSettled agar fungsi tidak crash total saat salah satu API gagal
-                const results = await Promise.allSettled([
-                    apiCall('getProducts'),
-                    apiCall('getOrders'),
-                    apiCall('getCoupons'),
-                    apiCall('getTemplates'),
-                    apiCall('getUsers'),
-                    apiCall('getSettings')
-                ]);
-                
-                if (results[0].status === 'fulfilled') window.appState.products = results[0].value.data || [];
-                if (results[1].status === 'fulfilled') window.appState.orders = results[1].value.data || [];
-                if (results[2].status === 'fulfilled') window.appState.coupons = results[2].value.data || [];
-                if (results[3].status === 'fulfilled') window.appState.templates = results[3].value.data || [];
-                if (results[4].status === 'fulfilled') window.appState.usersData = results[4].value.data || [];
-                if (results[5].status === 'fulfilled' && results[5].value.data) window.appState.settings = results[5].value.data;
+                const safeCall = async (action) => {
+                    try { return await apiCall(action); } 
+                    catch(e) { console.warn(action + ' failed:', e); return {data: []}; }
+                };
 
-                window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
-                window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
-                window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
-                window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
+                const prodRes = await safeCall('getProducts');
+                const orderRes = await safeCall('getOrders');
+                const coupRes = await safeCall('getCoupons');
+                const tmplRes = await safeCall('getTemplates');
+                const userRes = await safeCall('getUsers');
+                const setRes = await safeCall('getSettings');
+                
+                window.appState.products = prodRes.data || [];
+                window.appState.orders = orderRes.data || [];
+                window.appState.coupons = coupRes.data || [];
+                window.appState.templates = tmplRes.data || [];
+                window.appState.usersData = userRes.data || [];
+                if (setRes.data && !Array.isArray(setRes.data)) {
+                    window.appState.settings = setRes.data;
+                }
+
+                if(window.appState.products.length) window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
+                if(window.appState.orders.length) window.appState.orders.sort((a,b) => b.createdAt - a.createdAt);
+                if(window.appState.coupons.length) window.appState.coupons.sort((a,b) => b.createdAt - a.createdAt);
+                if(window.appState.templates.length) window.appState.templates.sort((a,b) => a.createdAt - b.createdAt);
                 
                 const statProductsEl = document.getElementById('statProducts');
                 if (statProductsEl) statProductsEl.innerText = window.appState.products.length;
@@ -1412,9 +1412,10 @@
                     });
                 }
                 
+                showToast("Data berhasil dimuat!", "success");
             } catch (err) {
-                console.error("Gagal memuat sebagian data:", err);
-                showToast("Sebagian data gagal dimuat dari server.", "error");
+                console.error("Gagal memuat data:", err);
+                showToast("Gagal memuat data dari server.", "error");
             }
         }
 
@@ -1801,7 +1802,7 @@
                 await loadAllData();
                 closeUserModal();
             } catch (e) {
-                showToast(e.message, "error");
+                showToast("Error: " + e.message, "error");
             }
         };
 
