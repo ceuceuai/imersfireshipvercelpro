@@ -1140,7 +1140,7 @@
     <!-- ==========================================
          JAVASCRIPT & APPS SCRIPT API LOGIC
          ========================================== -->
-    <script>
+  <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDMp3bh13yicLhXHlldnu1kO57rTxS_BQ-svN1Z5hSl6MSWyayFWkgnTTO4prxQWHM/exec";
         
         async function apiCall(action, payload = null) {
@@ -1173,6 +1173,10 @@
                 return data;
             } catch (err) {
                 console.error("API Call Error (" + action + "):", err);
+                // Smart Error Handler untuk Google Apps Script CORS/Version mismatch
+                if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
+                    throw new Error("Gagal terhubung! WAJIB Deploy Versi Baru di Apps Script (Kelola Deployment -> Edit -> Pilih 'Versi Baru').");
+                }
                 throw err;
             }
         }
@@ -1301,6 +1305,15 @@
                         const setRes = await apiCall('getSettings');
                         if(setRes && setRes.data) {
                             window.appState.settings = setRes.data;
+                            
+                            // Safe parsing
+                            if (typeof window.appState.settings.banks === 'string') {
+                                try { window.appState.settings.banks = JSON.parse(window.appState.settings.banks); } catch(e) { window.appState.settings.banks = []; }
+                            }
+                            if (typeof window.appState.settings.gateways === 'string') {
+                                try { window.appState.settings.gateways = JSON.parse(window.appState.settings.gateways); } catch(e) { window.appState.settings.gateways = {}; }
+                            }
+
                             applySettingsUI();
                         }
                     } catch(e){}
@@ -1348,13 +1361,26 @@
                 const userRes = await safeCall('getUsers');
                 const setRes = await safeCall('getSettings');
                 
+                // BULLETPROOF PARSING: Ensure data integrity
                 window.appState.products = prodRes.data || [];
+                window.appState.products.forEach(p => {
+                    if(typeof p.files === 'string') { try { p.files = JSON.parse(p.files); } catch(e) { p.files = []; } }
+                    if(typeof p.lessons === 'string') { try { p.lessons = JSON.parse(p.lessons); } catch(e) { p.lessons = []; } }
+                });
+
                 window.appState.orders = orderRes.data || [];
                 window.appState.coupons = coupRes.data || [];
                 window.appState.templates = tmplRes.data || [];
                 window.appState.usersData = userRes.data || [];
+
                 if (setRes.data && !Array.isArray(setRes.data)) {
                     window.appState.settings = setRes.data;
+                    if (typeof window.appState.settings.banks === 'string') {
+                        try { window.appState.settings.banks = JSON.parse(window.appState.settings.banks); } catch(e) { window.appState.settings.banks = []; }
+                    }
+                    if (typeof window.appState.settings.gateways === 'string') {
+                        try { window.appState.settings.gateways = JSON.parse(window.appState.settings.gateways); } catch(e) { window.appState.settings.gateways = {}; }
+                    }
                 }
 
                 if(window.appState.products.length) window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
@@ -2887,7 +2913,7 @@
             container.innerHTML = '';
             
             const settings = window.appState.settings;
-            if(settings && settings.banks) {
+            if(settings && Array.isArray(settings.banks)) {
                 settings.banks.forEach((b) => {
                     container.innerHTML += `
                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
@@ -3084,5 +3110,3 @@
             }, 100);
         }
     </script>
-</body>
-</html>
