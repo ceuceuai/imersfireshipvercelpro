@@ -1385,13 +1385,7 @@
 
                 const statRevenueEl = document.getElementById('statRevenue');
                 if (statRevenueEl) {
-                    if (totalRevenue >= 1000000000) {
-                        statRevenueEl.innerText = 'Rp ' + (totalRevenue / 1000000000).toFixed(2) + 'B';
-                    } else if (totalRevenue >= 1000000) {
-                        statRevenueEl.innerText = 'Rp ' + (totalRevenue / 1000000).toFixed(2) + 'M';
-                    } else {
-                        statRevenueEl.innerText = window.formatRp(totalRevenue);
-                    }
+                    statRevenueEl.innerText = window.formatRp(totalRevenue);
                 }
                 
                 applySettingsUI();
@@ -1882,7 +1876,7 @@
             const tsEl = document.getElementById('affTotalSales');
             if(tsEl) tsEl.innerText = totalSales;
             const tcEl = document.getElementById('affTotalCommission');
-            if(tcEl) tcEl.innerText = formatRp(totalCommission);
+            if(tcEl) tcEl.innerText = window.formatRp(totalCommission);
             
             if(user.bankName) {
                 const bN = document.getElementById('affBankName');
@@ -1905,7 +1899,7 @@
             window.appState.products.forEach(p => {
                 let commInfo = '';
                 if(p.commissionValue) {
-                    commInfo = p.commissionType === 'percent' ? `${p.commissionValue}%` : formatRp(p.commissionValue);
+                    commInfo = p.commissionType === 'percent' ? `${p.commissionValue}%` : window.formatRp(p.commissionValue);
                 } else {
                     commInfo = 'Tidak ada';
                 }
