@@ -408,7 +408,7 @@
                             <div class="flex items-center justify-between relative z-10">
                                 <div>
                                     <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-1">Total Revenue</p>
-                                    <h3 class="text-2xl font-black text-slate-800 dark:text-white">Rp 12.45M</h3>
+                                    <h3 id="statRevenue" class="text-2xl font-black text-slate-800 dark:text-white">Rp 0</h3>
                                 </div>
                                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-2xl shadow-lg shadow-green-500/30">
                                     <i class="ph ph-money"></i>
@@ -1219,6 +1219,10 @@
             currentCheckoutProduct: null, currentCheckoutUniqueCode: 0, currentCheckoutCoupon: null
         };
 
+        window.formatRp = (num) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
+        };
+
         // --- SAFE EVENT LISTENERS SETUP ---
         document.addEventListener("DOMContentLoaded", () => {
             const lf = document.getElementById('loginForm');
@@ -1364,11 +1368,31 @@
                 const statProductsEl = document.getElementById('statProducts');
                 if (statProductsEl) statProductsEl.innerText = window.appState.products.length;
                 
-                const statOrdersEl = document.getElementById('statOrders');
-                if (statOrdersEl) statOrdersEl.innerText = window.appState.orders.length;
-                
                 const statUsersEl = document.getElementById('statUsers');
                 if (statUsersEl) statUsersEl.innerText = window.appState.usersData.length;
+                
+                let totalRevenue = 0;
+                let activeOrdersCount = 0;
+                window.appState.orders.forEach(o => {
+                    if (o.status === 'Paid') {
+                        totalRevenue += Number(o.totalPay || o.basePrice || 0);
+                        activeOrdersCount++;
+                    }
+                });
+
+                const statOrdersEl = document.getElementById('statOrders');
+                if (statOrdersEl) statOrdersEl.innerText = activeOrdersCount;
+
+                const statRevenueEl = document.getElementById('statRevenue');
+                if (statRevenueEl) {
+                    if (totalRevenue >= 1000000000) {
+                        statRevenueEl.innerText = 'Rp ' + (totalRevenue / 1000000000).toFixed(2) + 'B';
+                    } else if (totalRevenue >= 1000000) {
+                        statRevenueEl.innerText = 'Rp ' + (totalRevenue / 1000000).toFixed(2) + 'M';
+                    } else {
+                        statRevenueEl.innerText = window.formatRp(totalRevenue);
+                    }
+                }
                 
                 applySettingsUI();
                 renderProductsTable();
@@ -2040,9 +2064,7 @@
 
         // --- PRODUCT CRUD LOGIC ---
         
-        window.formatRp = (num) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
-        };
+        // moved formatRp to top
 
         window.renderProductsTable = () => {
             const tbody = document.getElementById('productsTableBody');
@@ -2068,7 +2090,7 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 w-48 truncate font-medium mt-1" title="${p.description}">${p.description || ''}</p>
                     </td>
                     <td class="px-6 py-4">${typeLabel}</td>
-                    <td class="px-6 py-4 font-black text-brand dark:text-brandHover">${formatRp(p.price)}</td>
+                    <td class="px-6 py-4 font-black text-brand dark:text-brandHover">${window.formatRp(p.price)}</td>
                     <td class="px-6 py-4 text-right">
                         <div class="flex items-center justify-end gap-3">
                             <button onclick="editProduct('${p.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
@@ -2281,7 +2303,7 @@
 
             window.appState.coupons.forEach(c => {
                 const typeLabel = c.type === 'percent' ? 'Persentase (%)' : 'Nominal (Rp)';
-                const valueLabel = c.type === 'percent' ? `${c.value}%` : formatRp(c.value);
+                const valueLabel = c.type === 'percent' ? `${c.value}%` : window.formatRp(c.value);
                 
                 let applicableLabel = '<span class="bg-blue-500/20 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-lg text-xs font-black uppercase">Semua Produk</span>';
                 if (c.applicableProductId && c.applicableProductId !== 'all') {
@@ -2422,7 +2444,7 @@
                     const targetLink = course.salesPageUrl ? course.salesPageUrl : "?checkout=" + course.id;
                     buttonHtml = `
                         <a href="${targetLink}" target="${course.salesPageUrl ? '_blank' : '_self'}" class="w-full py-3 bg-white/60 hover:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-700 text-slate-800 dark:text-white text-sm font-bold rounded-xl transition-all border border-white/50 dark:border-slate-600 shadow-sm flex justify-center items-center gap-2 block text-center">
-                            Beli (${formatRp(course.price)}) <i class="ph ph-arrow-right"></i>
+                            Beli (${window.formatRp(course.price)}) <i class="ph ph-arrow-right"></i>
                         </a>
                     `;
                 }
@@ -2546,7 +2568,7 @@
                 if(found) {
                     window.appState.currentCheckoutProduct = found;
                     document.getElementById('coProdTitle').innerText = found.title;
-                    document.getElementById('coProdPrice').innerText = formatRp(found.price);
+                    document.getElementById('coProdPrice').innerText = window.formatRp(found.price);
                     
                     window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
                     
@@ -2592,7 +2614,7 @@
 
                 document.getElementById('coDiscountRow').classList.remove('hidden');
                 document.getElementById('coDiscountCodeDisplay').innerText = coupon.code;
-                document.getElementById('coDiscountAmount').innerText = `- ${formatRp(discount)}`;
+                document.getElementById('coDiscountAmount').innerText = `- ${window.formatRp(discount)}`;
             } else {
                 document.getElementById('coDiscountRow').classList.add('hidden');
             }
@@ -2738,7 +2760,7 @@
                             <i class="ph ph-check text-5xl text-white font-black"></i>
                         </div>
                         <h2 class="text-3xl font-black text-slate-800 dark:text-white mb-2">Order Diterima!</h2>
-                        <p class="text-slate-600 dark:text-slate-400 mb-8 font-medium">Silakan lakukan transfer via <b>${method}</b> sejumlah <br><span class="text-red-500 text-3xl font-black mt-2 inline-block">${formatRp(finalTotal)}</span></p>
+                        <p class="text-slate-600 dark:text-slate-400 mb-8 font-medium">Silakan lakukan transfer via <b>${method}</b> sejumlah <br><span class="text-red-500 text-3xl font-black mt-2 inline-block">${window.formatRp(finalTotal)}</span></p>
                         <div class="bg-blue-500/10 border border-blue-500/20 p-5 rounded-2xl text-sm text-blue-800 dark:text-blue-300 text-left mb-8 font-medium leading-relaxed">
                             Pastikan Anda menyimpan bukti transfer. Admin akan segera memverifikasi pesanan Anda. Akses produk akan terbuka otomatis di akun Anda setelah status menjadi <b>Paid</b>.
                         </div>
@@ -2782,7 +2804,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">${o.productTitle}</td>
                         <td class="px-6 py-4 text-sm">
-                            <p class="font-black text-slate-800 dark:text-white text-base">${formatRp(o.totalPay || o.basePrice)}</p>
+                            <p class="font-black text-slate-800 dark:text-white text-base">${window.formatRp(o.totalPay || o.basePrice)}</p>
                             ${o.couponCode ? `<p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1 mt-1 border border-emerald-500/20"><i class="ph ph-ticket"></i> ${o.couponCode}</p>` : ''}
                         </td>
                         <td class="px-6 py-4">${statusBadge}</td>
