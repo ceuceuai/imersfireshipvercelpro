@@ -110,7 +110,9 @@
                 <div class="bg-white/40 dark:bg-slate-800/40 py-3 text-center font-bold text-slate-700 dark:text-slate-200 text-sm border-b border-white/50 dark:border-slate-700/50">Order Details</div>
                 <div class="p-5">
                     <div class="flex items-center gap-4 mb-5">
-                        <div class="w-14 h-14 bg-gradient-to-br from-brand to-purple-500 rounded-xl flex items-center justify-center text-white text-3xl shadow-lg shadow-brand/30"><i class="ph ph-package"></i></div>
+                        <div id="coProdImageContainer" class="w-14 h-14 bg-gradient-to-br from-brand to-purple-500 rounded-xl flex items-center justify-center text-white text-3xl shadow-lg shadow-brand/30 shrink-0">
+                            <i class="ph ph-package"></i>
+                        </div>
                         <div class="flex-1">
                             <h3 id="coProdTitle" class="font-bold text-slate-800 dark:text-white text-lg">Memuat Produk...</h3>
                             <p id="coProdPrice" class="text-sm font-bold text-brand dark:text-brandHover">Rp 0</p>
@@ -898,6 +900,16 @@
                         </button>
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Gambar Produk (URL / Upload)</label>
+                        <div class="flex items-center gap-3 mb-3">
+                            <input type="url" id="prodImageUrl" placeholder="https://example.com/image.png" class="flex-1 px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm">
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <input type="file" id="prodImageFile" accept="image/*" class="w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-brand/10 file:text-brand hover:file:bg-brand/20 transition-all cursor-pointer">
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Title</label>
@@ -925,6 +937,13 @@
                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Salespage URL (Eksternal Landing Page)</label>
                         <input type="url" id="prodSalesPage" placeholder="https://domainkamu.com/promo" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm">
                         <p class="text-[10px] text-slate-500 mt-1">Kosongkan jika ingin user langsung diarahkan ke halaman Checkout.</p>
+                    </div>
+
+                    <!-- NEW: Internal Salespage HTML -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Internal Salespage (HTML Custom)</label>
+                        <textarea id="prodSalesPageHtml" rows="4" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand dark:text-white text-sm font-mono leading-relaxed" placeholder="<h1>Ketik landing page HTML kustom kamu di sini...</h1>\n<p>Keuntungannya...</p>"></textarea>
+                        <p class="text-[10px] text-slate-500 mt-1">Gunakan ini jika kamu tidak punya URL Landing Page Eksternal.</p>
                     </div>
 
                     <!-- NEW: Affiliate Commission Settings -->
@@ -1134,6 +1153,23 @@
             <div class="p-6 border-t border-white/20 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 flex justify-end gap-3">
                 <button onclick="closeCouponModal()" class="px-6 py-3 text-slate-600 dark:text-slate-300 font-bold hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-xl transition-colors">Batal</button>
                 <button onclick="saveCoupon()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand/30">Simpan Kupon</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Salespage Viewer Modal -->
+    <div id="salesPageModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-xl z-[70] hidden flex justify-center items-start p-0 sm:p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-4xl min-h-screen sm:min-h-[90vh] sm:rounded-3xl shadow-2xl flex flex-col relative mt-0 sm:mt-10">
+            <button onclick="closeSalesPageModal()" class="absolute top-4 right-4 bg-black/50 hover:bg-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-50 backdrop-blur-md">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+            <div id="spModalContent" class="flex-1 p-6 md:p-12 prose dark:prose-invert max-w-none overflow-hidden break-words text-slate-800 dark:text-slate-200">
+                <!-- HTML Content Here -->
+            </div>
+            <div class="sticky bottom-0 p-4 border-t border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex justify-center shadow-[0_-10px_20px_rgba(0,0,0,0.05)] rounded-b-3xl">
+                <a href="#" id="spModalBuyBtn" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white px-10 py-4 rounded-2xl font-black transition-all shadow-xl shadow-brand/30 text-lg flex items-center gap-3 w-full sm:w-auto justify-center">
+                    Beli Sekarang <i class="ph ph-arrow-right"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -2058,8 +2094,6 @@
 
         // --- PRODUCT CRUD LOGIC ---
         
-        // moved formatRp to top
-
         window.renderProductsTable = () => {
             const tbody = document.getElementById('productsTableBody');
             if(!tbody) return;
@@ -2177,15 +2211,27 @@
             const desc = document.getElementById('prodDesc').value;
             const accessHtml = document.getElementById('prodAccess').value;
             const salesPageUrl = document.getElementById('prodSalesPage').value;
+            const salesPageHtml = document.getElementById('prodSalesPageHtml').value;
             const commissionType = document.getElementById('prodCommType').value;
             const commissionValue = document.getElementById('prodCommValue').value;
+            
+            // Image handling logic
+            let finalImageUrl = document.getElementById('prodImageUrl').value;
+            const prodImageFile = document.getElementById('prodImageFile').files[0];
+            if (prodImageFile) {
+                finalImageUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(prodImageFile);
+                });
+            }
             
             if(!title || !price) {
                 showToast("Title and Price are required", "error");
                 return;
             }
 
-            let data = { id, type, title, price, description: desc, accessHtml, salesPageUrl, commissionType, commissionValue };
+            let data = { id, type, title, price, description: desc, accessHtml, salesPageUrl, salesPageHtml, commissionType, commissionValue, imageUrl: finalImageUrl };
 
             if (type === 'download') {
                 let files = [];
@@ -2228,8 +2274,12 @@
             document.getElementById('prodAccess').value = product.accessHtml || '';
             
             document.getElementById('prodSalesPage').value = product.salesPageUrl || '';
+            document.getElementById('prodSalesPageHtml').value = product.salesPageHtml || '';
             document.getElementById('prodCommType').value = product.commissionType || 'percent';
             document.getElementById('prodCommValue').value = product.commissionValue || '';
+            
+            document.getElementById('prodImageUrl').value = product.imageUrl || '';
+            document.getElementById('prodImageFile').value = '';
             
             document.getElementById('downloadsContainer').innerHTML = '';
             document.getElementById('lessonsContainer').innerHTML = '';
@@ -2442,25 +2492,59 @@
                         </a>
                     `;
                 }
+                
+                // Tambahkan Salespage button terpisah jika ada Salespage URL
+                let salesPageBtn = '';
+                if (course.salesPageUrl) {
+                    salesPageBtn = `<a href="${course.salesPageUrl}" target="_blank" class="w-full py-2 mb-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-sm font-bold rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 border border-blue-500/20"><i class="ph ph-storefront"></i> Lihat Info Lengkap</a>`;
+                } else if (course.salesPageHtml && course.salesPageHtml.trim() !== '') {
+                    salesPageBtn = `<button onclick="openSalesPageModal('${course.id}')" class="w-full py-2 mb-3 bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 dark:text-purple-400 text-sm font-bold rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 border border-purple-500/20"><i class="ph ph-article"></i> Baca Salespage</button>`;
+                }
+                
+                const imageHtml = course.imageUrl 
+                    ? `<img src="${course.imageUrl}" alt="${course.title}" class="w-full h-full object-cover">` 
+                    : `<div class="absolute inset-0 bg-black/10"></div>
+                       <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+                       <i class="ph ${icon} text-6xl text-white/80 drop-shadow-md"></i>`;
 
                 container.innerHTML += `
                     <div class="glass rounded-3xl overflow-hidden shadow-lg transition-all border border-white/40 dark:border-slate-700/50 flex flex-col">
                         <div class="h-40 bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center relative overflow-hidden shrink-0">
-                            <div class="absolute inset-0 bg-black/10"></div>
-                            <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                            <i class="ph ${icon} text-6xl text-white/80 drop-shadow-md"></i>
+                            ${imageHtml}
                         </div>
                         <div class="p-6 flex-1 flex flex-col bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm">
                             <span class="text-[10px] font-black ${isLms ? 'text-indigo-600 dark:text-indigo-400' : 'text-emerald-600 dark:text-emerald-400'} uppercase tracking-widest mb-2 block bg-white/50 dark:bg-slate-800/50 w-max px-2 py-1 rounded-md shadow-sm">${typeLabel}</span>
                             <h3 class="font-black text-slate-800 dark:text-white mb-2 text-lg leading-tight">${course.title}</h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 line-clamp-2 flex-1 font-medium">${course.description || 'No description'}</p>
                             <div class="mt-auto">
+                                ${salesPageBtn}
                                 ${buttonHtml}
                             </div>
                         </div>
                     </div>
                 `;
             });
+        };
+
+        window.openSalesPageModal = (id) => {
+            const product = window.appState.products.find(p => p.id === id);
+            if(!product) return;
+            
+            document.getElementById('spModalContent').innerHTML = product.salesPageHtml || '<p class="text-center py-10">Salespage tidak tersedia.</p>';
+            
+            const refId = localStorage.getItem('affiliateRef') || (window.appState.user ? (window.appState.user.affiliateCode || window.appState.user.id.substring(0,8).toUpperCase()) : null);
+            let checkoutLink = "?checkout=" + product.id;
+            if (refId) checkoutLink += "&ref=" + refId;
+            
+            document.getElementById('spModalBuyBtn').href = checkoutLink;
+            document.getElementById('spModalBuyBtn').innerHTML = `Beli Sekarang (${window.formatRp(product.price)}) <i class="ph ph-arrow-right"></i>`;
+            
+            document.getElementById('salesPageModal').classList.remove('hidden');
+        };
+
+        window.closeSalesPageModal = () => {
+            document.getElementById('salesPageModal').classList.add('hidden');
+            document.getElementById('spModalContent').innerHTML = '';
         };
 
         window.openProductAccess = (id) => {
@@ -2563,6 +2647,17 @@
                     window.appState.currentCheckoutProduct = found;
                     document.getElementById('coProdTitle').innerText = found.title;
                     document.getElementById('coProdPrice').innerText = window.formatRp(found.price);
+                    
+                    const coProdImageContainer = document.getElementById('coProdImageContainer');
+                    if (coProdImageContainer) {
+                        if(found.imageUrl) {
+                            coProdImageContainer.innerHTML = `<img src="${found.imageUrl}" class="w-full h-full object-cover">`;
+                            coProdImageContainer.className = "w-14 h-14 rounded-xl shadow-lg shadow-brand/30 overflow-hidden shrink-0";
+                        } else {
+                            coProdImageContainer.innerHTML = `<i class="ph ph-package"></i>`;
+                            coProdImageContainer.className = "w-14 h-14 bg-gradient-to-br from-brand to-purple-500 rounded-xl flex items-center justify-center text-white text-3xl shadow-lg shadow-brand/30 shrink-0";
+                        }
+                    }
                     
                     window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
                     
