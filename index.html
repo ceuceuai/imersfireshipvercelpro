@@ -29,6 +29,9 @@
         }
     </script>
 
+    <!-- Panggil File CSS Eksternal (Opsional, jika ada) -->
+    <link rel="stylesheet" href="style.css">
+
     <style>
         :root {
             --brand-color: #4f46e5;
@@ -474,9 +477,9 @@
 
                 <!-- PRODUCTS VIEW -->
                 <div id="content-products" class="content-section hidden space-y-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage your digital downloads and courses here.</p>
-                        <button onclick="openProductModal()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                        <button onclick="openProductModal()" class="shrink-0 relative z-10 cursor-pointer bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
                             <i class="ph ph-plus-circle text-xl"></i> Add Product
                         </button>
                     </div>
@@ -503,11 +506,41 @@
                     </div>
                 </div>
 
+                <!-- ORDERS VIEW -->
+                <div id="content-orders" class="content-section hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Order Management</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Verifikasi dan kelola pesanan masuk.</p>
+                        </div>
+                    </div>
+                    <div class="glass rounded-2xl overflow-hidden shadow-xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                                <thead class="bg-white/40 dark:bg-slate-800/40 text-slate-800 dark:text-slate-200 border-b border-white/50 dark:border-slate-700/50">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">Order ID</th>
+                                        <th class="px-6 py-4 font-bold">Customer</th>
+                                        <th class="px-6 py-4 font-bold">Product</th>
+                                        <th class="px-6 py-4 font-bold">Total</th>
+                                        <th class="px-6 py-4 font-bold">Status</th>
+                                        <th class="px-6 py-4 font-bold text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody" class="divide-y divide-white/20 dark:divide-slate-700/50">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- MARKETPLACE VIEW -->
                 <div id="content-marketplace" class="content-section hidden space-y-6">
-                    <div class="mb-4">
-                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Marketplace</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Katalog semua produk digital dan Course yang Anda jual.</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Marketplace</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Katalog semua produk digital dan Course yang Anda jual.</p>
+                        </div>
                     </div>
                     <div id="marketplaceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     </div>
@@ -529,9 +562,11 @@
 
                 <!-- LICENSE VIEW -->
                 <div id="content-license" class="content-section hidden space-y-6">
-                    <div class="mb-4">
-                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My License</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Gunakan kode lisensi ini untuk aktivasi layanan atau produk khusus Anda.</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">My License</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Gunakan kode lisensi ini untuk aktivasi layanan atau produk khusus Anda.</p>
+                        </div>
                     </div>
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-2xl">
                         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
@@ -585,9 +620,11 @@
 
                 <!-- PROFILE (CHANGE PASSWORD) VIEW -->
                 <div id="content-profile" class="content-section hidden space-y-6">
-                    <div class="mb-4">
-                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Profile</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola informasi akun dan keamanan Anda di sini.</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">My Profile</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola informasi akun dan keamanan Anda di sini.</p>
+                        </div>
                     </div>
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50 max-w-xl">
                         <h4 class="font-black text-slate-800 dark:text-white mb-6 text-lg border-b border-white/30 dark:border-slate-700/50 pb-3 flex items-center gap-2">
@@ -617,12 +654,12 @@
 
                 <!-- USERS DIRECTORY VIEW -->
                 <div id="content-users" class="content-section hidden space-y-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <div>
                             <h3 class="text-2xl font-black text-slate-800 dark:text-white">Users Directory</h3>
                             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kelola data member, admin, dan agency.</p>
                         </div>
-                        <button onclick="openUserModal()" id="btnAddUser" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                        <button onclick="openUserModal()" id="btnAddUser" class="shrink-0 relative z-10 cursor-pointer bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
                             <i class="ph ph-user-plus text-xl"></i> Tambah User
                         </button>
                     </div>
@@ -647,7 +684,7 @@
 
                 <!-- AFFILIATE SYSTEM VIEW -->
                 <div id="content-affiliate" class="content-section hidden space-y-6">
-                    <div class="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <div>
                             <h3 class="text-2xl font-black text-slate-800 dark:text-white">Affiliate Dashboard</h3>
                             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Pilih produk dan bagikan link affiliate Anda (Kode Ref: <span id="affiliateRefCode" class="font-bold text-brand uppercase"></span>).</p>
@@ -697,12 +734,12 @@
 
                 <!-- COUPONS VIEW -->
                 <div id="content-coupons" class="content-section hidden space-y-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <div>
                             <h3 class="text-2xl font-black text-slate-800 dark:text-white">Master Kupon</h3>
                             <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Buat kode diskon untuk promosi atau base affiliate Anda.</p>
                         </div>
-                        <button onclick="openCouponModal()" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                        <button onclick="openCouponModal()" class="shrink-0 relative z-10 cursor-pointer bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 shadow-lg shadow-brand/30 text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
                             <i class="ph ph-plus-circle text-xl"></i> Tambah Kupon
                         </button>
                     </div>
@@ -727,18 +764,28 @@
 
                 <!-- BROADCAST VIEW -->
                 <div id="content-broadcast" class="content-section hidden space-y-6 max-w-4xl">
-                    <div class="mb-4">
-                        <h3 class="text-2xl font-black text-slate-800 dark:text-white">Broadcast System</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kirim pesan massal ke Users via WhatsApp API Gateway.</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-800 dark:text-white">Broadcast System</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Kirim pesan massal ke Users via WhatsApp API Gateway.</p>
+                        </div>
                     </div>
                     <div class="glass rounded-3xl shadow-xl p-8 border border-white/40 dark:border-slate-700/50">
-                        <form id="broadcastForm" class="space-y-6">
+                        <form id="broadcastForm" class="space-y-6" onsubmit="prepareBroadcast(); simulateBroadcast(event)">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Target Audience</label>
-                                <select id="bcTarget" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                <!-- Hidden input agar app.js tetap bisa membaca id="bcTarget" tanpa diubah -->
+                                <input type="hidden" id="bcTarget" value="all">
+                                
+                                <select id="bcTargetSelect" onchange="toggleCustomNumbers()" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
                                     <option value="all">Semua Users</option>
                                     <option value="affiliates">Hanya Affiliates</option>
+                                    <option value="pending">Users Order Pending (Reminder)</option>
+                                    <option value="custom">Nomor WA Custom (Manual)</option>
                                 </select>
+                                
+                                <!-- Box Textarea untuk input nomor manual (Muncul otomatis kalau pilih Custom) -->
+                                <textarea id="bcCustomNumbers" rows="2" placeholder="Masukkan nomor WA (pisahkan dengan koma), cth: 081234, 628567..." class="mt-3 w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white text-sm hidden"></textarea>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center justify-between">
@@ -754,6 +801,30 @@
                                 <p class="text-xs text-slate-500 mt-3"><i class="ph ph-info"></i> Pastikan WhatsApp Gateway Anda sudah diatur di Admin Settings.</p>
                             </div>
                         </form>
+
+                        <!-- Trik Script Mini untuk bypass tanpa harus edit app.js -->
+                        <script>
+                            function toggleCustomNumbers() {
+                                const val = document.getElementById('bcTargetSelect').value;
+                                const customArea = document.getElementById('bcCustomNumbers');
+                                if (val === 'custom') {
+                                    customArea.classList.remove('hidden');
+                                    customArea.setAttribute('required', 'true');
+                                } else {
+                                    customArea.classList.add('hidden');
+                                    customArea.removeAttribute('required');
+                                }
+                            }
+                            function prepareBroadcast() {
+                                const sel = document.getElementById('bcTargetSelect').value;
+                                const realTarget = document.getElementById('bcTarget');
+                                if (sel === 'custom') {
+                                    realTarget.value = 'CUSTOM:' + document.getElementById('bcCustomNumbers').value;
+                                } else {
+                                    realTarget.value = sel;
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -832,6 +903,22 @@
                                     <div class="sm:col-span-2">
                                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">API Bearer Token</label>
                                         <input type="password" id="notifEmailToken" placeholder="Masukkan API Token Pihak Ke-3 Anda" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Telegram Bot Settings -->
+                            <div class="pt-6 border-t border-white/40 dark:border-slate-700/50">
+                                <h4 class="font-black text-slate-800 dark:text-white mb-4 text-lg">Telegram Bot Notification</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Atur pengiriman notifikasi order baru via Telegram Bot.</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Bot Token</label>
+                                        <input type="password" id="notifTelegramToken" placeholder="Masukkan Bot Token dari BotFather" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Admin Chat ID</label>
+                                        <input type="text" id="notifTelegramChatId" placeholder="Masukkan ID Chat Telegram Admin" class="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand outline-none transition-all dark:text-white font-medium">
                                     </div>
                                 </div>
                             </div>
@@ -1137,46 +1224,66 @@
         <span id="toastMsg" class="text-sm font-bold">Notification message</span>
     </div>
 
-    <!-- ==========================================
-         JAVASCRIPT & APPS SCRIPT API LOGIC
-         ========================================== -->
-  <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDMp3bh13yicLhXHlldnu1kO57rTxS_BQ-svN1Z5hSl6MSWyayFWkgnTTO4prxQWHM/exec";
-        
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYn9Q-5Ks8T2fePe7PCyYIhQtUq6ZxCh7uszdCFEtquQD0uLDLAC3Rip-1_GmAbB3n/exec";
+
         async function apiCall(action, payload = null) {
             if (SCRIPT_URL === "URL_WEB_APP_APPS_SCRIPT_LO_DISINI" || !SCRIPT_URL) {
                 showToast("Script URL belum diganti di index.html!", "error");
                 throw new Error("URL Belum disetting");
             }
             
-            let url = `${SCRIPT_URL}?action=${action}`;
-            // Memastikan mode CORS dan tidak nge-block jika di-redirect
-            let options = { method: 'GET', mode: 'cors', redirect: 'follow' };
+            // Pastikan URL bersih dari spasi yang nggak sengaja ke-copy
+            const cleanUrl = SCRIPT_URL.trim();
+            let url = `${cleanUrl}?action=${action}`;
+            
+            // Konfigurasi fetch standar untuk Google Apps Script
+            // redirect: 'follow' wajib karena Google selalu melakukan redirect internal
+            let options = { 
+                method: 'GET', 
+                redirect: 'follow',
+                mode: 'cors'
+            };
+
             if (payload) {
                 options.method = 'POST';
-                options.body = JSON.stringify(payload);
+                /**
+                 * KUNCI PERBAIKAN CORS: 
+                 * Kita gunakan 'text/plain'. Kalau pakai 'application/json', browser bakal kirim 
+                 * request OPTIONS (Preflight) yang sering ditolak mentah-mentah sama Google.
+                 */
                 options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+                options.body = JSON.stringify(payload);
             }
 
             try {
                 const response = await fetch(url, options);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                
                 const text = await response.text(); 
                 let data;
                 try {
                     data = JSON.parse(text); 
                 } catch(e) {
-                    console.error("Respon bukan JSON:", text);
-                    throw new Error("Gagal konek ke DB! Pastikan URL Apps Script sudah di-Deploy (Anyone).");
+                    /** * Kalau masuk sini, artinya GAS lo ngirim HTML Error (Backend Crash).
+                     * Browser nangkep ini sebagai CORS error karena halaman HTML Google nggak punya header CORS.
+                     */
+                    console.error("Respon bukan JSON (Kemungkinan GAS Error):", text);
+                    throw new Error("Koneksi ditolak Google! Pastikan di GAS lo fungsinya sudah di-Return pakai ContentService.createTextOutput.");
                 }
                 
                 if (!data.success) throw new Error(data.error || "Terjadi kesalahan pada server");
                 return data;
             } catch (err) {
-                console.error("API Call Error (" + action + "):", err);
-                // Smart Error Handler untuk Google Apps Script CORS/Version mismatch
-                if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
-                    throw new Error("Gagal terhubung! WAJIB Deploy Versi Baru di Apps Script (Kelola Deployment -> Edit -> Pilih 'Versi Baru').");
+                console.error(`API Call Error (${action}) -> ${url}:`, err);
+                
+                if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+                    throw new Error("Koneksi ditolak Google! Pastikan di GAS lo fungsinya sudah di-Return pakai ContentService.createTextOutput.");
                 }
+                
                 throw err;
             }
         }
@@ -1210,8 +1317,8 @@
         window.appState = {
             user: null, products: [], orders: [], coupons: [], templates: [], usersData: [], isSidebarOpen: false,
             settings: {
-                banks: [], gateways: { tripay: false, duitku: false, sendit: false },
-                notifications: { waProvider: 'fonnte', waToken: '', adminWa: '', emailProvider: 'google', emailToken: '' }
+                banks: [],
+                notifications: { waProvider: 'fonnte', waToken: '', adminWa: '', emailProvider: 'google', emailToken: '', telegramToken: '', telegramChatId: '' }
             },
             currentCheckoutProduct: null, currentCheckoutUniqueCode: 0, currentCheckoutCoupon: null
         };
@@ -1220,8 +1327,52 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
         };
 
+        // HELPER: Generate Random Short ID (6 Characters)
+        window.generateShortId = () => {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        };
+
+        // HELPER: Auto Format WA (Mencegah Angka 0 Hilang di Google Sheets)
+        window.formatPhoneNumber = (number) => {
+            if (!number) return '';
+            let cleaned = String(number).replace(/\D/g, '');
+            if (cleaned.startsWith('0')) {
+                cleaned = '62' + cleaned.substring(1);
+            } else if (cleaned.startsWith('8')) {
+                cleaned = '62' + cleaned;
+            }
+            return cleaned;
+        };
+
+        // HELPER: Kompresi Gambar ke Base64 agar muat di Google Sheets (Max 50k karakter)
+        window.compressImage = (file, maxWidth = 400) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxWidth) {
+                            h = Math.round((maxWidth / w) * h);
+                            w = maxWidth;
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        // Menggunakan JPEG dengan kualitas 70% agar teks Base64 sangat ringan
+                        resolve(canvas.toDataURL('image/jpeg', 0.7)); 
+                    };
+                };
+            });
+        };
+
         // --- SAFE EVENT LISTENERS SETUP ---
-        document.addEventListener("DOMContentLoaded", () => {
+        function initAppEvents() {
             const lf = document.getElementById('loginForm');
             if (lf) lf.addEventListener('submit', handleLogin);
 
@@ -1245,8 +1396,32 @@
                 });
             }
 
+            // TRIGGER PEMBERSIHAN INPUT GAMBAR JIKA MENGISI URL MANUAL
+            const settingLogoUrl = document.getElementById('settingLogoUrl');
+            const settingLogoFile = document.getElementById('settingLogoFile');
+            if (settingLogoUrl && settingLogoFile) {
+                settingLogoUrl.addEventListener('input', () => {
+                    settingLogoFile.value = ''; // Kosongkan file upload jika ngetik manual
+                });
+            }
+
+            const prodImageUrl = document.getElementById('prodImageUrl');
+            const prodImageFile = document.getElementById('prodImageFile');
+            if (prodImageUrl && prodImageFile) {
+                prodImageUrl.addEventListener('input', () => {
+                    prodImageFile.value = ''; // Kosongkan file upload jika ngetik manual
+                });
+            }
+
             initializeAppState();
-        });
+        }
+
+        // Mengecek apakah HTML sudah siap. Jika sudah siap, langsung jalankan. Jika belum, tunggu sampai siap.
+        if (document.readyState === 'loading') {
+            document.addEventListener("DOMContentLoaded", initAppEvents);
+        } else {
+            initAppEvents();
+        }
 
         async function initializeAppState() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1305,15 +1480,6 @@
                         const setRes = await apiCall('getSettings');
                         if(setRes && setRes.data) {
                             window.appState.settings = setRes.data;
-                            
-                            // Safe parsing
-                            if (typeof window.appState.settings.banks === 'string') {
-                                try { window.appState.settings.banks = JSON.parse(window.appState.settings.banks); } catch(e) { window.appState.settings.banks = []; }
-                            }
-                            if (typeof window.appState.settings.gateways === 'string') {
-                                try { window.appState.settings.gateways = JSON.parse(window.appState.settings.gateways); } catch(e) { window.appState.settings.gateways = {}; }
-                            }
-
                             applySettingsUI();
                         }
                     } catch(e){}
@@ -1336,6 +1502,23 @@
                 document.querySelectorAll('[data-target="products"], [data-target="orders"], [data-target="coupons"], [data-target="users"], [data-target="broadcast"], [data-target="templates"], [data-target="settings"]').forEach(el => el.classList.add('hidden'));
             }
 
+            // --- FITUR BARU: SEMBUNYIKAN OMSET & CHART JIKA BUKAN ADMIN ---
+            if (user.role !== 'admin') {
+                const revenueCard = document.getElementById('statRevenue')?.closest('.glass');
+                if (revenueCard) revenueCard.classList.add('hidden');
+                
+                const ordersCard = document.getElementById('statOrders')?.closest('.glass');
+                if (ordersCard) ordersCard.classList.add('hidden');
+                
+                const chartCard = document.getElementById('salesChart')?.closest('.glass');
+                if (chartCard) chartCard.classList.add('hidden');
+
+                // Agency & User harus bisa akses menu Kupon
+                if (user.role === 'agency' || user.role === 'user') {
+                    document.querySelectorAll('[data-target="coupons"]').forEach(el => el.classList.remove('hidden'));
+                }
+            }
+
             if(!user.affiliateCode) {
                 user.affiliateCode = user.name.replace(/\s+/g, '').toUpperCase().substring(0, 5) + Math.floor(Math.random()*1000);
             }
@@ -1354,33 +1537,22 @@
                     }
                 };
 
-                const prodRes = await safeCall('getProducts');
-                const orderRes = await safeCall('getOrders');
-                const coupRes = await safeCall('getCoupons');
-                const tmplRes = await safeCall('getTemplates');
-                const userRes = await safeCall('getUsers');
-                const setRes = await safeCall('getSettings');
+                const [prodRes, orderRes, coupRes, tmplRes, userRes, setRes] = await Promise.all([
+                    apiCall('getProducts'),
+                    apiCall('getOrders'),
+                    apiCall('getCoupons'),
+                    apiCall('getTemplates'),
+                    apiCall('getUsers'),
+                    apiCall('getSettings')
+                ]);
                 
-                // BULLETPROOF PARSING: Ensure data integrity
                 window.appState.products = prodRes.data || [];
-                window.appState.products.forEach(p => {
-                    if(typeof p.files === 'string') { try { p.files = JSON.parse(p.files); } catch(e) { p.files = []; } }
-                    if(typeof p.lessons === 'string') { try { p.lessons = JSON.parse(p.lessons); } catch(e) { p.lessons = []; } }
-                });
-
                 window.appState.orders = orderRes.data || [];
                 window.appState.coupons = coupRes.data || [];
                 window.appState.templates = tmplRes.data || [];
                 window.appState.usersData = userRes.data || [];
-
                 if (setRes.data && !Array.isArray(setRes.data)) {
                     window.appState.settings = setRes.data;
-                    if (typeof window.appState.settings.banks === 'string') {
-                        try { window.appState.settings.banks = JSON.parse(window.appState.settings.banks); } catch(e) { window.appState.settings.banks = []; }
-                    }
-                    if (typeof window.appState.settings.gateways === 'string') {
-                        try { window.appState.settings.gateways = JSON.parse(window.appState.settings.gateways); } catch(e) { window.appState.settings.gateways = {}; }
-                    }
                 }
 
                 if(window.appState.products.length) window.appState.products.sort((a,b) => b.createdAt - a.createdAt);
@@ -1485,12 +1657,6 @@
                 
                 const notifAdminWaEl = document.getElementById('notifAdminWa');
                 if (notifAdminWaEl) notifAdminWaEl.value = set.notifications.adminWa || '';
-                
-                const notifEmailProviderEl = document.getElementById('notifEmailProvider');
-                if (notifEmailProviderEl) notifEmailProviderEl.value = set.notifications.emailProvider || 'google';
-                
-                const notifEmailTokenEl = document.getElementById('notifEmailToken');
-                if (notifEmailTokenEl) notifEmailTokenEl.value = set.notifications.emailToken || '';
             }
         }
 
@@ -1530,7 +1696,7 @@
         async function handleLogin(e) {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
-            const email = document.getElementById('loginEmail').value;
+            const emailInput = document.getElementById('loginEmail').value.trim();
             const rawPass = document.getElementById('loginPassword').value;
 
             btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memeriksa...';
@@ -1540,8 +1706,8 @@
                 const res = await apiCall('getUsers');
                 const users = res.data || [];
                 
-                // Cari kecocokan hash (atau raw string buat fallback dummy script sebelumnya)
-                const user = users.find(u => u.email === email && (u.password === hashedPass || u.password === rawPass));
+                // FIXED LOGIN LOGIC: Case-insensitive email check & support for plain/hashed pwd
+                const user = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && (u.password === hashedPass || u.password === rawPass));
 
                 if (user) {
                     window.appState.user = user;
@@ -1578,7 +1744,8 @@
             const btn = document.getElementById('regBtn');
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
-            const wa = document.getElementById('regWa').value;
+            const rawWa = document.getElementById('regWa').value;
+            const wa = window.formatPhoneNumber(rawWa);
             const rawPass = document.getElementById('regPassword').value;
 
             btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memproses...';
@@ -1589,7 +1756,7 @@
                 
                 await apiCall('register', payload);
                 
-                showToast("Registrasi berhasil! Silakan periksa WA/Email Anda.", "success");
+                showToast("Registrasi berhasil! Silakan Login.");
                 document.getElementById('registerForm').reset();
                 switchAuthView('login');
             } catch(err) {
@@ -1657,9 +1824,7 @@
             window.appState.user = null;
             localStorage.removeItem('iMersUser'); 
             localStorage.removeItem('checkoutIntent');
-            document.getElementById('view-auth').classList.remove('hidden');
-            document.getElementById('view-app').classList.add('hidden');
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('hidden'));
+            window.location.reload();
         };
 
         // --- NAVIGATION & UI LOGIC ---
@@ -1709,7 +1874,7 @@
                 if(sidebar) sidebar.classList.add('-translate-x-full');
             }
         };
-        
+
         async function simulateBroadcast(e) {
             if(e) e.preventDefault();
             const target = document.getElementById('bcTarget').value;
@@ -1717,14 +1882,33 @@
             if(!msg) return;
 
             showToast("Memproses Broadcast...", "info");
+            
+            // Disable button dan tampilkan loading
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Mengirim...';
+            }
 
             try {
-                setTimeout(() => {
-                    showToast("Berhasil mengirim notifikasi massal ke antrean!", "success");
-                    document.getElementById('bcMessage').value = '';
-                }, 1500);
+                const payload = {
+                    target: target,
+                    message: msg
+                };
+                
+                // Memanggil API Broadcast di backend (Code.gs)
+                await apiCall('sendBroadcast', payload);
+                
+                showToast("Berhasil mengirim notifikasi massal!", "success");
+                document.getElementById('bcMessage').value = '';
             } catch(err) {
                 showToast("Error memproses broadcast: " + err.message, "error");
+            } finally {
+                // Kembalikan tombol seperti semula
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="ph ph-paper-plane-tilt text-xl"></i> Kirim Broadcast Sekarang';
+                }
             }
         }
 
@@ -1747,7 +1931,7 @@
             }
         };
 
-        // --- USERS CRUD LOGIC ---
+        // --- USERS CRUD LOGIC (FIXED COLUMN MISMATCH) ---
         window.renderUsersTable = () => {
             const tbody = document.getElementById('usersTableBody');
             if(!tbody) return;
@@ -1766,20 +1950,36 @@
                 };
                 const roleClass = roleColors[u.role] || roleColors['user'];
 
+                // FIXED BANK INFO CARD
+                let bankInfo = '<span class="text-slate-400 italic text-[10px]">Belum diatur</span>';
+                if(u.bankName || u.bankNo) {
+                    bankInfo = `<div class="bg-brand/5 p-2 rounded-lg border border-brand/10 text-[10px]">
+                        <p class="font-black text-brand uppercase">${u.bankName || '???'}</p>
+                        <p class="font-mono font-bold text-slate-700 dark:text-white">${u.bankNo || '???'}</p>
+                        <p class="text-slate-500 italic opacity-60">a.n ${u.bankOwner || '???'}</p>
+                    </div>`;
+                }
+
+                // SINKRONISASI KOLOM: Nama&Email | Bank Affiliate | Role | Code | Action
                 tbody.innerHTML += `
-                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
+                    <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors border-b border-white/10 dark:border-slate-700/30">
                         <td class="px-6 py-4">
-                            <p class="font-bold text-slate-800 dark:text-white text-base">${u.name}</p>
+                            <p class="font-bold text-slate-800 dark:text-white text-base leading-tight">${u.name}</p>
                             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${u.email}</p>
+                            <div class="flex items-center gap-1 mt-1 text-[10px] font-bold text-brand bg-brand/5 px-1.5 py-0.5 rounded w-max">
+                                <i class="ph ph-whatsapp-logo"></i> ${u.wa || '-'}
+                            </div>
                         </td>
-                        <td class="px-6 py-4 font-medium text-slate-700 dark:text-slate-300">${u.wa || '-'}</td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4">${bankInfo}</td>
+                        <td class="px-6 py-4 text-center">
                             <span class="${roleClass} px-3 py-1 rounded-lg text-xs font-black uppercase">${u.role}</span>
                         </td>
                         <td class="px-6 py-4 font-mono text-xs text-brand font-bold">${u.affiliateCode || u.license || '-'}</td>
                         <td class="px-6 py-4 text-right">
-                            <button onclick="editUser('${u.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
-                            <button onclick="deleteUser('${u.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
+                            <div class="flex items-center justify-end gap-2">
+                                <button onclick="editUser('${u.id}')" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-xl transition-colors" title="Edit"><i class="ph ph-pencil-simple text-xl"></i></button>
+                                <button onclick="deleteUser('${u.id}')" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-500/20 rounded-xl transition-colors" title="Delete"><i class="ph ph-trash text-xl"></i></button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -1802,10 +2002,13 @@
         };
 
         window.saveUser = async () => {
-            const id = document.getElementById('userId').value;
+            let id = document.getElementById('userId').value;
+            if (!id) id = window.generateShortId();
+            
             const name = document.getElementById('userName').value;
             const email = document.getElementById('userEmail').value;
-            const wa = document.getElementById('userWa').value;
+            const rawWa = document.getElementById('userWa').value;
+            const wa = window.formatPhoneNumber(rawWa); // KUNCI PERBAIKAN WA
             const role = document.getElementById('userRole').value;
             const rawPass = document.getElementById('userPassword').value;
 
@@ -1816,7 +2019,7 @@
 
             let payload = { id, name, email, wa, role };
 
-            if (id) {
+            if (document.getElementById('userId').value) {
                 if (rawPass) {
                     payload.password = await window.hashPassword(rawPass);
                 }
@@ -1868,7 +2071,7 @@
             }
         };
 
-        // --- AFFILIATE LOGIC ---
+        // --- AFFILIATE SYSTEM LOGIC (DUAL LINKS - INTERNAL FIXED) ---
         window.renderAffiliateList = () => {
             const container = document.getElementById('affiliateProductsList');
             const refCodeEl = document.getElementById('affiliateRefCode');
@@ -1920,16 +2123,18 @@
             }
 
             window.appState.products.forEach(p => {
-                let commInfo = '';
-                if(p.commissionValue) {
-                    commInfo = p.commissionType === 'percent' ? `${p.commissionValue}%` : window.formatRp(p.commissionValue);
-                } else {
-                    commInfo = 'Tidak ada';
-                }
-
-                const targetLink = p.salesPageUrl ? p.salesPageUrl : window.location.origin + window.location.pathname + "?checkout=" + p.id;
-                const finalLink = targetLink + (targetLink.includes('?') ? '&' : '?') + "ref=" + refId;
+                const currentPath = window.location.origin + window.location.pathname;
                 
+                // Link 1: Link Direct Checkout (Murni domain lo sendiri)
+                const affCheckoutLink = `${currentPath}?checkout=${p.id}&ref=${refId}`;
+                
+                // Link 2: Link Salespage (Internal jika salesPageUrl kosong)
+                let affSalespageLink = p.salesPageUrl ? 
+                    `${p.salesPageUrl}${p.salesPageUrl.includes('?') ? '&' : '?'}ref=${refId}` : 
+                    affCheckoutLink;
+
+                let commInfo = p.commissionType === 'percent' ? `${p.commissionValue}%` : window.formatRp(p.commissionValue);
+
                 container.innerHTML += `
                     <div class="glass rounded-2xl p-5 border border-white/40 dark:border-slate-700/50 flex flex-col hover:shadow-xl transition-shadow">
                         <h4 class="font-black text-slate-800 dark:text-white mb-2 text-lg truncate" title="${p.title}">${p.title}</h4>
@@ -1937,11 +2142,23 @@
                             <span class="text-xs font-bold text-orange-600 dark:text-orange-400">Komisi per Sale:</span>
                             <span class="text-sm font-black text-orange-600 dark:text-orange-400">${commInfo}</span>
                         </div>
-                        <div class="mt-auto">
-                            <input type="text" readonly value="${finalLink}" class="w-full px-3 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-xs text-slate-600 dark:text-slate-300 mb-3 outline-none">
-                            <button onclick="copyTextToClipboard('${finalLink}')" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white py-2.5 rounded-xl font-bold transition-all shadow-md shadow-orange-500/30 flex justify-center items-center gap-2 text-sm">
-                                <i class="ph ph-copy text-lg"></i> Salin Link Affiliate
-                            </button>
+                        <div class="mt-auto space-y-4">
+                            <div>
+                                <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 ml-1">Link Landing Page</label>
+                                <div class="flex gap-2">
+                                    <input type="text" readonly value="${affSalespageLink}" class="flex-1 px-3 py-2 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none">
+                                    <button onclick="copyTextToClipboard('${affSalespageLink}')" class="bg-slate-800 text-white p-2 rounded-xl"><i class="ph ph-copy"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-brand uppercase mb-1 ml-1">Link Checkout Langsung</label>
+                                <div class="flex gap-2">
+                                    <input type="text" readonly value="${affCheckoutLink}" class="flex-1 px-3 py-2 bg-brand/5 border border-brand/20 rounded-xl text-[11px] font-bold text-brand outline-none">
+                                    <button onclick="copyTextToClipboard('${affCheckoutLink}')" class="bg-brand text-white p-2 rounded-xl shadow-lg shadow-brand/30 transition-transform active:scale-95">
+                                        <i class="ph ph-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -2050,7 +2267,9 @@
         };
 
         window.saveTemplate = async () => {
-            const id = document.getElementById('tmplId').value;
+            let id = document.getElementById('tmplId').value;
+            if (!id) id = window.generateShortId();
+            
             const type = document.getElementById('tmplType').value;
             const title = document.getElementById('tmplTitle').value;
             const subject = document.getElementById('tmplSubject').value;
@@ -2080,7 +2299,7 @@
         };
 
         // --- PRODUCT CRUD LOGIC ---
-        
+
         window.renderProductsTable = () => {
             const tbody = document.getElementById('productsTableBody');
             if(!tbody) return;
@@ -2101,7 +2320,7 @@
                 tr.className = "hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors";
                 tr.innerHTML = `
                     <td class="px-6 py-4">
-                        <p class="font-bold text-slate-800 dark:text-white text-base">${p.title}</p>
+                        <p class="font-bold text-slate-800 dark:text-white text-base leading-tight">${p.title}</p>
                         <p class="text-xs text-slate-500 dark:text-slate-400 w-48 truncate font-medium mt-1" title="${p.description}">${p.description || ''}</p>
                     </td>
                     <td class="px-6 py-4">${typeLabel}</td>
@@ -2134,7 +2353,7 @@
             const modal = document.getElementById('productModal');
             if (modal) modal.classList.remove('hidden');
         };
-        
+
         window.closeProductModal = () => {
             const modal = document.getElementById('productModal');
             if (modal) modal.classList.add('hidden');
@@ -2202,15 +2421,10 @@
             const commissionType = document.getElementById('prodCommType').value;
             const commissionValue = document.getElementById('prodCommValue').value;
             
-            // Image handling logic
             let finalImageUrl = document.getElementById('prodImageUrl').value;
             const prodImageFile = document.getElementById('prodImageFile').files[0];
             if (prodImageFile) {
-                finalImageUrl = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.readAsDataURL(prodImageFile);
-                });
+                finalImageUrl = await window.compressImage(prodImageFile, 600);
             }
             
             if(!title || !price) {
@@ -2218,7 +2432,7 @@
                 return;
             }
 
-            let data = { id, type, title, price, description: desc, accessHtml, salesPageUrl, salesPageHtml, commissionType, commissionValue, imageUrl: finalImageUrl };
+            let data = { id: id || window.generateShortId(), type, title, price, description: desc, accessHtml, salesPageUrl, salesPageHtml, commissionType, commissionValue, imageUrl: finalImageUrl, createdAt: Date.now() };
 
             if (type === 'download') {
                 let files = [];
@@ -2308,7 +2522,7 @@
             if(!product) return;
             
             const newData = JSON.parse(JSON.stringify(product));
-            delete newData.id;
+            newData.id = window.generateShortId();
             newData.title = newData.title + " (Copy)";
 
             try {
@@ -2327,12 +2541,15 @@
             if(!tbody) return;
             tbody.innerHTML = '';
 
-            if(window.appState.coupons.length === 0) {
+            const isUserAdmin = window.appState.user.role === 'admin';
+            const filteredCoupons = isUserAdmin ? window.appState.coupons : window.appState.coupons.filter(c => c.createdBy === window.appState.user.id);
+
+            if(filteredCoupons.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-slate-500 font-bold">Belum ada kupon. Buat kupon pertama Anda.</td></tr>`;
                 return;
             }
 
-            window.appState.coupons.forEach(c => {
+            filteredCoupons.forEach(c => {
                 const typeLabel = c.type === 'percent' ? 'Persentase (%)' : 'Nominal (Rp)';
                 const valueLabel = c.type === 'percent' ? `${c.value}%` : window.formatRp(c.value);
                 
@@ -2388,7 +2605,7 @@
         };
 
         window.saveCoupon = async () => {
-            const id = document.getElementById('couponId').value;
+            let id = document.getElementById('couponId').value;
             const code = document.getElementById('couponCode').value.toUpperCase().trim();
             const type = document.getElementById('couponType').value;
             const value = Number(document.getElementById('couponValue').value);
@@ -2399,7 +2616,7 @@
                 return;
             }
 
-            let data = { id, code, type, value, applicableProductId };
+            let data = { id: id || window.generateShortId(), code, type, value, applicableProductId, createdBy: window.appState.user.id };
 
             try {
                 await apiCall('saveCoupon', data);
@@ -2433,7 +2650,7 @@
         };
 
         // --- MARKETPLACE LOGIC ---
-        
+
         function getYTVideoId(url) {
             if(!url) return '';
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -2472,15 +2689,14 @@
                         </button>
                     `;
                 } else {
-                    const targetLink = course.salesPageUrl ? course.salesPageUrl : "?checkout=" + course.id;
+                    const checkoutLink = "?checkout=" + course.id;
                     buttonHtml = `
-                        <a href="${targetLink}" target="${course.salesPageUrl ? '_blank' : '_self'}" class="w-full py-3 bg-white/60 hover:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-700 text-slate-800 dark:text-white text-sm font-bold rounded-xl transition-all border border-white/50 dark:border-slate-600 shadow-sm flex justify-center items-center gap-2 block text-center">
+                        <a href="${checkoutLink}" class="w-full py-3 bg-white/60 hover:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-700 text-slate-800 dark:text-white text-sm font-bold rounded-xl transition-all border border-white/50 dark:border-slate-600 shadow-sm flex justify-center items-center gap-2 block text-center">
                             Beli (${window.formatRp(course.price)}) <i class="ph ph-arrow-right"></i>
                         </a>
                     `;
                 }
                 
-                // Tambahkan Salespage button terpisah jika ada Salespage URL
                 let salesPageBtn = '';
                 if (course.salesPageUrl) {
                     salesPageBtn = `<a href="${course.salesPageUrl}" target="_blank" class="w-full py-2 mb-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-sm font-bold rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 border border-blue-500/20"><i class="ph ph-storefront"></i> Lihat Info Lengkap</a>`;
@@ -2623,10 +2839,14 @@
         };
 
         // --- CHECKOUT LOGIC ---
-        
+
         window.loadCheckoutProduct = async (productId) => {
             try {
-                const res = await apiCall('getProducts');
+                const [res, setRes] = await Promise.all([
+                    apiCall('getProducts'),
+                    apiCall('getSettings')
+                ]);
+                
                 const products = res.data || [];
                 let found = products.find(p => p.id === productId);
                 
@@ -2648,17 +2868,17 @@
                     
                     window.appState.currentCheckoutUniqueCode = Math.floor(Math.random() * 900) + 100;
                     
-                    const setRes = await apiCall('getSettings');
                     if(setRes && setRes.data) window.appState.settings = setRes.data;
 
                     window.recalculateCheckout();
                     window.renderCheckoutPaymentMethods();
 
-                    // Cek Affiliate Parameter
                     const refId = localStorage.getItem('affiliateRef');
                     if (refId) {
-                        document.getElementById('coAffiliateBadgeContainer').classList.remove('hidden');
-                        document.getElementById('coAffiliateNameDisplay').innerText = refId.toUpperCase();
+                        const badge = document.getElementById('coAffiliateBadgeContainer');
+                        if(badge) badge.classList.remove('hidden');
+                        const nameDisplay = document.getElementById('coAffiliateNameDisplay');
+                        if(nameDisplay) nameDisplay.innerText = refId.toUpperCase();
                     }
 
                 } else {
@@ -2781,7 +3001,8 @@
             const name = document.getElementById('coName').value;
             const email = document.getElementById('coEmail').value;
             const rawPassword = document.getElementById('coPassword').value;
-            const wa = document.getElementById('coWA').value;
+            const rawWa = document.getElementById('coWA').value;
+            const wa = window.formatPhoneNumber(rawWa); // KUNCI PERBAIKAN WA
             const methodEl = document.querySelector('input[name="paymentMethod"]:checked');
             
             if(!name || !email || !rawPassword || !wa) {
@@ -2796,7 +3017,6 @@
             const btn = document.getElementById('btnSubmitCheckout');
             btn.innerText = "PROCESSING...";
 
-            const method = methodEl.value;
             const product = window.appState.currentCheckoutProduct;
             const coupon = window.appState.currentCheckoutCoupon;
             const uniqueCode = window.appState.currentCheckoutUniqueCode;
@@ -2812,35 +3032,23 @@
             const finalTotal = product.price - 113 - discount + uniqueCode;
             
             const orderData = {
-                customerName: name,
-                customerEmail: email,
-                customerWA: wa,
-                productId: product.id,
-                productTitle: product.title,
-                basePrice: product.price,
-                discountApplied: discount,
-                couponCode: coupon ? coupon.code : null,
-                totalPay: finalTotal,
-                paymentMethod: method,
-                status: 'Pending',
-                userPasswordHash: hashedPassword,
-                affiliateRef: refId
+                id: window.generateShortId(), customerName: name, customerEmail: email, customerWA: wa,
+                productId: product.id, productTitle: product.title, basePrice: product.price,
+                discountApplied: discount, totalPay: finalTotal, paymentMethod: methodEl.value,
+                status: 'Pending', userPasswordHash: hashedPassword, affiliateRef: refId, createdAt: Date.now()
             };
 
             try {
                 await apiCall('saveOrder', orderData);
                 
                 document.getElementById('view-checkout').innerHTML = `
-                    <div class="max-w-md mx-auto mt-20 glass p-10 rounded-3xl shadow-2xl text-center border border-white/40 dark:border-slate-700/50">
-                        <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30">
-                            <i class="ph ph-check text-5xl text-white font-black"></i>
+                    <div class="max-w-md mx-auto mt-20 glass p-10 rounded-3xl shadow-2xl text-center border border-white/40">
+                        <div class="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
+                            <i class="ph ph-check-circle text-6xl"></i>
                         </div>
                         <h2 class="text-3xl font-black text-slate-800 dark:text-white mb-2">Order Diterima!</h2>
-                        <p class="text-slate-600 dark:text-slate-400 mb-8 font-medium">Silakan lakukan transfer via <b>${method}</b> sejumlah <br><span class="text-red-500 text-3xl font-black mt-2 inline-block">${window.formatRp(finalTotal)}</span></p>
-                        <div class="bg-blue-500/10 border border-blue-500/20 p-5 rounded-2xl text-sm text-blue-800 dark:text-blue-300 text-left mb-8 font-medium leading-relaxed">
-                            Pastikan Anda menyimpan bukti transfer. Admin akan segera memverifikasi pesanan Anda. Akses produk akan terbuka otomatis di akun Anda setelah status menjadi <b>Paid</b>.
-                        </div>
-                        <a href="?" class="bg-gradient-to-r from-brand to-purple-600 hover:from-brandHover hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl block transition-all shadow-lg shadow-brand/30">Selesai & Login</a>
+                        <p class="mb-8">Admin akan segera memverifikasi pesanan Anda. Akses produk akan terbuka otomatis.</p>
+                        <a href="?" class="bg-brand text-white font-bold py-4 px-8 rounded-xl block shadow-lg shadow-brand/30">Selesai & Login</a>
                     </div>
                 `;
             } catch(e) {
@@ -2848,8 +3056,6 @@
                 btn.innerText = "CREATE ORDER";
             }
         };
-
-        // --- ORDERS LOGIC (ADMIN) ---
 
         window.renderOrdersTable = () => {
             const tbody = document.getElementById('ordersTableBody');
@@ -2875,7 +3081,7 @@
                     <tr class="hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors">
                         <td class="px-6 py-4 text-xs font-mono font-bold text-slate-500 dark:text-slate-400">#${o.id.substring(0,6)}</td>
                         <td class="px-6 py-4">
-                            <p class="font-bold text-slate-800 dark:text-white text-base">${o.customerName}</p>
+                            <p class="font-bold text-slate-800 dark:text-white text-base leading-tight">${o.customerName}</p>
                             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${o.paymentMethod}</p>
                         </td>
                         <td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300 font-bold">${o.productTitle}</td>
@@ -2883,7 +3089,7 @@
                             <p class="font-black text-slate-800 dark:text-white text-base">${window.formatRp(o.totalPay || o.basePrice)}</p>
                             ${o.couponCode ? `<p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1 mt-1 border border-emerald-500/20"><i class="ph ph-ticket"></i> ${o.couponCode}</p>` : ''}
                         </td>
-                        <td class="px-6 py-4">${statusBadge}</td>
+                        <td class="px-6 py-4 text-center">${statusBadge}</td>
                         <td class="px-6 py-4 text-right flex justify-end">${actionBtn}</td>
                     </tr>
                 `;
@@ -2900,12 +3106,10 @@
                     showToast("Order Approved! Akses diberikan ke kustomer.");
                     await loadAllData();
                 } catch(e) {
-                    showToast("Error approving: " + e.message, "error");
+                    showToast(e.message, "error");
                 }
             }
         };
-
-        // --- SETTINGS & UI UTILITIES LOGIC (RESTORED) ---
 
         window.renderSettingsBankList = () => {
             const container = document.getElementById('bankList');
@@ -2913,27 +3117,18 @@
             container.innerHTML = '';
             
             const settings = window.appState.settings;
-            if(settings && Array.isArray(settings.banks)) {
+            if(settings && settings.banks) {
                 settings.banks.forEach((b) => {
                     container.innerHTML += `
                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bank-item bg-white/50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-700 rounded-xl">
                             <input type="text" placeholder="Nama Bank (BCA)" value="${b.name}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-bold dark:text-white b-name">
-                            <input type="text" placeholder="No Rekening" value="${b.no}" class="w-full sm:w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
+                            <input type="text" placeholder="No Rekening" value="${b.no}" class="w-2/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-mono dark:text-white b-no">
                             <input type="text" placeholder="Atas Nama" value="${b.owner}" class="w-full sm:w-1/4 px-3 py-2 border border-slate-300 dark:border-slate-600 bg-transparent rounded-lg text-sm outline-none focus:border-brand font-medium dark:text-white b-owner">
                             <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2 hover:bg-red-500/20 rounded-lg transition-colors bg-red-500/10 sm:bg-transparent"><i class="ph ph-trash text-xl"></i></button>
                         </div>
                     `;
                 });
             }
-
-            const gwTripayEl = document.getElementById('gwTripay');
-            if (gwTripayEl) gwTripayEl.checked = settings.gateways ? settings.gateways.tripay : false;
-            
-            const gwDuitkuEl = document.getElementById('gwDuitku');
-            if (gwDuitkuEl) gwDuitkuEl.checked = settings.gateways ? settings.gateways.duitku : false;
-            
-            const gwSenditEl = document.getElementById('gwSendit');
-            if (gwSenditEl) gwSenditEl.checked = settings.gateways ? settings.gateways.sendit : false;
         };
 
         window.addBankField = () => {
@@ -2956,11 +3151,8 @@
             const logoUrlInput = document.getElementById('settingLogoUrl').value;
             const logoFileInput = document.getElementById('settingLogoFile').files[0];
             
-            const waProv = document.getElementById('notifWaProvider').value;
-            const waToken = document.getElementById('notifWaToken').value;
-            const adminWa = document.getElementById('notifAdminWa').value;
-            const emailProv = document.getElementById('notifEmailProvider').value;
-            const emailToken = document.getElementById('notifEmailToken').value;
+            const rawAdminWa = document.getElementById('notifAdminWa').value;
+            const adminWa = window.formatPhoneNumber(rawAdminWa);
 
             document.documentElement.style.setProperty('--brand-color', color);
             document.documentElement.style.setProperty('--brand-hover', color); 
@@ -2983,87 +3175,52 @@
 
             let finalLogoUrl = logoUrlInput;
             if (logoFileInput) {
-                finalLogoUrl = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.readAsDataURL(logoFileInput);
-                });
+                finalLogoUrl = await window.compressImage(logoFileInput, 400);
             }
             
             const payload = {
-                appName: name,
-                primaryColor: color,
-                logoUrl: finalLogoUrl,
-                banks: banks,
-                gateways: {
-                    tripay: document.getElementById('gwTripay') ? document.getElementById('gwTripay').checked : false,
-                    duitku: document.getElementById('gwDuitku') ? document.getElementById('gwDuitku').checked : false,
-                    sendit: document.getElementById('gwSendit') ? document.getElementById('gwSendit').checked : false
-                },
-                waProvider: waProv, waToken: waToken, adminWa: adminWa,
-                emailProvider: emailProv, emailToken: emailToken
+                appName: name, primaryColor: color, logoUrl: finalLogoUrl, banks: banks,
+                adminWa: adminWa
             };
 
             try {
                 await apiCall('saveSettings', payload);
                 window.applyLogo(finalLogoUrl);
-                showToast("Admin settings saved to server!");
+                showToast("Admin settings saved!");
                 await loadAllData();
             } catch(e) {
-                showToast("Error saving settings: " + e.message, "error");
+                showToast(e.message, "error");
             }
         };
 
         window.applyLogo = (src) => {
             const appLogoSidebar = document.getElementById('appLogoSidebar');
-            const appIconSidebarBg = document.getElementById('appIconSidebarBg');
-            const appLogoAuth = document.getElementById('appLogoAuth');
-            const appIconAuth = document.getElementById('appIconAuth');
-
-            if (src) {
-                if(appLogoSidebar) { appLogoSidebar.src = src; appLogoSidebar.classList.remove('hidden'); }
-                if(appIconSidebarBg) appIconSidebarBg.classList.add('hidden');
-                
-                if(appLogoAuth) { appLogoAuth.src = src; appLogoAuth.classList.remove('hidden'); }
-                if(appIconAuth) appIconAuth.classList.add('hidden');
-            } else {
-                if(appLogoSidebar) { appLogoSidebar.src = ''; appLogoSidebar.classList.add('hidden'); }
-                if(appIconSidebarBg) appIconSidebarBg.classList.remove('hidden');
-                
-                if(appLogoAuth) { appLogoAuth.src = ''; appLogoAuth.classList.add('hidden'); }
-                if(appIconAuth) appIconAuth.classList.remove('hidden');
-            }
+            if (src) { if(appLogoSidebar) { appLogoSidebar.src = src; appLogoSidebar.classList.remove('hidden'); } }
+            else { if(appLogoSidebar) { appLogoSidebar.src = ''; appLogoSidebar.classList.add('hidden'); } }
         };
 
-        window.showToast = (msg, type = 'success') => {
-            const toast = document.getElementById('toast');
-            if(!toast) return;
-            const msgEl = document.getElementById('toastMsg');
-            if(msgEl) msgEl.innerText = msg;
-            
-            const icon = document.getElementById('toastIcon');
-            if (icon) {
-                if(type === 'error') {
-                    icon.className = "ph ph-x-circle text-red-500 text-3xl drop-shadow-sm";
-                    toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-red-500 translate-y-0";
-                } else if (type === 'info') {
-                    icon.className = "ph ph-info text-blue-500 text-3xl drop-shadow-sm";
-                    toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-blue-500 translate-y-0";
-                } else {
-                    icon.className = "ph ph-check-circle text-green-500 text-3xl drop-shadow-sm";
-                    toast.className = "fixed bottom-6 right-6 glass text-slate-800 dark:text-white px-5 py-4 rounded-2xl shadow-2xl transform opacity-100 transition-all duration-300 z-[60] flex items-center gap-3 border-l-4 border-l-green-500 translate-y-0";
-                }
-            }
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+        window.showToast = (m, t='success') => {
+            const el = document.getElementById('toast'), msgEl = document.getElementById('toastMsg');
+            if(!el || !msgEl) return; msgEl.innerText = m;
+            el.classList.remove('hidden', 'translate-y-20', 'opacity-0');
+            setTimeout(() => { el.classList.add('translate-y-20', 'opacity-0'); }, 3000);
         };
+
+        function updateDashboardStats() {
+            document.getElementById('statProducts').innerText = window.appState.products.length;
+            if (window.appState.user.role === 'admin') {
+                document.getElementById('statUsers').innerText = window.appState.usersData.length;
+                let rev = 0, ord = 0;
+                window.appState.orders.forEach(o => { if (o.status === 'Paid') { rev += Number(o.totalPay || 0); ord++; } });
+                document.getElementById('statRevenue').innerText = window.formatRp(rev);
+                document.getElementById('statOrders').innerText = ord;
+            }
+        }
 
         function initChart() {
             setTimeout(() => {
                 const canvas = document.getElementById('salesChart');
-                if(!canvas) return;
+                if(!canvas || window.appState.user.role !== 'admin') return;
 
                 let existingChart = Chart.getChart(canvas);
                 if (existingChart) existingChart.destroy();
@@ -3081,32 +3238,21 @@
                             data: [1200000, 1900000, 3000000, 5000000, 4200000, 6800000, 12450000],
                             borderColor: getComputedStyle(document.documentElement).getPropertyValue('--brand-color').trim() || '#4f46e5',
                             backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: '#ffffff',
-                            pointBorderColor: '#4f46e5',
-                            pointBorderWidth: 2,
-                            pointRadius: 4,
-                            pointHoverRadius: 6
+                            borderWidth: 3, tension: 0.4, fill: true,
+                            pointBackgroundColor: '#ffffff', pointBorderColor: '#4f46e5',
+                            pointBorderWidth: 2, pointRadius: 4, pointHoverRadius: 6
                         }]
                     },
                     options: {
-                        responsive: true,
-                        plugins: { legend: { display: false } },
+                        responsive: true, plugins: { legend: { display: false } },
                         scales: {
-                            y: { 
-                                beginAtZero: true, 
-                                grid: { color: gridColor }, 
-                                ticks: { color: textColor }
-                            },
-                            x: { 
-                                grid: { display: false },
-                                ticks: { color: textColor }
-                            }
+                            y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor } },
+                            x: { grid: { display: false }, ticks: { color: textColor } }
                         }
                     }
                 });
             }, 100);
         }
     </script>
+</body>
+</html>
